@@ -4,6 +4,7 @@ import { getDatabase } from "../../../shared/db/client.ts"
 import { ensureProfile } from "../../../shared/db/profile.ts"
 import type { CardProgress } from "../../../shared/db/types.ts"
 import { nextLocalMidnight } from "../../../shared/lib/dates.ts"
+import { openDay } from "../model/openDay.ts"
 import { buildTodayQueue } from "../model/queue.ts"
 import { formatDelay } from "../model/schedule.ts"
 import { nextDueAt, type TodaySummary } from "../model/today.ts"
@@ -37,6 +38,7 @@ export function useToday(): {
           dailyGoal: profile.dailyGoal,
           newPerDay: profile.newPerDay,
         })
+        const opened = await openDay(database, now, cardIds.length)
         const nextDue = nextDueAt(seen, dueBefore)
         if (cancelled) {
           return
@@ -44,8 +46,8 @@ export function useToday(): {
         setQueue(cardIds)
         setProgress(saved)
         setSummary({
-          streak: profile.streak,
-          xp: profile.xp,
+          streak: opened.streak,
+          xp: opened.xp,
           queueSize: cardIds.length,
           nextDueLabel:
             nextDue === null ? null : formatDelay((nextDue - now.getTime()) / 60_000),
