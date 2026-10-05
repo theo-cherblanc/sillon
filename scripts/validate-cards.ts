@@ -1,0 +1,48 @@
+import type { Card } from "../src/shared/content/types.ts"
+
+export function validateCards(cards: Card[]): void {
+  const seen = new Set<string>()
+
+  for (const card of cards) {
+    if (seen.has(card.id)) {
+      throw new Error(`Identifiant en double : ${card.id}`)
+    }
+    seen.add(card.id)
+
+    if (card.type === "mcq") {
+      validateMcq(card)
+    } else {
+      validateReveal(card)
+    }
+  }
+}
+
+function validateMcq(card: Card): void {
+  if (card.answer !== undefined) {
+    throw new Error(`${card.id} : un QCM n'a pas de réponse à révéler`)
+  }
+
+  const choices = card.choices
+  if (!choices || choices.length < 2) {
+    throw new Error(`${card.id} : un QCM doit avoir au moins deux choix`)
+  }
+
+  const ids = new Set(choices.map((choice) => choice.id))
+  if (ids.size !== choices.length) {
+    throw new Error(`${card.id} : les choix doivent avoir des identifiants uniques`)
+  }
+
+  if (!card.correctChoiceId || !ids.has(card.correctChoiceId)) {
+    throw new Error(`${card.id} : le bon choix doit être l'un des choix`)
+  }
+}
+
+function validateReveal(card: Card): void {
+  if (!card.answer) {
+    throw new Error(`${card.id} : une carte à révéler doit avoir une réponse`)
+  }
+
+  if (card.choices !== undefined || card.correctChoiceId !== undefined) {
+    throw new Error(`${card.id} : une carte à révéler n'a pas de choix`)
+  }
+}
