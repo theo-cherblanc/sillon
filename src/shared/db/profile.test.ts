@@ -46,4 +46,18 @@ describe("ensureProfile", () => {
   it("rejects a creation time that is not a real instant", async () => {
     await assert.rejects(() => ensureProfile(database, Number.NaN), /finite creation time/)
   })
+
+  it("keeps a single profile when the first launch is requested twice", async () => {
+    const race = new SillonDatabase("sillon-profile-race")
+    try {
+      const [first, second] = await Promise.all([
+        ensureProfile(race, 10),
+        ensureProfile(race, 20),
+      ])
+      assert.equal(first.createdAt, second.createdAt)
+      assert.equal(await race.profile.count(), 1)
+    } finally {
+      await race.delete()
+    }
+  })
 })

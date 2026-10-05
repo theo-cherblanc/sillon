@@ -1,3 +1,5 @@
+import { TodayPage } from "../features/review/index.ts"
+
 export function App() {
-  return <h1 className="p-6 text-2xl font-semibold">Sillon</h1>
+  return <TodayPage />
 }
