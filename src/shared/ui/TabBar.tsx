@@ -2,31 +2,33 @@ export function TabBar({
   current,
   onToday,
   onProgress,
+  onSettings,
   className = "",
 }: {
-  current: "today" | "progress"
+  current: "today" | "progress" | "settings"
   onToday: () => void
   onProgress: () => void
+  onSettings: () => void
   className?: string
 }) {
   return (
-    <nav className={`flex gap-6 pt-6 ${className}`}>
-      <button
-        type="button"
-        onClick={onToday}
-        aria-current={current === "today" ? "page" : undefined}
-        className={current === "today" ? "text-lg font-medium" : "text-lg text-neutral-500"}
-      >
-        Aujourd'hui
-      </button>
-      <button
-        type="button"
-        onClick={onProgress}
-        aria-current={current === "progress" ? "page" : undefined}
-        className={current === "progress" ? "text-lg font-medium" : "text-lg text-neutral-500"}
-      >
-        Progression
-      </button>
+    <nav className={`flex justify-between gap-3 pt-6 ${className}`}>
+      <Tab current={current === "today"} onClick={onToday} label="Aujourd'hui" />
+      <Tab current={current === "progress"} onClick={onProgress} label="Progression" />
+      <Tab current={current === "settings"} onClick={onSettings} label="Réglages" />
     </nav>
+  )
+}
+
+function Tab({ current, onClick, label }: { current: boolean; onClick: () => void; label: string }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-current={current ? "page" : undefined}
+      className={current ? "text-base font-medium" : "text-base text-neutral-500"}
+    >
+      {label}
+    </button>
   )
 }

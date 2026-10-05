@@ -2,7 +2,7 @@ import { Screen } from "../../../shared/ui/Screen.tsx"
 import { TabBar } from "../../../shared/ui/TabBar.tsx"
 import { useProgress, type ProgressSummary } from "../hooks/useProgress.ts"
 
-export function ProgressPage({ onToday }: { onToday: () => void }) {
+export function ProgressPage({ onToday, onSettings }: { onToday: () => void; onSettings: () => void }) {
   const { summary, error } = useProgress()
 
   return (
@@ -11,7 +11,13 @@ export function ProgressPage({ onToday }: { onToday: () => void }) {
       {error ? <p className="mt-8 text-lg">{error}</p> : null}
       {!error && !summary ? <p className="mt-8 text-lg text-neutral-500">Chargement…</p> : null}
       {summary ? <ProgressBody summary={summary} /> : null}
-      <TabBar current="progress" onToday={onToday} onProgress={() => undefined} className="mt-auto" />
+      <TabBar
+        current="progress"
+        onToday={onToday}
+        onProgress={() => undefined}
+        onSettings={onSettings}
+        className="mt-auto"
+      />
     </Screen>
   )
 }

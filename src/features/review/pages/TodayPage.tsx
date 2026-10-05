@@ -3,7 +3,15 @@ import { TabBar } from "../../../shared/ui/TabBar.tsx"
 import { useToday } from "../hooks/useToday.ts"
 import { todayStatus, type TodaySummary } from "../model/today.ts"
 
-export function TodayPage({ onReview, onProgress }: { onReview: () => void; onProgress: () => void }) {
+export function TodayPage({
+  onReview,
+  onProgress,
+  onSettings,
+}: {
+  onReview: () => void
+  onProgress: () => void
+  onSettings: () => void
+}) {
   const { summary, error } = useToday()
 
   return (
@@ -16,6 +24,7 @@ export function TodayPage({ onReview, onProgress }: { onReview: () => void; onPr
         current="today"
         onToday={() => undefined}
         onProgress={onProgress}
+        onSettings={onSettings}
         className={summary && summary.queueSize > 0 ? "" : "mt-auto"}
       />
     </Screen>
