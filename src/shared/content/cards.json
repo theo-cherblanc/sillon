@@ -1,5 +1,96 @@
 [
   {
+    "id": "js.async.001",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "async"
+    ],
+    "difficulty": 2,
+    "prompt": "Dans quel ordre les lettres s'affichent-elles ?\n\n```js\nconsole.log(\"A\")\nPromise.resolve().then(() => console.log(\"B\"))\nconsole.log(\"C\")\n```",
+    "explanation": "Le callback de `then` est une microtâche. Il attend que le code synchrone en cours soit fini. `A` et `C` s'affichent donc avant `B`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "A, puis B, puis C"
+      },
+      {
+        "id": "b",
+        "text": "A, puis C, puis B"
+      },
+      {
+        "id": "c",
+        "text": "B, puis A, puis C"
+      }
+    ],
+    "correctChoiceId": "b"
+  },
+  {
+    "id": "js.async.002",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "async"
+    ],
+    "difficulty": 2,
+    "prompt": "Que renvoie `run()` ?\n\n```js\nasync function run() {\n  return 1\n}\n```",
+    "explanation": "Une fonction `async` renvoie toujours une promesse. `return 1` ne renvoie pas le nombre directement : il résout cette promesse avec `1`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "le nombre 1"
+      },
+      {
+        "id": "b",
+        "text": "undefined"
+      },
+      {
+        "id": "c",
+        "text": "une promesse résolue avec 1"
+      }
+    ],
+    "correctChoiceId": "c"
+  },
+  {
+    "id": "js.closures.001",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "closures"
+    ],
+    "difficulty": 2,
+    "prompt": "Que renvoie le second appel à `next` ?\n\n```js\nfunction make() {\n  let n = 0\n  return () => ++n\n}\nconst next = make()\nnext()\nnext()\n```",
+    "explanation": "`next` capture `n`. Les deux appels incrémentent la même variable : le premier renvoie `1`, le second renvoie `2`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "0"
+      },
+      {
+        "id": "b",
+        "text": "1"
+      },
+      {
+        "id": "c",
+        "text": "2"
+      }
+    ],
+    "correctChoiceId": "c"
+  },
+  {
+    "id": "js.closures.002",
+    "type": "reveal",
+    "topic": "javascript",
+    "tags": [
+      "closures",
+      "scope"
+    ],
+    "difficulty": 3,
+    "prompt": "Que renvoie `fns[0]()` ?\n\n```js\nconst fns = []\nfor (var i = 0; i < 3; i++) {\n  fns.push(() => i)\n}\n```",
+    "explanation": "`var i` est une seule variable pour toute la boucle. Les trois fonctions lisent ce même `i`, qui vaut `3` une fois la boucle terminée. Avec `let`, chaque tour aurait eu son propre `i`.",
+    "answer": "`3`"
+  },
+  {
     "id": "js.closures.003",
     "type": "mcq",
     "topic": "javascript",
@@ -21,5 +112,233 @@
       }
     ],
     "correctChoiceId": "b"
+  },
+  {
+    "id": "js.prototypes.001",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "prototypes"
+    ],
+    "difficulty": 2,
+    "prompt": "Que renvoie `ada.hello()` ?\n\n```js\nfunction User(name) {\n  this.name = name\n}\nUser.prototype.hello = function () {\n  return this.name\n}\nconst ada = new User(\"Ada\")\n```",
+    "explanation": "`ada` n'a pas `hello` sur elle-même. JavaScript trouve la méthode sur `User.prototype`. Au moment de l'appel, `this` vaut `ada`, donc `this.name` vaut `\"Ada\"`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "\"Ada\""
+      },
+      {
+        "id": "b",
+        "text": "undefined"
+      },
+      {
+        "id": "c",
+        "text": "une TypeError est lancée"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
+    "id": "js.prototypes.002",
+    "type": "reveal",
+    "topic": "javascript",
+    "tags": [
+      "prototypes"
+    ],
+    "difficulty": 2,
+    "prompt": "Juste après `const ada = new User(\"Ada\")`, que renvoie `Object.getPrototypeOf(ada)` ?\n\n```js\nfunction User(name) {\n  this.name = name\n}\nconst ada = new User(\"Ada\")\n```",
+    "explanation": "`new` crée l'objet et le relie au `prototype` du constructeur. Les méthodes partagées vivent sur ce prototype, pas copiées sur chaque instance.",
+    "answer": "`User.prototype`"
+  },
+  {
+    "id": "js.scope.001",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "scope"
+    ],
+    "difficulty": 2,
+    "prompt": "Que se passe-t-il ?\n\n```js\n{\n  let x = 1\n}\nconsole.log(x)\n```",
+    "explanation": "`let` est limité au bloc entre accolades. En dehors de ce bloc, `x` n'existe pas, et le lire lance une `ReferenceError`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "1 s'affiche"
+      },
+      {
+        "id": "b",
+        "text": "undefined s'affiche"
+      },
+      {
+        "id": "c",
+        "text": "une ReferenceError est lancée"
+      }
+    ],
+    "correctChoiceId": "c"
+  },
+  {
+    "id": "js.scope.002",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "scope"
+    ],
+    "difficulty": 2,
+    "prompt": "Qu'affiche ce code ?\n\n```js\nconsole.log(a)\nvar a = 1\n```",
+    "explanation": "`var` est hissée et initialisée à `undefined`. La déclaration est déjà visible, l'affectation `a = 1` ne l'est pas encore.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "1 s'affiche"
+      },
+      {
+        "id": "b",
+        "text": "undefined s'affiche"
+      },
+      {
+        "id": "c",
+        "text": "une ReferenceError est lancée"
+      }
+    ],
+    "correctChoiceId": "b"
+  },
+  {
+    "id": "js.scope.003",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "scope"
+    ],
+    "difficulty": 3,
+    "prompt": "Que se passe-t-il ?\n\n```js\nconsole.log(b)\nlet b = 1\n```",
+    "explanation": "`let` est hissée, mais la variable reste dans la zone morte temporelle jusqu'à sa ligne. La lire avant lance une `ReferenceError`, au lieu d'afficher `undefined` comme `var`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "1 s'affiche"
+      },
+      {
+        "id": "b",
+        "text": "undefined s'affiche"
+      },
+      {
+        "id": "c",
+        "text": "une ReferenceError est lancée"
+      }
+    ],
+    "correctChoiceId": "c"
+  },
+  {
+    "id": "js.this.001",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "this"
+    ],
+    "difficulty": 2,
+    "prompt": "En mode strict, que se passe-t-il ?\n\n```js\nconst user = {\n  name: \"Ada\",\n  hello() {\n    return this.name\n  },\n}\nconst greet = user.hello\ngreet()\n```",
+    "explanation": "`greet` n'est plus appelée comme méthode de `user`. En mode strict, `this` vaut `undefined`, et lire `this.name` lance une `TypeError`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "\"Ada\" est renvoyé"
+      },
+      {
+        "id": "b",
+        "text": "undefined est renvoyé"
+      },
+      {
+        "id": "c",
+        "text": "une TypeError est lancée"
+      }
+    ],
+    "correctChoiceId": "c"
+  },
+  {
+    "id": "js.this.002",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "this"
+    ],
+    "difficulty": 2,
+    "prompt": "Que renvoie `user.delayed()` ?\n\n```js\nconst user = {\n  name: \"Ada\",\n  delayed() {\n    const read = () => this.name\n    return read()\n  },\n}\n```",
+    "explanation": "Une fonction flèche n'a pas son propre `this`. Elle reprend celui de `delayed`. Comme `delayed` est appelée sur `user`, `this.name` vaut `\"Ada\"`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "\"Ada\""
+      },
+      {
+        "id": "b",
+        "text": "undefined"
+      },
+      {
+        "id": "c",
+        "text": "une TypeError est lancée"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
+    "id": "js.types.001",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "types"
+    ],
+    "difficulty": 1,
+    "prompt": "Que renvoie `typeof null` ?",
+    "explanation": "`typeof null` vaut `\"object\"`. C'est un vieux défaut du langage, resté tel quel pour ne pas casser le code existant.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "\"null\""
+      },
+      {
+        "id": "b",
+        "text": "\"object\""
+      },
+      {
+        "id": "c",
+        "text": "\"undefined\""
+      }
+    ],
+    "correctChoiceId": "b"
+  },
+  {
+    "id": "js.types.002",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "types"
+    ],
+    "difficulty": 2,
+    "prompt": "Que vaut `NaN === NaN` ?",
+    "explanation": "`NaN` n'est égal à aucune valeur, pas même à lui-même. Pour le reconnaître, on utilise `Number.isNaN`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "true"
+      },
+      {
+        "id": "b",
+        "text": "false"
+      }
+    ],
+    "correctChoiceId": "b"
+  },
+  {
+    "id": "js.types.003",
+    "type": "reveal",
+    "topic": "javascript",
+    "tags": [
+      "types"
+    ],
+    "difficulty": 2,
+    "prompt": "Quelle est la différence entre `==` et `===` ?",
+    "explanation": "`0 == false` est vrai, parce que `false` est converti en `0`. `0 === false` est faux : un nombre n'est pas un booléen.",
+    "answer": "`===` compare les deux valeurs sans les convertir. `==` les convertit d'abord vers un type commun."
   }
 ]
