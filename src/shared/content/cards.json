@@ -52,6 +52,58 @@
     "correctChoiceId": "c"
   },
   {
+    "id": "js.async.003",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "async"
+    ],
+    "difficulty": 3,
+    "prompt": "Dans quel ordre les messages s'affichent-ils ?\n\n```js\nsetTimeout(() => console.log(\"timeout\"), 0)\nPromise.resolve().then(() => console.log(\"promise\"))\n```",
+    "explanation": "Une fois le code synchrone fini, les microtâches passent avant les macrotâches. Le callback de `then` est une microtâche, `setTimeout` une macrotâche. `promise` s'affiche donc avant `timeout`, même avec un délai de `0`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "timeout, puis promise"
+      },
+      {
+        "id": "b",
+        "text": "promise, puis timeout"
+      },
+      {
+        "id": "c",
+        "text": "les deux en même temps"
+      }
+    ],
+    "correctChoiceId": "b"
+  },
+  {
+    "id": "js.async.004",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "async"
+    ],
+    "difficulty": 3,
+    "prompt": "Dans quel ordre les lettres s'affichent-elles ?\n\n```js\nasync function run() {\n  console.log(\"A\")\n  await Promise.resolve()\n  console.log(\"B\")\n}\nrun()\nconsole.log(\"C\")\n```",
+    "explanation": "`A` s'affiche tout de suite. `await` rend la main à l'appelant, donc `C` continue. La suite de `run`, après le `await`, reprend comme une microtâche : `B` s'affiche en dernier.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "A, puis B, puis C"
+      },
+      {
+        "id": "b",
+        "text": "A, puis C, puis B"
+      },
+      {
+        "id": "c",
+        "text": "C, puis A, puis B"
+      }
+    ],
+    "correctChoiceId": "b"
+  },
+  {
     "id": "js.closures.001",
     "type": "mcq",
     "topic": "javascript",
@@ -114,6 +166,19 @@
     "correctChoiceId": "b"
   },
   {
+    "id": "js.closures.004",
+    "type": "reveal",
+    "topic": "javascript",
+    "tags": [
+      "closures",
+      "scope"
+    ],
+    "difficulty": 3,
+    "prompt": "Que renvoie `fns[0]()` ?\n\n```js\nconst fns = []\nfor (let i = 0; i < 3; i++) {\n  fns.push(() => i)\n}\n```",
+    "explanation": "`let` crée une variable par tour de boucle. `fns[0]` a capturé le `i` du premier tour, qui reste `0`. Avec `var`, les trois fonctions auraient lu la même variable, valant `3` à la fin.",
+    "answer": "`0`"
+  },
+  {
     "id": "js.prototypes.001",
     "type": "mcq",
     "topic": "javascript",
@@ -150,6 +215,58 @@
     "prompt": "Juste après `const ada = new User(\"Ada\")`, que renvoie `Object.getPrototypeOf(ada)` ?\n\n```js\nfunction User(name) {\n  this.name = name\n}\nconst ada = new User(\"Ada\")\n```",
     "explanation": "`new` crée l'objet et le relie au `prototype` du constructeur. Les méthodes partagées vivent sur ce prototype, pas copiées sur chaque instance.",
     "answer": "`User.prototype`"
+  },
+  {
+    "id": "js.prototypes.003",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "prototypes"
+    ],
+    "difficulty": 2,
+    "prompt": "Que vaut `\"hello\" in ada` ?\n\n```js\nfunction User(name) {\n  this.name = name\n}\nUser.prototype.hello = function () {\n  return this.name\n}\nconst ada = new User(\"Ada\")\n```",
+    "explanation": "`in` regarde l'objet et sa chaîne de prototypes. `hello` n'est pas sur `ada`, mais sur `User.prototype`, donc `\"hello\" in ada` vaut `true`. `Object.hasOwn(ada, \"hello\")` vaut `false` : la méthode n'appartient pas à l'instance.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "true"
+      },
+      {
+        "id": "b",
+        "text": "false"
+      },
+      {
+        "id": "c",
+        "text": "une TypeError est lancée"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
+    "id": "js.prototypes.004",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "prototypes"
+    ],
+    "difficulty": 3,
+    "prompt": "Que renvoie `ada.hello()` à la fin ?\n\n```js\nfunction User(name) {\n  this.name = name\n}\nUser.prototype.hello = function () {\n  return this.name\n}\nconst ada = new User(\"Ada\")\nUser.prototype.hello = function () {\n  return \"redefini\"\n}\n```",
+    "explanation": "Les instances partagent le même prototype. Remplacer `hello` sur `User.prototype` change l'appel des instances déjà créées. `ada.hello()` renvoie donc `\"redefini\"`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "\"Ada\""
+      },
+      {
+        "id": "b",
+        "text": "\"redefini\""
+      },
+      {
+        "id": "c",
+        "text": "undefined"
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "js.scope.001",
@@ -230,6 +347,32 @@
     "correctChoiceId": "c"
   },
   {
+    "id": "js.scope.004",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "scope"
+    ],
+    "difficulty": 2,
+    "prompt": "Que se passe-t-il ?\n\n```js\nconst user = { name: \"Ada\" }\nuser.name = \"Grace\"\n```",
+    "explanation": "`const` empêche de réassigner la variable `user`. L'objet, lui, reste modifiable : `user.name` vaut `\"Grace\"`. Une `TypeError` apparaîtrait seulement avec `user = autreChose`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "user.name vaut \"Grace\""
+      },
+      {
+        "id": "b",
+        "text": "user.name reste \"Ada\""
+      },
+      {
+        "id": "c",
+        "text": "une TypeError est lancée"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
     "id": "js.this.001",
     "type": "mcq",
     "topic": "javascript",
@@ -265,6 +408,58 @@
     "difficulty": 2,
     "prompt": "Que renvoie `user.delayed()` ?\n\n```js\nconst user = {\n  name: \"Ada\",\n  delayed() {\n    const read = () => this.name\n    return read()\n  },\n}\n```",
     "explanation": "Une fonction flèche n'a pas son propre `this`. Elle reprend celui de `delayed`. Comme `delayed` est appelée sur `user`, `this.name` vaut `\"Ada\"`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "\"Ada\""
+      },
+      {
+        "id": "b",
+        "text": "undefined"
+      },
+      {
+        "id": "c",
+        "text": "une TypeError est lancée"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
+    "id": "js.this.003",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "this"
+    ],
+    "difficulty": 1,
+    "prompt": "Que renvoie `user.hello()` ?\n\n```js\nconst user = {\n  name: \"Ada\",\n  hello() {\n    return this.name\n  },\n}\n```",
+    "explanation": "`hello` est appelée comme méthode de `user`. Dans cet appel, `this` vaut `user`, donc `this.name` vaut `\"Ada\"`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "\"Ada\""
+      },
+      {
+        "id": "b",
+        "text": "undefined"
+      },
+      {
+        "id": "c",
+        "text": "une TypeError est lancée"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
+    "id": "js.this.004",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "this"
+    ],
+    "difficulty": 3,
+    "prompt": "En mode strict, que renvoie `greet()` ?\n\n```js\nconst user = {\n  name: \"Ada\",\n  hello() {\n    return this.name\n  },\n}\nconst greet = user.hello.bind(user)\ngreet()\n```",
+    "explanation": "`bind` fixe `this` sur `user` pour les appels suivants. `greet` n'est pas appelée comme méthode, mais `this` reste `user`, donc le résultat vaut `\"Ada\"`.",
     "choices": [
       {
         "id": "a",
@@ -340,5 +535,53 @@
     "prompt": "Quelle est la différence entre `==` et `===` ?",
     "explanation": "`0 == false` est vrai, parce que `false` est converti en `0`. `0 === false` est faux : un nombre n'est pas un booléen.",
     "answer": "`===` compare les deux valeurs sans les convertir. `==` les convertit d'abord vers un type commun."
+  },
+  {
+    "id": "js.types.004",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "types"
+    ],
+    "difficulty": 1,
+    "prompt": "Que renvoie `typeof []` ?",
+    "explanation": "`typeof` ne distingue pas un tableau d'un autre objet. `[]` est un objet, donc le résultat vaut `\"object\"`. Pour reconnaître un tableau, on utilise `Array.isArray([])`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "\"array\""
+      },
+      {
+        "id": "b",
+        "text": "\"object\""
+      },
+      {
+        "id": "c",
+        "text": "\"undefined\""
+      }
+    ],
+    "correctChoiceId": "b"
+  },
+  {
+    "id": "js.types.005",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "types"
+    ],
+    "difficulty": 2,
+    "prompt": "Que vaut `[] === []` ?",
+    "explanation": "Chaque `[]` crée un nouvel objet. `===` compare leur identité, pas leur contenu. Les deux tableaux sont vides, mais ce ne sont pas le même objet, donc la comparaison vaut `false`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "true"
+      },
+      {
+        "id": "b",
+        "text": "false"
+      }
+    ],
+    "correctChoiceId": "b"
   }
 ]
