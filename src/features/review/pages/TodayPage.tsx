@@ -1,20 +1,21 @@
-import { todayStatus, type TodaySummary } from "../model/today.ts"
+import { Screen } from "../../../shared/ui/Screen.tsx"
 import { useToday } from "../hooks/useToday.ts"
+import { todayStatus, type TodaySummary } from "../model/today.ts"
 
-export function TodayPage() {
+export function TodayPage({ onReview }: { onReview: () => void }) {
   const { summary, error } = useToday()
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-md flex-col bg-white px-6 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))] text-neutral-900">
+    <Screen>
       <h1 className="text-3xl font-semibold tracking-tight">Aujourd'hui</h1>
       {error ? <p className="mt-8 text-lg">{error}</p> : null}
       {!error && !summary ? <p className="mt-8 text-lg text-neutral-500">Chargement…</p> : null}
-      {summary ? <TodayBody summary={summary} /> : null}
-    </main>
+      {summary ? <TodayBody summary={summary} onReview={onReview} /> : null}
+    </Screen>
   )
 }
 
-function TodayBody({ summary }: { summary: TodaySummary }) {
+function TodayBody({ summary, onReview }: { summary: TodaySummary; onReview: () => void }) {
   return (
     <>
       <p className="mt-8 text-lg">Série {summary.streak}</p>
@@ -23,6 +24,7 @@ function TodayBody({ summary }: { summary: TodaySummary }) {
       {summary.queueSize > 0 ? (
         <button
           type="button"
+          onClick={onReview}
           className="mt-auto w-full rounded-2xl bg-neutral-900 px-6 py-4 text-lg font-medium text-white"
         >
           Réviser

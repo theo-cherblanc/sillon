@@ -1,7 +1,8 @@
 import assert from "node:assert/strict"
 import { describe, it } from "node:test"
 import { createEmptyCard, State, type Card } from "ts-fsrs"
-import { formatDelay, previewDelays } from "./schedule.ts"
+import { formatDelay, previewDelays, previewForProgress, scheduleReview } from "./schedule.ts"
+import type { CardProgress } from "../../../shared/db/types.ts"
 
 const now = new Date("2026-10-05T08:00:00.000Z")
 
@@ -78,5 +79,42 @@ describe("previewDelays", () => {
 
   it("rejects a preview without a valid date", () => {
     assert.throws(() => previewDelays(null, new Date(Number.NaN)), /valid date/)
+  })
+
+  it("reads a saved card the same way as a new one when nothing is saved", () => {
+    assert.deepEqual(previewForProgress(null, now), previewDelays(null, now))
+  })
+
+  it("reads the delay from saved progress", () => {
+    const saved: CardProgress = {
+      cardId: "js.closures.003",
+      due: now.getTime(),
+      stability: 1,
+      difficulty: 5,
+      elapsed_days: 1,
+      scheduled_days: 1,
+      learning_steps: 0,
+      reps: 2,
+      lapses: 0,
+      state: 2,
+      lastReview: now.getTime() - 86_400_000,
+      lastRating: "good",
+      updatedAt: now.getTime(),
+    }
+    assert.equal(previewForProgress(saved, now).good, "dans 4 jours")
+  })
+})
+
+describe("scheduleReview", () => {
+  it("sets a new card ten minutes out when the answer was known", () => {
+    const next = scheduleReview(null, "js.async.001", "good", now)
+    assert.equal(next.cardId, "js.async.001")
+    assert.equal(next.due, now.getTime() + 10 * 60_000)
+    assert.equal(next.lastRating, "good")
+    assert.equal(next.reps, 1)
+  })
+
+  it("rejects a review without a valid date", () => {
+    assert.throws(() => scheduleReview(null, "js.async.001", "good", new Date(Number.NaN)), /valid date/)
   })
 })

@@ -1,6 +1,13 @@
-import { createEmptyCard, fsrs, Rating, type Card, type Grade } from "ts-fsrs"
+import { createEmptyCard, fsrs, Rating, State, type Card, type Grade } from "ts-fsrs"
+import type { CardProgress, CardState, StoredRating } from "../../../shared/db/types.ts"
 
 const scheduler = fsrs({ enable_fuzz: false })
+
+const fsrsRating = {
+  again: Rating.Again,
+  hard: Rating.Hard,
+  good: Rating.Good,
+} as const satisfies Record<StoredRating, Grade>
 
 export type DelayPreview = {
   again: string
@@ -52,5 +59,59 @@ export function previewDelays(card: Card | null, now: Date): DelayPreview {
     again: label(Rating.Again),
     hard: label(Rating.Hard),
     good: label(Rating.Good),
+  }
+}
+
+function toSchedulerCard(progress: CardProgress, now: Date): Card {
+  return {
+    ...createEmptyCard(now),
+    due: new Date(progress.due),
+    stability: progress.stability,
+    difficulty: progress.difficulty,
+    elapsed_days: progress.elapsed_days,
+    scheduled_days: progress.scheduled_days,
+    learning_steps: progress.learning_steps,
+    reps: progress.reps,
+    lapses: progress.lapses,
+    state: progress.state as State,
+    last_review: progress.lastReview === null ? undefined : new Date(progress.lastReview),
+  }
+}
+
+export function previewForProgress(progress: CardProgress | null, now: Date): DelayPreview {
+  if (progress === null) {
+    return previewDelays(null, now)
+  }
+
+  return previewDelays(toSchedulerCard(progress, now), now)
+}
+
+export function scheduleReview(
+  progress: CardProgress | null,
+  cardId: string,
+  rating: StoredRating,
+  now: Date,
+): CardProgress {
+  if (Number.isNaN(now.getTime())) {
+    throw new Error("A review needs a valid date")
+  }
+
+  const current = progress ? toSchedulerCard(progress, now) : createEmptyCard(now)
+  const next = scheduler.next(current, now, fsrsRating[rating]).card
+
+  return {
+    cardId,
+    due: next.due.getTime(),
+    stability: next.stability,
+    difficulty: next.difficulty,
+    elapsed_days: next.elapsed_days,
+    scheduled_days: next.scheduled_days,
+    learning_steps: next.learning_steps,
+    reps: next.reps,
+    lapses: next.lapses,
+    state: next.state as CardState,
+    lastReview: next.last_review?.getTime() ?? now.getTime(),
+    lastRating: rating,
+    updatedAt: now.getTime(),
   }
 }

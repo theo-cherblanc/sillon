@@ -2,13 +2,21 @@ import { useEffect, useState } from "react"
 import { cards } from "../../../shared/content/cards.ts"
 import { getDatabase } from "../../../shared/db/client.ts"
 import { ensureProfile } from "../../../shared/db/profile.ts"
+import type { CardProgress } from "../../../shared/db/types.ts"
 import { nextLocalMidnight } from "../../../shared/lib/dates.ts"
 import { buildTodayQueue } from "../model/queue.ts"
 import { formatDelay } from "../model/schedule.ts"
 import { nextDueAt, type TodaySummary } from "../model/today.ts"
 
-export function useToday(): { summary: TodaySummary | null; error: string | null } {
+export function useToday(): {
+  summary: TodaySummary | null
+  queue: readonly string[]
+  progress: readonly CardProgress[]
+  error: string | null
+} {
   const [summary, setSummary] = useState<TodaySummary | null>(null)
+  const [queue, setQueue] = useState<readonly string[]>([])
+  const [progress, setProgress] = useState<readonly CardProgress[]>([])
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -19,10 +27,10 @@ export function useToday(): { summary: TodaySummary | null; error: string | null
       try {
         const database = getDatabase()
         const profile = await ensureProfile(database, now.getTime())
-        const progress = await database.progress.toArray()
-        const seen = progress.map((row) => ({ cardId: row.cardId, due: row.due }))
+        const saved = await database.progress.toArray()
+        const seen = saved.map((row) => ({ cardId: row.cardId, due: row.due }))
         const dueBefore = nextLocalMidnight(now)
-        const queue = buildTodayQueue({
+        const cardIds = buildTodayQueue({
           cardIds: cards.map((card) => card.id),
           seen,
           dueBefore,
@@ -33,10 +41,12 @@ export function useToday(): { summary: TodaySummary | null; error: string | null
         if (cancelled) {
           return
         }
+        setQueue(cardIds)
+        setProgress(saved)
         setSummary({
           streak: profile.streak,
           xp: profile.xp,
-          queueSize: queue.length,
+          queueSize: cardIds.length,
           nextDueLabel:
             nextDue === null ? null : formatDelay((nextDue - now.getTime()) / 60_000),
         })
@@ -53,5 +63,5 @@ export function useToday(): { summary: TodaySummary | null; error: string | null
     }
   }, [])
 
-  return { summary, error }
+  return { summary, queue, progress, error }
 }
