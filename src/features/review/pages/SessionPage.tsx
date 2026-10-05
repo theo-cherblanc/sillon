@@ -1,8 +1,9 @@
 import { useState } from "react"
 import { cards } from "../../../shared/content/cards.ts"
 import type { Card } from "../../../shared/content/types.ts"
-import { getDatabase } from "../../../shared/db/client.ts"
+import { getDatabase, localProfileId } from "../../../shared/db/client.ts"
 import type { CardProgress } from "../../../shared/db/types.ts"
+import { localDate } from "../../../shared/lib/dates.ts"
 import { Screen } from "../../../shared/ui/Screen.tsx"
 import { PromptText } from "../components/PromptText.tsx"
 import { useToday } from "../hooks/useToday.ts"
@@ -15,6 +16,7 @@ export function SessionPage({ onClose }: { onClose: () => void }) {
   const [index, setIndex] = useState(0)
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
+  const [done, setDone] = useState<{ streak: number; xp: number } | null>(null)
   const card = cards.find((item) => item.id === queue[index])
   const remembered = progress.find((item) => item.cardId === card?.id) ?? null
 
@@ -26,18 +28,29 @@ export function SessionPage({ onClose }: { onClose: () => void }) {
     setSaveError(null)
     try {
       const lastCard = index + 1 >= queue.length
-      await recordGrade(getDatabase(), {
+      const now = new Date()
+      const database = getDatabase()
+      await recordGrade(database, {
         card,
         progress: remembered,
         choice,
         mcqChoiceId,
         mcqCorrect,
-        now: new Date(),
+        now,
         finishesQueue: lastCard,
         queueSize: lastCard ? queue.length : undefined,
       })
-      if (index + 1 >= queue.length) {
-        onClose()
+      if (lastCard) {
+        const profile = await database.profile.get(localProfileId)
+        const reviews = await database.reviews.toArray()
+        const date = localDate(now)
+        const xp = reviews
+          .filter((review) => review.fromQueue && localDate(new Date(review.at)) === date)
+          .reduce((total, review) => total + review.xp, 0)
+        if (!profile) {
+          throw new Error("A review needs a profile")
+        }
+        setDone({ streak: profile.streak, xp })
         return
       }
       setIndex(index + 1)
@@ -46,6 +59,23 @@ export function SessionPage({ onClose }: { onClose: () => void }) {
     } finally {
       setSaving(false)
     }
+  }
+
+  if (done) {
+    return (
+      <Screen>
+        <h1 className="text-3xl font-semibold tracking-tight">Journée terminée</h1>
+        <p className="mt-8 text-lg">Série {done.streak}</p>
+        <p className="mt-1 text-lg">{done.xp} XP aujourd'hui</p>
+        <button
+          type="button"
+          onClick={onClose}
+          className="mt-auto w-full rounded-2xl bg-neutral-900 px-6 py-4 text-lg font-medium text-white"
+        >
+          Retour
+        </button>
+      </Screen>
+    )
   }
 
   return (
