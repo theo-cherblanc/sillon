@@ -1,8 +1,9 @@
 import { Screen } from "../../../shared/ui/Screen.tsx"
+import { TabBar } from "../../../shared/ui/TabBar.tsx"
 import { useToday } from "../hooks/useToday.ts"
 import { todayStatus, type TodaySummary } from "../model/today.ts"
 
-export function TodayPage({ onReview }: { onReview: () => void }) {
+export function TodayPage({ onReview, onProgress }: { onReview: () => void; onProgress: () => void }) {
   const { summary, error } = useToday()
 
   return (
@@ -11,6 +12,12 @@ export function TodayPage({ onReview }: { onReview: () => void }) {
       {error ? <p className="mt-8 text-lg">{error}</p> : null}
       {!error && !summary ? <p className="mt-8 text-lg text-neutral-500">Chargement…</p> : null}
       {summary ? <TodayBody summary={summary} onReview={onReview} /> : null}
+      <TabBar
+        current="today"
+        onToday={() => undefined}
+        onProgress={onProgress}
+        className={summary && summary.queueSize > 0 ? "" : "mt-auto"}
+      />
     </Screen>
   )
 }

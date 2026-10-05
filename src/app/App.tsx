@@ -1,12 +1,17 @@
 import { useState } from "react"
+import { ProgressPage } from "../features/progress/pages/ProgressPage.tsx"
 import { SessionPage, TodayPage } from "../features/review/index.ts"
 
 export function App() {
-  const [inSession, setInSession] = useState(false)
+  const [screen, setScreen] = useState<"today" | "progress" | "session">("today")
 
-  if (inSession) {
-    return <SessionPage onClose={() => setInSession(false)} />
+  if (screen === "session") {
+    return <SessionPage onClose={() => setScreen("today")} />
   }
 
-  return <TodayPage onReview={() => setInSession(true)} />
+  if (screen === "progress") {
+    return <ProgressPage onToday={() => setScreen("today")} />
+  }
+
+  return <TodayPage onReview={() => setScreen("session")} onProgress={() => setScreen("progress")} />
 }
