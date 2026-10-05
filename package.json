@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "content": "node scripts/build-content.ts",
+    "test": "node --experimental-strip-types --test \"src/**/*.test.ts\"",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview"
   },
