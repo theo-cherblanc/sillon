@@ -1,10 +1,15 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { getDatabase } from "../shared/db/client.ts"
 import { ProgressPage } from "../features/progress/pages/ProgressPage.tsx"
 import { SessionPage, TodayPage } from "../features/review/index.ts"
-import { SettingsPage } from "../features/settings/index.ts"
+import { openMemory, SettingsPage } from "../features/settings/index.ts"
 
 export function App() {
   const [screen, setScreen] = useState<"today" | "progress" | "settings" | "session">("today")
+
+  useEffect(() => {
+    void openMemory(getDatabase(), Date.now())
+  }, [])
 
   if (screen === "session") {
     return <SessionPage onClose={() => setScreen("today")} />
