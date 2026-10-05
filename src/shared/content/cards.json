@@ -1,0 +1,25 @@
+[
+  {
+    "id": "js.closures.003",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "fonctions",
+      "scope"
+    ],
+    "difficulty": 2,
+    "prompt": "Que vaut `x` à la fin de ce snippet ?\n\n```js\nfunction outer() {\n  const x = 42\n  return () => x\n}\nconst read = outer()\n```",
+    "explanation": "La fonction interne capture `x`. `read()` renvoie `42`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "undefined"
+      },
+      {
+        "id": "b",
+        "text": "42"
+      }
+    ],
+    "correctChoiceId": "b"
+  }
+]
