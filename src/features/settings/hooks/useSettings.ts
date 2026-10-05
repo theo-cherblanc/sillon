@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { getDatabase } from "../../../shared/db/client.ts"
 import { ensureProfile } from "../../../shared/db/profile.ts"
+import type { Profile } from "../../../shared/db/types.ts"
 import { saveDailyGoals } from "../model/saveGoals.ts"
 
 export type SettingsSummary = {
@@ -14,6 +15,7 @@ export function useSettings(): {
   error: string | null
   saving: boolean
   change: (dailyGoal: number, newPerDay: number) => void
+  adopt: (profile: Profile) => void
 } {
   const [summary, setSummary] = useState<SettingsSummary | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -68,5 +70,14 @@ export function useSettings(): {
       })
   }
 
-  return { summary, error, saving, change }
+  function adopt(profile: Profile) {
+    setSummary({
+      dailyGoal: profile.dailyGoal,
+      newPerDay: profile.newPerDay,
+      schemaVersion: profile.schemaVersion,
+    })
+    setError(null)
+  }
+
+  return { summary, error, saving, change, adopt }
 }

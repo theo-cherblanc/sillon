@@ -1,7 +1,12 @@
+import { useRef, useState, type ChangeEvent } from "react"
+import { getDatabase } from "../../../shared/db/client.ts"
+import { localDate } from "../../../shared/lib/dates.ts"
 import { Screen } from "../../../shared/ui/Screen.tsx"
 import { TabBar } from "../../../shared/ui/TabBar.tsx"
 import { useSettings, type SettingsSummary } from "../hooks/useSettings.ts"
+import { readExport, type ProgressFile } from "../model/export.ts"
 import { maxDailyCount } from "../model/goals.ts"
+import { parseProgressFile, replaceMemory } from "../model/import.ts"
 
 export function SettingsPage({
   onToday,
@@ -10,14 +15,101 @@ export function SettingsPage({
   onToday: () => void
   onProgress: () => void
 }) {
-  const { summary, error, saving, change } = useSettings()
+  const { summary, error, saving, change, adopt } = useSettings()
+  const fileInput = useRef<HTMLInputElement>(null)
+  const [fileError, setFileError] = useState<string | null>(null)
+  const [notice, setNotice] = useState<string | null>(null)
+  const [exporting, setExporting] = useState(false)
+  const [importing, setImporting] = useState(false)
+  const [pending, setPending] = useState<ProgressFile | null>(null)
+  const busy = saving || exporting || importing || pending !== null
+
+  async function download() {
+    setExporting(true)
+    setFileError(null)
+    setNotice(null)
+    try {
+      const now = new Date()
+      const file = await readExport(getDatabase(), now.getTime())
+      const blob = new Blob([`${JSON.stringify(file, null, 2)}\n`], { type: "application/json" })
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement("a")
+      link.href = url
+      link.download = `sillon-${localDate(now)}.json`
+      link.click()
+      URL.revokeObjectURL(url)
+    } catch {
+      setFileError("L'export n'a pas pu être créé.")
+    } finally {
+      setExporting(false)
+    }
+  }
+
+  async function choose(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0]
+    event.target.value = ""
+    if (!file) {
+      return
+    }
+
+    setFileError(null)
+    setNotice(null)
+    try {
+      setPending(parseProgressFile(JSON.parse(await file.text())))
+    } catch {
+      setPending(null)
+      setFileError("Ce fichier n'est pas un export Sillon.")
+    }
+  }
+
+  async function confirm() {
+    if (!pending || importing) {
+      return
+    }
+
+    setImporting(true)
+    setFileError(null)
+    try {
+      adopt(await replaceMemory(getDatabase(), pending))
+      setPending(null)
+      setNotice("Mémoire remplacée.")
+    } catch {
+      setFileError("L'import n'a pas pu être enregistré.")
+    } finally {
+      setImporting(false)
+    }
+  }
 
   return (
     <Screen>
       <h1 className="text-3xl font-semibold tracking-tight">Réglages</h1>
+      <input
+        ref={fileInput}
+        type="file"
+        accept="application/json,.json"
+        className="hidden"
+        onChange={(event) => void choose(event)}
+      />
       {error ? <p className="mt-8 text-lg">{error}</p> : null}
+      {fileError ? <p className="mt-8 text-lg">{fileError}</p> : null}
+      {notice ? <p className="mt-8 text-lg">{notice}</p> : null}
       {!error && !summary ? <p className="mt-8 text-lg text-neutral-500">Chargement…</p> : null}
-      {summary ? <SettingsBody summary={summary} saving={saving} onChange={change} /> : null}
+      {summary ? (
+        <SettingsBody
+          summary={summary}
+          busy={busy}
+          importing={importing}
+          pending={pending}
+          onChange={(dailyGoal, newPerDay) => {
+            setNotice(null)
+            change(dailyGoal, newPerDay)
+          }}
+          onExport={download}
+          onImport={() => fileInput.current?.click()}
+          onConfirm={() => void confirm()}
+          onCancel={() => setPending(null)}
+        />
+      ) : null}
       <TabBar
         current="settings"
         onToday={onToday}
@@ -31,29 +123,81 @@ export function SettingsPage({
 
 function SettingsBody({
   summary,
-  saving,
+  busy,
+  importing,
+  pending,
   onChange,
+  onExport,
+  onImport,
+  onConfirm,
+  onCancel,
 }: {
   summary: SettingsSummary
-  saving: boolean
+  busy: boolean
+  importing: boolean
+  pending: ProgressFile | null
   onChange: (dailyGoal: number, newPerDay: number) => void
+  onExport: () => void
+  onImport: () => void
+  onConfirm: () => void
+  onCancel: () => void
 }) {
   return (
     <>
       <Stepper
         label="Objectif du jour"
         value={summary.dailyGoal}
-        saving={saving}
+        saving={busy}
         onDecrease={() => onChange(summary.dailyGoal - 1, summary.newPerDay)}
         onIncrease={() => onChange(summary.dailyGoal + 1, summary.newPerDay)}
       />
       <Stepper
         label="Nouvelles par jour"
         value={summary.newPerDay}
-        saving={saving}
+        saving={busy}
         onDecrease={() => onChange(summary.dailyGoal, summary.newPerDay - 1)}
         onIncrease={() => onChange(summary.dailyGoal, summary.newPerDay + 1)}
       />
+      <button
+        type="button"
+        onClick={onExport}
+        disabled={busy}
+        className="mt-8 w-full rounded-2xl border border-neutral-300 px-6 py-4 text-lg font-medium disabled:opacity-40"
+      >
+        Exporter
+      </button>
+      <button
+        type="button"
+        onClick={onImport}
+        disabled={busy}
+        className="mt-3 w-full rounded-2xl border border-neutral-300 px-6 py-4 text-lg font-medium disabled:opacity-40"
+      >
+        Importer
+      </button>
+      {pending ? (
+        <section className="mt-8">
+          <h2 className="text-lg font-medium">Remplacer la mémoire actuelle ?</h2>
+          <p className="mt-2 text-neutral-500">
+            Export du {localDate(new Date(pending.exportedAt))} · Série {pending.profile.streak} · {pending.profile.xp} XP
+          </p>
+          <button
+            type="button"
+            onClick={onConfirm}
+            disabled={importing}
+            className="mt-4 w-full rounded-2xl bg-neutral-900 px-6 py-4 text-lg font-medium text-white disabled:opacity-40"
+          >
+            Remplacer
+          </button>
+          <button
+            type="button"
+            onClick={onCancel}
+            disabled={importing}
+            className="mt-3 w-full rounded-2xl border border-neutral-300 px-6 py-4 text-lg font-medium disabled:opacity-40"
+          >
+            Annuler
+          </button>
+        </section>
+      ) : null}
       <p className="mt-8 text-sm text-neutral-500">Schéma {summary.schemaVersion}</p>
     </>
   )
