@@ -1,6 +1,6 @@
 import assert from "node:assert/strict"
 import { describe, it } from "node:test"
-import { nextDueAt, todayStatus } from "./today.ts"
+import { nextDueAt, soonestDue, todayStatus } from "./today.ts"
 
 const midnight = 100
 
@@ -21,6 +21,35 @@ describe("nextDueAt", () => {
 
   it("returns nothing when every seen card is already due", () => {
     assert.equal(nextDueAt([{ cardId: "due", due: 40 }], midnight), null)
+  })
+})
+
+describe("soonestDue", () => {
+  it("keeps the three cards that come back first", () => {
+    assert.deepEqual(
+      soonestDue(
+        [
+          { cardId: "later", due: 300 },
+          { cardId: "second", due: 20 },
+          { cardId: "first", due: 10 },
+          { cardId: "third", due: 20 },
+        ],
+        3,
+      ),
+      [
+        { cardId: "first", due: 10 },
+        { cardId: "second", due: 20 },
+        { cardId: "third", due: 20 },
+      ],
+    )
+  })
+
+  it("returns every card when fewer than three are known", () => {
+    assert.deepEqual(soonestDue([{ cardId: "only", due: 5 }], 3), [{ cardId: "only", due: 5 }])
+  })
+
+  it("rejects a summary that asks for no card", () => {
+    assert.throws(() => soonestDue([], 0), /at least one/)
   })
 })
 

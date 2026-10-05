@@ -9,14 +9,19 @@ import { PromptText } from "../components/PromptText.tsx"
 import { useToday } from "../hooks/useToday.ts"
 import { gradeChoices, type GradeChoice } from "../model/grade.ts"
 import { recordGrade } from "../model/record.ts"
-import { previewForProgress, type DelayPreview } from "../model/schedule.ts"
+import { formatDelay, previewForProgress, type DelayPreview } from "../model/schedule.ts"
+import { soonestDue } from "../model/today.ts"
 
 export function SessionPage({ onClose }: { onClose: () => void }) {
   const { summary, queue, progress, error } = useToday()
   const [index, setIndex] = useState(0)
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
-  const [done, setDone] = useState<{ streak: number; xp: number } | null>(null)
+  const [done, setDone] = useState<{
+    streak: number
+    xp: number
+    soonest: { cardId: string; title: string; label: string }[]
+  } | null>(null)
   const card = cards.find((item) => item.id === queue[index])
   const remembered = progress.find((item) => item.cardId === card?.id) ?? null
 
@@ -50,7 +55,25 @@ export function SessionPage({ onClose }: { onClose: () => void }) {
         if (!profile) {
           throw new Error("A review needs a profile")
         }
-        setDone({ streak: profile.streak, xp })
+        const saved = await database.progress.toArray()
+        const soonest =
+          saved.length === 0
+            ? []
+            : soonestDue(saved, 3).flatMap((row) => {
+                const source = cards.find((item) => item.id === row.cardId)
+                if (!source) {
+                  return []
+                }
+                const minutes = (row.due - now.getTime()) / 60_000
+                return [
+                  {
+                    cardId: row.cardId,
+                    title: cardTitle(source.prompt),
+                    label: minutes < 0 ? "maintenant" : formatDelay(minutes),
+                  },
+                ]
+              })
+        setDone({ streak: profile.streak, xp, soonest })
         return
       }
       setIndex(index + 1)
@@ -67,6 +90,19 @@ export function SessionPage({ onClose }: { onClose: () => void }) {
         <h1 className="text-3xl font-semibold tracking-tight">Journée terminée</h1>
         <p className="mt-8 text-lg">Série {done.streak}</p>
         <p className="mt-1 text-lg">{done.xp} XP aujourd'hui</p>
+        {done.soonest.length > 0 ? (
+          <div className="mt-8">
+            <h2 className="text-sm font-medium text-neutral-500">Prochaines cartes</h2>
+            <ul className="mt-3 flex flex-col gap-4">
+              {done.soonest.map((item) => (
+                <li key={item.cardId}>
+                  <p className="text-lg">{item.title}</p>
+                  <p className="text-sm text-neutral-500">{item.label}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
         <button
           type="button"
           onClick={onClose}
@@ -103,6 +139,12 @@ export function SessionPage({ onClose }: { onClose: () => void }) {
       ) : null}
     </Screen>
   )
+}
+
+function cardTitle(prompt: string) {
+  const line = prompt.split("\n").find((part) => part.trim().length > 0) ?? ""
+  const plain = line.replaceAll("`", "").trim()
+  return plain.length > 0 ? plain : "Carte"
 }
 
 const gradeLabel: Record<GradeChoice, string> = {
