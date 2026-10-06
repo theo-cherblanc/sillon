@@ -6,12 +6,12 @@ tags: [web, url]
 difficulty: 2
 ---
 
-Dans `https://sillon.dev/cartes?tag=git`, quels sont le schéma, l'hôte, le chemin et la requête ?
+Dans `https://sillon.dev/cartes?tag=git`, quels sont le schéma, l'hôte, le chemin et les paramètres après `?` ?
 
 ## Réponse
 
-Schéma `https`, hôte `sillon.dev`, chemin `/cartes`, requête `tag=git`.
+Schéma `https`, hôte `sillon.dev`, chemin `/cartes`, paramètres `tag=git`.
 
 ## Explication
 
-Le schéma dit comment parler. L'hôte dit à quelle machine. Le chemin désigne la ressource. La requête, après `?`, ajoute des paramètres. Le fragment après `#` reste dans le navigateur et n'est pas envoyé au serveur.
+Le schéma dit comment parler. L'hôte dit à quelle machine. Le chemin désigne la ressource. Les paramètres, après `?`, précisent la demande. Le fragment après `#` reste dans le navigateur et n'est pas envoyé au serveur.

@@ -10,7 +10,7 @@ choices:
 correctChoiceId: b
 ---
 
-Que vaut `x` à la fin de ce snippet ?
+Que vaut `x` à la fin de cet extrait ?
 
 ```js
 function outer() {

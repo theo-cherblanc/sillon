@@ -6,7 +6,7 @@ tags: [docker]
 difficulty: 3
 ---
 
-Pourquoi l'ordre des instructions d'un Dockerfile change-t-il la vitesse du build ?
+Pourquoi l'ordre des instructions d'un Dockerfile change-t-il la vitesse de construction ?
 
 ## Réponse
 

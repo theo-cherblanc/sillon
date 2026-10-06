@@ -14,4 +14,4 @@ difficulty: 2
 
 ## Explication
 
-Le système de fichiers writable du conteneur disparaît avec lui. Un volume est un stockage monté dedans, géré à part. La base ou les fichiers qu'on veut conserver vont là, pas seulement dans la couche du conteneur.
+Le système de fichiers que le conteneur peut modifier disparaît avec lui. Un volume est un stockage monté dedans, géré à part. La base ou les fichiers qu'on veut conserver vont là, pas seulement dans la couche du conteneur.

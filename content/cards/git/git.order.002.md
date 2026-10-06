@@ -13,4 +13,4 @@ Dans quel ordre `git pull` agit-il, par défaut ?
 
 ## Explication
 
-Par défaut, `git pull` fait un fetch, puis un merge. Le fetch ramène les commits distants sans modifier les fichiers de la branche en cours. Le merge les réunit ensuite avec cette branche.
+Par défaut, `git pull` récupère d'abord les commits du dépôt distant (`git fetch`), puis les fusionne dans la branche actuelle (`git merge`). La récupération ne modifie pas encore les fichiers de la branche en cours. La fusion les réunit ensuite avec cette branche.

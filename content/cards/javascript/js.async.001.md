@@ -21,4 +21,4 @@ console.log("C")
 
 ## Explication
 
-Le callback de `then` est une microtâche. Il attend que le code synchrone en cours soit fini. `A` et `C` s'affichent donc avant `B`.
+La fonction passée à `then` est une microtâche. Il attend que le code synchrone en cours soit fini. `A` et `C` s'affichent donc avant `B`.

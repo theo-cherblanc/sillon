@@ -10,7 +10,7 @@ steps:
   - git push
 ---
 
-Dans quel ordre ces commandes publient-elles une modification déjà écrite dans un fichier suivi ?
+Dans quel ordre ces commandes publient-elles une modification déjà écrite dans un fichier que Git suit déjà ?
 
 ## Explication
 

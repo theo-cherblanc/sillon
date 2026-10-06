@@ -14,4 +14,4 @@ difficulty: 2
 
 ## Explication
 
-Le fichier nomme les services, leurs images, leurs ports et leurs volumes. Une commande monte l'ensemble au lieu d'enchaîner les `docker run` à la main. Compose ne remplace pas l'idée d'image et de conteneur.
+Le fichier nomme les services, leurs images, leurs ports et leurs volumes. Une commande lance l'ensemble au lieu d'enchaîner les `docker run` à la main. Compose ne remplace pas l'idée d'image et de conteneur.

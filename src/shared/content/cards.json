@@ -132,8 +132,8 @@
       "docker"
     ],
     "difficulty": 2,
-    "prompt": "Quel drapeau court publie le port 80 du conteneur sur le port 8080 de la machine ?\n\n```\ndocker run ____ 8080:80 nginx\n```",
-    "explanation": "L'ordre est le port de la machine, puis celui du conteneur. La forme longue de `-p` est `--publish`. Sans ce drapeau, le port ouvert dans le conteneur ne s'atteint pas depuis l'extérieur.",
+    "prompt": "Quelle option courte de `docker run` publie le port 80 du conteneur sur le port 8080 de la machine ?\n\n```\ndocker run ____ 8080:80 nginx\n```",
+    "explanation": "L'ordre est le port de la machine, puis celui du conteneur. La forme longue de `-p` est `--publish`. Sans cette option, le port ouvert dans le conteneur ne s'atteint pas depuis l'extérieur.",
     "answer": "-p"
   },
   {
@@ -145,7 +145,7 @@
     ],
     "difficulty": 2,
     "prompt": "À quoi sert Docker Compose ?",
-    "explanation": "Le fichier nomme les services, leurs images, leurs ports et leurs volumes. Une commande monte l'ensemble au lieu d'enchaîner les `docker run` à la main. Compose ne remplace pas l'idée d'image et de conteneur.",
+    "explanation": "Le fichier nomme les services, leurs images, leurs ports et leurs volumes. Une commande lance l'ensemble au lieu d'enchaîner les `docker run` à la main. Compose ne remplace pas l'idée d'image et de conteneur.",
     "answer": "À décrire et lancer plusieurs services ensemble, depuis un fichier."
   },
   {
@@ -194,7 +194,7 @@
       "docker"
     ],
     "difficulty": 3,
-    "prompt": "Pourquoi l'ordre des instructions d'un Dockerfile change-t-il la vitesse du build ?",
+    "prompt": "Pourquoi l'ordre des instructions d'un Dockerfile change-t-il la vitesse de construction ?",
     "explanation": "Si une instruction change, elle et toutes celles d'après sont reconstruites. On place donc d'abord ce qui bouge peu, comme l'installation des dépendances, et ensuite le code qui change souvent.",
     "answer": "Chaque instruction est une couche. Docker réutilise le cache tant que la couche n'a pas changé."
   },
@@ -259,7 +259,7 @@
     ],
     "difficulty": 2,
     "prompt": "À quoi sert un volume ?",
-    "explanation": "Le système de fichiers writable du conteneur disparaît avec lui. Un volume est un stockage monté dedans, géré à part. La base ou les fichiers qu'on veut conserver vont là, pas seulement dans la couche du conteneur.",
+    "explanation": "Le système de fichiers que le conteneur peut modifier disparaît avec lui. Un volume est un stockage monté dedans, géré à part. La base ou les fichiers qu'on veut conserver vont là, pas seulement dans la couche du conteneur.",
     "answer": "À garder des données après la suppression du conteneur."
   },
   {
@@ -369,7 +369,7 @@
     ],
     "difficulty": 2,
     "prompt": "Que fait un merge ?",
-    "explanation": "Si une seule branche a avancé, le merge se contente d'avancer le pointeur. Si les deux ont des commits propres, Git crée un commit de merge qui a deux parents, après avoir combiné les fichiers. Un même endroit modifié des deux côtés devient un conflit à trancher.",
+    "explanation": "Si une seule branche a avancé, la fusion se contente de faire avancer l'autre jusqu'à elle. Si les deux ont des commits propres, Git crée un commit de fusion qui a deux parents, après avoir combiné les fichiers. Un même endroit modifié des deux côtés devient un conflit à trancher.",
     "answer": "Il réunit deux historiques."
   },
   {
@@ -380,7 +380,7 @@
       "git"
     ],
     "difficulty": 1,
-    "prompt": "Dans quel ordre ces commandes publient-elles une modification déjà écrite dans un fichier suivi ?",
+    "prompt": "Dans quel ordre ces commandes publient-elles une modification déjà écrite dans un fichier que Git suit déjà ?",
     "explanation": "`git add` met le fichier dans l'index. `git commit` enregistre cet index sur la machine. `git push` envoie le commit au dépôt distant. Le commit existe avant d'être publié.",
     "steps": [
       "git add",
@@ -397,7 +397,7 @@
     ],
     "difficulty": 2,
     "prompt": "Dans quel ordre `git pull` agit-il, par défaut ?",
-    "explanation": "Par défaut, `git pull` fait un fetch, puis un merge. Le fetch ramène les commits distants sans modifier les fichiers de la branche en cours. Le merge les réunit ensuite avec cette branche.",
+    "explanation": "Par défaut, `git pull` récupère d'abord les commits du dépôt distant (`git fetch`), puis les fusionne dans la branche actuelle (`git merge`). La récupération ne modifie pas encore les fichiers de la branche en cours. La fusion les réunit ensuite avec cette branche.",
     "steps": [
       "Récupérer les commits du dépôt distant",
       "Les fusionner dans la branche actuelle"
@@ -673,7 +673,7 @@
     ],
     "difficulty": 2,
     "prompt": "Dans quel ordre les lettres s'affichent-elles ?\n\n```js\nconsole.log(\"A\")\nPromise.resolve().then(() => console.log(\"B\"))\nconsole.log(\"C\")\n```",
-    "explanation": "Le callback de `then` est une microtâche. Il attend que le code synchrone en cours soit fini. `A` et `C` s'affichent donc avant `B`.",
+    "explanation": "La fonction passée à `then` est une microtâche. Il attend que le code synchrone en cours soit fini. `A` et `C` s'affichent donc avant `B`.",
     "choices": [
       {
         "id": "a",
@@ -725,7 +725,7 @@
     ],
     "difficulty": 3,
     "prompt": "Dans quel ordre les messages s'affichent-ils ?\n\n```js\nsetTimeout(() => console.log(\"timeout\"), 0)\nPromise.resolve().then(() => console.log(\"promise\"))\n```",
-    "explanation": "Une fois le code synchrone fini, les microtâches passent avant les macrotâches. Le callback de `then` est une microtâche, `setTimeout` une macrotâche. `promise` s'affiche donc avant `timeout`, même avec un délai de `0`.",
+    "explanation": "Une fois le code synchrone fini, les microtâches passent avant les macrotâches. La fonction passée à `then` est une microtâche, `setTimeout` une macrotâche. `promise` s'affiche donc avant `timeout`, même avec un délai de `0`.",
     "choices": [
       {
         "id": "a",
@@ -1016,7 +1016,7 @@
       "scope"
     ],
     "difficulty": 2,
-    "prompt": "Que vaut `x` à la fin de ce snippet ?\n\n```js\nfunction outer() {\n  const x = 42\n  return () => x\n}\nconst read = outer()\n```",
+    "prompt": "Que vaut `x` à la fin de cet extrait ?\n\n```js\nfunction outer() {\n  const x = 42\n  return () => x\n}\nconst read = outer()\n```",
     "explanation": "La fonction interne capture `x`. `read()` renvoie `42`.",
     "choices": [
       {
@@ -2178,8 +2178,8 @@
       "url"
     ],
     "difficulty": 2,
-    "prompt": "Dans `https://sillon.dev/cartes?tag=git`, quels sont le schéma, l'hôte, le chemin et la requête ?",
-    "explanation": "Le schéma dit comment parler. L'hôte dit à quelle machine. Le chemin désigne la ressource. La requête, après `?`, ajoute des paramètres. Le fragment après `#` reste dans le navigateur et n'est pas envoyé au serveur.",
-    "answer": "Schéma `https`, hôte `sillon.dev`, chemin `/cartes`, requête `tag=git`."
+    "prompt": "Dans `https://sillon.dev/cartes?tag=git`, quels sont le schéma, l'hôte, le chemin et les paramètres après `?` ?",
+    "explanation": "Le schéma dit comment parler. L'hôte dit à quelle machine. Le chemin désigne la ressource. Les paramètres, après `?`, précisent la demande. Le fragment après `#` reste dans le navigateur et n'est pas envoyé au serveur.",
+    "answer": "Schéma `https`, hôte `sillon.dev`, chemin `/cartes`, paramètres `tag=git`."
   }
 ]

@@ -20,4 +20,4 @@ Promise.resolve().then(() => console.log("promise"))
 
 ## Explication
 
-Une fois le code synchrone fini, les microtâches passent avant les macrotâches. Le callback de `then` est une microtâche, `setTimeout` une macrotâche. `promise` s'affiche donc avant `timeout`, même avec un délai de `0`.
+Une fois le code synchrone fini, les microtâches passent avant les macrotâches. La fonction passée à `then` est une microtâche, `setTimeout` une macrotâche. `promise` s'affiche donc avant `timeout`, même avec un délai de `0`.
