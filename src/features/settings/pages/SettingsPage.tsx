@@ -7,6 +7,7 @@ import { useSettings, type SettingsSummary } from "../hooks/useSettings.ts"
 import { readExport, type ProgressFile } from "../model/export.ts"
 import { maxDailyCount } from "../model/goals.ts"
 import { parseProgressFile, replaceMemory } from "../model/import.ts"
+import { lastExportNote, readLastExport, rememberExport } from "../model/lastExport.ts"
 
 export function SettingsPage({
   onToday,
@@ -22,6 +23,13 @@ export function SettingsPage({
   const [exporting, setExporting] = useState(false)
   const [importing, setImporting] = useState(false)
   const [pending, setPending] = useState<ProgressFile | null>(null)
+  const [lastExport, setLastExport] = useState<string | null>(() => {
+    try {
+      return readLastExport(localStorage)
+    } catch {
+      return null
+    }
+  })
   const busy = saving || exporting || importing || pending !== null
 
   async function download() {
@@ -35,9 +43,16 @@ export function SettingsPage({
       const url = URL.createObjectURL(blob)
       const link = document.createElement("a")
       link.href = url
-      link.download = `sillon-${localDate(now)}.json`
+      const day = localDate(now)
+      link.download = `sillon-${day}.json`
       link.click()
       URL.revokeObjectURL(url)
+      try {
+        rememberExport(localStorage, day)
+        setLastExport(day)
+      } catch {
+        // The file is already downloaded. A missing reminder must not fail the export.
+      }
     } catch {
       setFileError("L'export n'a pas pu être créé.")
     } finally {
@@ -105,6 +120,7 @@ export function SettingsPage({
             change(dailyGoal, newPerDay)
           }}
           onExport={download}
+          exportNote={lastExportNote(lastExport)}
           onImport={() => fileInput.current?.click()}
           onConfirm={() => void confirm()}
           onCancel={() => setPending(null)}
@@ -128,6 +144,7 @@ function SettingsBody({
   pending,
   onChange,
   onExport,
+  exportNote,
   onImport,
   onConfirm,
   onCancel,
@@ -138,6 +155,7 @@ function SettingsBody({
   pending: ProgressFile | null
   onChange: (dailyGoal: number, newPerDay: number) => void
   onExport: () => void
+  exportNote: string
   onImport: () => void
   onConfirm: () => void
   onCancel: () => void
@@ -166,6 +184,7 @@ function SettingsBody({
       >
         Exporter
       </button>
+      <p className="mt-3 text-sm text-neutral-500">{exportNote}</p>
       <button
         type="button"
         onClick={onImport}
