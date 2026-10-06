@@ -156,6 +156,58 @@
     "correctChoiceId": "a"
   },
   {
+    "id": "js.async.007",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "async"
+    ],
+    "difficulty": 2,
+    "prompt": "Que devient `all` une fois les deux promesses réglées ?\n\n```js\nconst all = Promise.all([\n  Promise.resolve(1),\n  Promise.reject(new Error(\"rate\")),\n])\n```",
+    "explanation": "`Promise.all` échoue dès qu'une promesse échoue. Le tableau partiel n'est pas renvoyé : `all` se rejette avec l'erreur `\"rate\"`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "une promesse résolue avec [1]"
+      },
+      {
+        "id": "b",
+        "text": "une promesse rejetée"
+      },
+      {
+        "id": "c",
+        "text": "une promesse qui reste en attente"
+      }
+    ],
+    "correctChoiceId": "b"
+  },
+  {
+    "id": "js.async.008",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "async"
+    ],
+    "difficulty": 2,
+    "prompt": "Avec quoi cette chaîne se résout-elle ?\n\n```js\nPromise.reject(new Error(\"rate\")).catch(() => 1)\n```",
+    "explanation": "`catch` reçoit le rejet. S'il renvoie une valeur, la chaîne continue avec une promesse résolue. Ici, elle se résout avec `1`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "l'erreur \"rate\""
+      },
+      {
+        "id": "b",
+        "text": "1"
+      },
+      {
+        "id": "c",
+        "text": "undefined"
+      }
+    ],
+    "correctChoiceId": "b"
+  },
+  {
     "id": "js.closures.001",
     "type": "mcq",
     "topic": "javascript",
@@ -255,6 +307,32 @@
       }
     ],
     "correctChoiceId": "b"
+  },
+  {
+    "id": "js.closures.006",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "closures"
+    ],
+    "difficulty": 2,
+    "prompt": "Que renvoie `b()` ?\n\n```js\nfunction make() {\n  let n = 0\n  return () => ++n\n}\nconst a = make()\nconst b = make()\na()\n```",
+    "explanation": "Chaque appel à `make` crée son propre `n`. `a` et `b` ne partagent pas le compteur. `a()` le passe à `1` de son côté. `b()` part de `0` et renvoie `1`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "1"
+      },
+      {
+        "id": "b",
+        "text": "2"
+      },
+      {
+        "id": "c",
+        "text": "0"
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "js.prototypes.001",
@@ -390,6 +468,58 @@
       {
         "id": "b",
         "text": "\"Ada\""
+      },
+      {
+        "id": "c",
+        "text": "undefined"
+      }
+    ],
+    "correctChoiceId": "b"
+  },
+  {
+    "id": "js.prototypes.007",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "prototypes"
+    ],
+    "difficulty": 2,
+    "prompt": "Que renvoie `Object.getPrototypeOf({})` ?",
+    "explanation": "Un objet écrit avec `{}` a `Object.prototype` comme prototype. C'est de là que viennent `toString` et les autres méthodes partagées. `Object.create(null)` serait le cas où le prototype vaut `null`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "null"
+      },
+      {
+        "id": "b",
+        "text": "Object.prototype"
+      },
+      {
+        "id": "c",
+        "text": "undefined"
+      }
+    ],
+    "correctChoiceId": "b"
+  },
+  {
+    "id": "js.prototypes.008",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "prototypes"
+    ],
+    "difficulty": 3,
+    "prompt": "Que vaut `ada.name` à la fin ?\n\n```js\nfunction User() {}\nUser.prototype.name = \"proto\"\nconst ada = new User()\nada.name = \"Ada\"\ndelete ada.name\n```",
+    "explanation": "`ada.name = \"Ada\"` masque le prototype. `delete ada.name` retire cette propriété de l'instance. La lecture reprend alors celle du prototype, et `ada.name` vaut `\"proto\"`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "\"Ada\""
+      },
+      {
+        "id": "b",
+        "text": "\"proto\""
       },
       {
         "id": "c",
@@ -555,6 +685,58 @@
     "correctChoiceId": "b"
   },
   {
+    "id": "js.scope.007",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "scope"
+    ],
+    "difficulty": 2,
+    "prompt": "Que se passe-t-il ?\n\n```js\ngreet()\nfunction greet() {\n  console.log(\"bonjour\")\n}\n```",
+    "explanation": "Une déclaration `function` est hissée en entier, corps compris. L'appel avant la ligne est donc valide, et `bonjour` s'affiche.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "bonjour s'affiche"
+      },
+      {
+        "id": "b",
+        "text": "une ReferenceError est lancée"
+      },
+      {
+        "id": "c",
+        "text": "une TypeError est lancée"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
+    "id": "js.scope.008",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "scope"
+    ],
+    "difficulty": 2,
+    "prompt": "Que se passe-t-il ?\n\n```js\ngreet()\nconst greet = function () {\n  console.log(\"bonjour\")\n}\n```",
+    "explanation": "`const` est hissée, mais elle reste dans la zone morte temporelle jusqu'à sa ligne. L'appel lit `greet` trop tôt et lance une `ReferenceError`. Seule une déclaration `function` est utilisable avant sa ligne.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "bonjour s'affiche"
+      },
+      {
+        "id": "b",
+        "text": "une ReferenceError est lancée"
+      },
+      {
+        "id": "c",
+        "text": "undefined s'affiche"
+      }
+    ],
+    "correctChoiceId": "b"
+  },
+  {
     "id": "js.this.001",
     "type": "mcq",
     "topic": "javascript",
@@ -683,6 +865,32 @@
       }
     ],
     "correctChoiceId": "c"
+  },
+  {
+    "id": "js.this.006",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "this"
+    ],
+    "difficulty": 2,
+    "prompt": "Que renvoie `hello.call(user)` ?\n\n```js\nfunction hello() {\n  return this.name\n}\nconst user = { name: \"Ada\" }\n```",
+    "explanation": "`call` appelle la fonction en fixant `this` pour cet appel. Ici `this` vaut `user`, donc `this.name` vaut `\"Ada\"`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "\"Ada\""
+      },
+      {
+        "id": "b",
+        "text": "undefined"
+      },
+      {
+        "id": "c",
+        "text": "une TypeError est lancée"
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "js.types.001",
@@ -836,6 +1044,54 @@
       {
         "id": "b",
         "text": "false"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
+    "id": "js.types.008",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "types"
+    ],
+    "difficulty": 2,
+    "prompt": "Qu'affiche ce code ?\n\n```js\nif ([]) {\n  console.log(\"oui\")\n} else {\n  console.log(\"non\")\n}\n```",
+    "explanation": "Un tableau, même vide, est un objet. Un objet est vrai dans un `if`. La chaîne vide `\"\"`, `0`, `null`, `undefined`, `NaN` et `false` sont faux. `[]` ne l'est pas.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "oui"
+      },
+      {
+        "id": "b",
+        "text": "non"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
+    "id": "js.types.009",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "types"
+    ],
+    "difficulty": 2,
+    "prompt": "Que vaut `Number(\"\")` ?",
+    "explanation": "`Number` convertit une chaîne vide en `0`. Une chaîne qui n'est pas un nombre, comme `\"a\"`, donne `NaN`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "0"
+      },
+      {
+        "id": "b",
+        "text": "NaN"
+      },
+      {
+        "id": "c",
+        "text": "\"\""
       }
     ],
     "correctChoiceId": "a"
