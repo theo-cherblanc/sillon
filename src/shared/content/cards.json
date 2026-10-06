@@ -1,5 +1,586 @@
 [
   {
+    "id": "arch.api.001",
+    "type": "reveal",
+    "topic": "architecture",
+    "tags": [
+      "architecture"
+    ],
+    "difficulty": 1,
+    "prompt": "Qu'est-ce qu'une API ?",
+    "explanation": "Deux programmes se parlent à travers ce contrat, sans partager leur intérieur. Une API HTTP en est une forme. Une bibliothèque a aussi une API : les fonctions publiques qu'on a le droit d'appeler.",
+    "answer": "Un contrat : quels appels existent, ce qu'ils acceptent, ce qu'ils renvoient."
+  },
+  {
+    "id": "arch.cache.001",
+    "type": "reveal",
+    "topic": "architecture",
+    "tags": [
+      "architecture"
+    ],
+    "difficulty": 1,
+    "prompt": "À quoi sert un cache ?",
+    "explanation": "Le navigateur, un serveur ou une base peuvent cacher une réponse. Le gain est la vitesse. Le risque est une copie périmée : il faut savoir quand elle n'est plus valable.",
+    "answer": "À garder une copie d'un résultat pour ne pas refaire le travail."
+  },
+  {
+    "id": "arch.client.001",
+    "type": "reveal",
+    "topic": "architecture",
+    "tags": [
+      "architecture"
+    ],
+    "difficulty": 1,
+    "prompt": "Dans un échange client-serveur, qui fait quoi ?",
+    "explanation": "Le navigateur est un client. L'API qu'il appelle est le serveur de cet échange. Le même programme peut être client d'un autre service une seconde plus tard. Les rôles décrivent l'échange, pas une machine pour toujours.",
+    "answer": "Le client envoie une requête. Le serveur renvoie une réponse."
+  },
+  {
+    "id": "arch.idempotent.001",
+    "type": "reveal",
+    "topic": "architecture",
+    "tags": [
+      "architecture",
+      "http"
+    ],
+    "difficulty": 2,
+    "prompt": "Qu'est-ce qu'une opération idempotente ?",
+    "explanation": "`PUT` avec le même corps deux fois laisse la ressource dans le même état. `POST` qui crée à chaque appel ne l'est pas : deux appels peuvent créer deux ressources. Réessayer une opération idempotente est sans surprise.",
+    "answer": "La refaire une fois de plus laisse le même résultat que l'avoir faite une seule fois."
+  },
+  {
+    "id": "arch.monolith.001",
+    "type": "reveal",
+    "topic": "architecture",
+    "tags": [
+      "architecture"
+    ],
+    "difficulty": 2,
+    "prompt": "Qu'est-ce qu'un monolithe ?",
+    "explanation": "L'interface, l'API et l'accès aux données peuvent vivre dans ce même livrable. Plusieurs services, à l'inverse, sont plusieurs programmes déployés séparément, qui se parlent. Le mot décrit le découpage, pas la qualité.",
+    "answer": "Un seul programme, déployé ensemble, qui porte plusieurs responsabilités."
+  },
+  {
+    "id": "arch.persist.001",
+    "type": "mcq",
+    "topic": "architecture",
+    "tags": [
+      "architecture"
+    ],
+    "difficulty": 1,
+    "prompt": "Pourquoi une base de données, plutôt qu'une variable ?",
+    "explanation": "La mémoire du processus est perdue quand il s'arrête. Une base écrit la donnée pour la relire après. Plusieurs processus peuvent aussi la partager. La variable reste utile pour ce qui ne doit vivre que le temps du calcul.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "la variable disparaît avec le processus. La base garde la donnée"
+      },
+      {
+        "id": "b",
+        "text": "une variable globale est déjà une base de données"
+      },
+      {
+        "id": "c",
+        "text": "une base ne survit pas au redémarrage de la machine"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
+    "id": "arch.rest.001",
+    "type": "reveal",
+    "topic": "architecture",
+    "tags": [
+      "architecture",
+      "http"
+    ],
+    "difficulty": 2,
+    "prompt": "Qu'est-ce qu'une API REST, dans l'usage courant ?",
+    "explanation": "`GET /cartes/1` lit, `POST /cartes` crée, `DELETE /cartes/1` supprime. REST n'est pas un format de fichier imposé. C'est une façon de caler l'API sur HTTP. Le corps est souvent du JSON.",
+    "answer": "Une API qui nomme des ressources par des URL et utilise les méthodes HTTP pour les actions."
+  },
+  {
+    "id": "arch.spa.001",
+    "type": "reveal",
+    "topic": "architecture",
+    "tags": [
+      "architecture",
+      "web"
+    ],
+    "difficulty": 2,
+    "prompt": "Qu'est-ce qu'une SPA ?",
+    "explanation": "SPA veut dire single-page application. Changer de vue ne recharge pas forcément un nouveau document HTML. Le serveur fournit souvent une API, et le navigateur compose l'interface.",
+    "answer": "Une application d'une seule page : le navigateur charge un document, puis le JavaScript change l'écran."
+  },
+  {
+    "id": "arch.stateless.001",
+    "type": "reveal",
+    "topic": "architecture",
+    "tags": [
+      "architecture"
+    ],
+    "difficulty": 2,
+    "prompt": "Que veut dire qu'un serveur est sans état ?",
+    "explanation": "Deux requêtes identiques peuvent être reçues par deux machines différentes. Ce dont le serveur a besoin voyage avec la requête, ou se trouve dans un stockage partagé. Ce n'est pas « l'application n'a aucune donnée ».",
+    "answer": "Chaque requête contient ce qu'il faut pour la traiter. Le serveur ne dépend pas du souvenir de la précédente."
+  },
+  {
+    "id": "docker.compose.001",
+    "type": "reveal",
+    "topic": "docker",
+    "tags": [
+      "docker"
+    ],
+    "difficulty": 2,
+    "prompt": "À quoi sert Docker Compose ?",
+    "explanation": "Le fichier nomme les services, leurs images, leurs ports et leurs volumes. Une commande monte l'ensemble au lieu d'enchaîner les `docker run` à la main. Compose ne remplace pas l'idée d'image et de conteneur.",
+    "answer": "À décrire et lancer plusieurs services ensemble, depuis un fichier."
+  },
+  {
+    "id": "docker.file.001",
+    "type": "reveal",
+    "topic": "docker",
+    "tags": [
+      "docker"
+    ],
+    "difficulty": 1,
+    "prompt": "Qu'est-ce qu'un Dockerfile ?",
+    "explanation": "Chaque instruction (`FROM`, `COPY`, `RUN`…) est une étape du build. `docker build` lit ce fichier et produit une image. Le Dockerfile n'est pas le conteneur qui tourne.",
+    "answer": "Le fichier texte qui décrit comment construire une image."
+  },
+  {
+    "id": "docker.image.001",
+    "type": "mcq",
+    "topic": "docker",
+    "tags": [
+      "docker"
+    ],
+    "difficulty": 1,
+    "prompt": "Quelle différence y a-t-il entre une image et un conteneur ?",
+    "explanation": "L'image est un paquet figé : système de fichiers et commande de départ. Le conteneur est cette image en train de tourner, avec un état à lui. On peut lancer plusieurs conteneurs depuis la même image.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "l'image est le modèle. Le conteneur en est une instance lancée"
+      },
+      {
+        "id": "b",
+        "text": "l'image est le processus en cours. Le conteneur est le fichier texte"
+      },
+      {
+        "id": "c",
+        "text": "les deux noms désignent la même chose"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
+    "id": "docker.layer.001",
+    "type": "reveal",
+    "topic": "docker",
+    "tags": [
+      "docker"
+    ],
+    "difficulty": 3,
+    "prompt": "Pourquoi l'ordre des instructions d'un Dockerfile change-t-il la vitesse du build ?",
+    "explanation": "Si une instruction change, elle et toutes celles d'après sont reconstruites. On place donc d'abord ce qui bouge peu, comme l'installation des dépendances, et ensuite le code qui change souvent.",
+    "answer": "Chaque instruction est une couche. Docker réutilise le cache tant que la couche n'a pas changé."
+  },
+  {
+    "id": "docker.port.001",
+    "type": "reveal",
+    "topic": "docker",
+    "tags": [
+      "docker"
+    ],
+    "difficulty": 2,
+    "prompt": "Que fait `docker run -p 8080:80 …` ?",
+    "explanation": "L'ordre est hôte, puis conteneur. Sans publication, un port ouvert dans le conteneur n'est pas joignable depuis l'extérieur. `http://localhost:8080` arrive alors sur le service qui écoute sur `80` dedans.",
+    "answer": "Il publie le port `80` du conteneur sur le port `8080` de la machine."
+  },
+  {
+    "id": "docker.run.001",
+    "type": "reveal",
+    "topic": "docker",
+    "tags": [
+      "docker"
+    ],
+    "difficulty": 1,
+    "prompt": "Que change l'option `-d` de `docker run` ?",
+    "explanation": "Sans `-d`, le terminal reste attaché à la sortie du processus. Avec `--detach`, on récupère la main. Le conteneur tourne quand même. `docker logs` permet de revoir sa sortie.",
+    "answer": "Le conteneur continue en arrière-plan, sans occuper le terminal."
+  },
+  {
+    "id": "docker.secret.001",
+    "type": "reveal",
+    "topic": "docker",
+    "tags": [
+      "docker"
+    ],
+    "difficulty": 2,
+    "prompt": "Pourquoi ne pas écrire un mot de passe dans l'image ?",
+    "explanation": "Copier un secret pendant le build l'inscrit dans l'historique de l'image, même si un `RUN` suivant efface le fichier. On le fournit au moment de lancer le conteneur, par une variable ou un mécanisme de secrets.",
+    "answer": "L'image se partage et se conserve. Le secret resterait dans ses couches."
+  },
+  {
+    "id": "docker.volume.001",
+    "type": "reveal",
+    "topic": "docker",
+    "tags": [
+      "docker"
+    ],
+    "difficulty": 2,
+    "prompt": "À quoi sert un volume ?",
+    "explanation": "Le système de fichiers writable du conteneur disparaît avec lui. Un volume est un stockage monté dedans, géré à part. La base ou les fichiers qu'on veut conserver vont là, pas seulement dans la couche du conteneur.",
+    "answer": "À garder des données après la suppression du conteneur."
+  },
+  {
+    "id": "git.branch.001",
+    "type": "reveal",
+    "topic": "git",
+    "tags": [
+      "git"
+    ],
+    "difficulty": 2,
+    "prompt": "Qu'est-ce qu'une branche ?",
+    "explanation": "La branche n'est pas une copie des fichiers. C'est une étiquette mobile. Deux branches peuvent partager tout l'historique jusqu'au point où elles divergent.",
+    "answer": "Un nom qui pointe vers un commit, et qui avance quand on commit dessus."
+  },
+  {
+    "id": "git.clone.001",
+    "type": "reveal",
+    "topic": "git",
+    "tags": [
+      "git"
+    ],
+    "difficulty": 1,
+    "prompt": "Que fait `git clone` ?",
+    "explanation": "On obtient les commits, les branches distantes que Git a récupérées, et une copie de travail. Ce n'est pas un téléchargement du seul dernier dossier : l'historique vient avec.",
+    "answer": "Il copie un dépôt sur la machine, historique compris."
+  },
+  {
+    "id": "git.commit.001",
+    "type": "reveal",
+    "topic": "git",
+    "tags": [
+      "git"
+    ],
+    "difficulty": 1,
+    "prompt": "Qu'est-ce qu'un commit ?",
+    "explanation": "Git garde l'historique comme une suite de commits. Chacun désigne l'état des fichiers à ce moment-là, et le commit d'avant. Tant qu'on ne l'a pas poussé, il reste sur la machine.",
+    "answer": "Un instantané enregistré du projet, avec un auteur et un message."
+  },
+  {
+    "id": "git.diff.001",
+    "type": "mcq",
+    "topic": "git",
+    "tags": [
+      "git"
+    ],
+    "difficulty": 2,
+    "prompt": "Que distinguent `git status` et `git diff` ?",
+    "explanation": "`git status` dit quels fichiers sont modifiés, lesquels sont dans l'index, et sur quelle branche on est. `git diff` montre le contenu du changement, ligne par ligne.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`status` liste l'état, `diff` montre les lignes changées"
+      },
+      {
+        "id": "b",
+        "text": "`diff` envoie les commits, `status` les crée"
+      },
+      {
+        "id": "c",
+        "text": "les deux affichent la même chose"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
+    "id": "git.head.001",
+    "type": "reveal",
+    "topic": "git",
+    "tags": [
+      "git"
+    ],
+    "difficulty": 2,
+    "prompt": "Qu'est-ce que `HEAD` ?",
+    "explanation": "Les commandes qui regardent « où l'on est » partent de `HEAD`. Si l'on extrait un commit précis au lieu d'une branche, `HEAD` ne porte plus de nom de branche : on dit qu'il est détaché.",
+    "answer": "Le commit actuellement extrait. En général, le bout de la branche en cours."
+  },
+  {
+    "id": "git.ignore.001",
+    "type": "reveal",
+    "topic": "git",
+    "tags": [
+      "git"
+    ],
+    "difficulty": 1,
+    "prompt": "À quoi sert `.gitignore` ?",
+    "explanation": "On y met souvent les dépendances, les builds et les secrets. Un fichier déjà suivi reste suivi : l'ignorer ensuite ne le retire pas de l'historique.",
+    "answer": "À dire à Git quels fichiers ne pas suivre."
+  },
+  {
+    "id": "git.merge.001",
+    "type": "reveal",
+    "topic": "git",
+    "tags": [
+      "git"
+    ],
+    "difficulty": 2,
+    "prompt": "Que fait un merge ?",
+    "explanation": "Si une seule branche a avancé, le merge se contente d'avancer le pointeur. Si les deux ont des commits propres, Git crée un commit de merge qui a deux parents, après avoir combiné les fichiers. Un même endroit modifié des deux côtés devient un conflit à trancher.",
+    "answer": "Il réunit deux historiques."
+  },
+  {
+    "id": "git.pull.001",
+    "type": "reveal",
+    "topic": "git",
+    "tags": [
+      "git"
+    ],
+    "difficulty": 2,
+    "prompt": "Que fait `git pull` ?",
+    "explanation": "Récupérer sans intégrer, c'est `git fetch`. `git pull` enchaîne les deux. Si les deux côtés ont bougé, Git peut demander de résoudre un conflit avant de finir.",
+    "answer": "Il récupère les commits distants, puis les intègre. Par défaut, cette intégration est un merge."
+  },
+  {
+    "id": "git.push.001",
+    "type": "mcq",
+    "topic": "git",
+    "tags": [
+      "git"
+    ],
+    "difficulty": 1,
+    "prompt": "Quelle différence y a-t-il entre commit et push ?",
+    "explanation": "`git commit` enregistre dans le dépôt de la machine. `git push` envoie ces commits vers un remote, par exemple un dépôt sur un serveur. Sans push, les autres ne voient pas le commit.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "le commit est local. `git push` l'envoie au dépôt distant"
+      },
+      {
+        "id": "b",
+        "text": "`git commit` publie déjà le travail"
+      },
+      {
+        "id": "c",
+        "text": "`git push` crée le message du commit"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
+    "id": "git.stage.001",
+    "type": "reveal",
+    "topic": "git",
+    "tags": [
+      "git"
+    ],
+    "difficulty": 1,
+    "prompt": "À quoi sert la zone d'index, celle que `git add` remplit ?",
+    "explanation": "Le dossier de travail peut contenir d'autres modifications. `git add` en copie dans l'index. Le commit enregistre l'index, pas forcément tout ce qui est modifié sur le disque.",
+    "answer": "À choisir ce que le prochain commit contiendra."
+  },
+  {
+    "id": "http.status.200",
+    "type": "reveal",
+    "topic": "http",
+    "tags": [
+      "http",
+      "status"
+    ],
+    "difficulty": 1,
+    "prompt": "Que signifie le statut HTTP `200` ?",
+    "explanation": "`200` est le succès ordinaire, avec un corps de réponse. Un succès volontairement sans corps se note plutôt `204`.",
+    "answer": "`OK`. La requête a réussi, et la réponse apporte son résultat."
+  },
+  {
+    "id": "http.status.201",
+    "type": "reveal",
+    "topic": "http",
+    "tags": [
+      "http",
+      "status"
+    ],
+    "difficulty": 1,
+    "prompt": "Que signifie le statut HTTP `201` ?",
+    "explanation": "On le renvoie souvent après un `POST` qui crée quelque chose. L'en-tête `Location` peut donner l'adresse de la nouvelle ressource.",
+    "answer": "`Created`. La requête a réussi, et une ressource a été créée."
+  },
+  {
+    "id": "http.status.204",
+    "type": "reveal",
+    "topic": "http",
+    "tags": [
+      "http",
+      "status"
+    ],
+    "difficulty": 2,
+    "prompt": "Que signifie le statut HTTP `204` ?",
+    "explanation": "Le client n'a rien à lire en retour. C'est un statut fréquent après une suppression ou une mise à jour dont le résultat n'a pas besoin d'être renvoyé.",
+    "answer": "`No Content`. La requête a réussi, et la réponse n'a pas de corps."
+  },
+  {
+    "id": "http.status.301",
+    "type": "reveal",
+    "topic": "http",
+    "tags": [
+      "http",
+      "status"
+    ],
+    "difficulty": 2,
+    "prompt": "Que signifie le statut HTTP `301` ?",
+    "explanation": "Le client et les caches peuvent retenir la nouvelle adresse. La prochaine fois, ils y vont directement, sans repasser par l'ancienne.",
+    "answer": "`Moved Permanently`. La ressource a changé d'adresse pour de bon."
+  },
+  {
+    "id": "http.status.302",
+    "type": "mcq",
+    "topic": "http",
+    "tags": [
+      "http",
+      "status"
+    ],
+    "difficulty": 2,
+    "prompt": "Que fait un statut `302`, comparé à un `301` ?",
+    "explanation": "`302 Found` envoie vers une autre adresse pour cette fois. L'adresse d'origine reste la bonne pour plus tard. `301` dit au contraire que le déménagement est définitif.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "une redirection temporaire : on garde l'ancienne adresse"
+      },
+      {
+        "id": "b",
+        "text": "une redirection permanente"
+      },
+      {
+        "id": "c",
+        "text": "une erreur du client"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
+    "id": "http.status.400",
+    "type": "reveal",
+    "topic": "http",
+    "tags": [
+      "http",
+      "status"
+    ],
+    "difficulty": 1,
+    "prompt": "Que signifie le statut HTTP `400` ?",
+    "explanation": "Le problème est dans ce que le client a envoyé : JSON mal formé, champ manquant, valeur refusée. Ce n'est pas une panne du serveur.",
+    "answer": "`Bad Request`. Le serveur n'a pas compris la requête, ou elle est invalide."
+  },
+  {
+    "id": "http.status.401",
+    "type": "mcq",
+    "topic": "http",
+    "tags": [
+      "http",
+      "status"
+    ],
+    "difficulty": 2,
+    "prompt": "Que demande surtout un statut `401` ?",
+    "explanation": "`401 Unauthorized` veut dire que l'authentification manque ou n'est pas valable. Le nom est trompeur : ce n'est pas « tu n'as pas le droit », c'est « on ne sait pas qui tu es ». Le refus malgré une identité reconnue, c'est `403`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "prouver qui tu es"
+      },
+      {
+        "id": "b",
+        "text": "tu es reconnu, mais cette action est refusée"
+      },
+      {
+        "id": "c",
+        "text": "cette adresse n'existe pas"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
+    "id": "http.status.403",
+    "type": "reveal",
+    "topic": "http",
+    "tags": [
+      "http",
+      "status"
+    ],
+    "difficulty": 2,
+    "prompt": "Que signifie le statut HTTP `403` ?",
+    "explanation": "La requête est comprise. L'identité peut même être connue. L'accès est quand même refusé. `401` demande d'abord de s'authentifier. `404` dit que l'adresse ne correspond à rien.",
+    "answer": "`Forbidden`. Le serveur refuse l'action."
+  },
+  {
+    "id": "http.status.404",
+    "type": "reveal",
+    "topic": "http",
+    "tags": [
+      "http",
+      "status"
+    ],
+    "difficulty": 1,
+    "prompt": "Que signifie le statut HTTP `404` ?",
+    "explanation": "Le serveur a compris la requête, et il n'a rien à cette URL. Ce n'est pas un `400` : le message est lisible, la cible n'existe pas.",
+    "answer": "`Not Found`. Cette adresse ne correspond à aucune ressource."
+  },
+  {
+    "id": "http.status.429",
+    "type": "reveal",
+    "topic": "http",
+    "tags": [
+      "http",
+      "status"
+    ],
+    "difficulty": 2,
+    "prompt": "Que signifie le statut HTTP `429` ?",
+    "explanation": "Il faut ralentir. Le serveur peut indiquer quand réessayer avec l'en-tête `Retry-After`. Ce n'est pas une erreur de forme de la requête.",
+    "answer": "`Too Many Requests`. Le client a envoyé trop de requêtes."
+  },
+  {
+    "id": "http.status.500",
+    "type": "reveal",
+    "topic": "http",
+    "tags": [
+      "http",
+      "status"
+    ],
+    "difficulty": 1,
+    "prompt": "Que signifie le statut HTTP `500` ?",
+    "explanation": "La requête pouvait être valide. La panne est du côté du serveur : une exception, une dépendance, un cas non prévu. Le client ne corrige pas ça en reformulant au hasard.",
+    "answer": "`Internal Server Error`. Le serveur a échoué en traitant la requête."
+  },
+  {
+    "id": "http.status.502",
+    "type": "mcq",
+    "topic": "http",
+    "tags": [
+      "http",
+      "status"
+    ],
+    "difficulty": 3,
+    "prompt": "Quelle est la différence entre `502` et `504` ?",
+    "explanation": "Les deux viennent d'une passerelle ou d'un proxy, pas du client. `502 Bad Gateway` : l'amont a répondu quelque chose d'inutilisable. `504 Gateway Timeout` : l'amont n'a pas répondu à temps.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`502` : la passerelle a reçu une mauvaise réponse. `504` : elle a attendu trop longtemps"
+      },
+      {
+        "id": "b",
+        "text": "`502` : la page n'existe pas. `504` : le client est trop lent"
+      },
+      {
+        "id": "c",
+        "text": "les deux veulent dire que le JSON est invalide"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
     "id": "js.async.001",
     "type": "mcq",
     "topic": "javascript",
@@ -1095,5 +1676,247 @@
       }
     ],
     "correctChoiceId": "a"
+  },
+  {
+    "id": "shell.exit.001",
+    "type": "reveal",
+    "topic": "shell",
+    "tags": [
+      "shell"
+    ],
+    "difficulty": 2,
+    "prompt": "Que veut dire le code de sortie d'une commande ?",
+    "explanation": "Chaque programme s'arrête avec un statut. Le shell le garde. `echo $?` affiche celui de la commande précédente. Un script peut s'arrêter là où une commande a échoué, selon ses options.",
+    "answer": "`0` veut dire succès. Un autre nombre veut dire échec."
+  },
+  {
+    "id": "shell.grep.001",
+    "type": "reveal",
+    "topic": "shell",
+    "tags": [
+      "shell"
+    ],
+    "difficulty": 1,
+    "prompt": "Que fait `grep` ?",
+    "explanation": "`grep erreur journal.txt` ne modifie pas le fichier. Il filtre. Avec un tuyau, il filtre la sortie d'une autre commande. Le motif est une expression régulière, pas seulement un mot fixe.",
+    "answer": "Il affiche les lignes qui correspondent à un motif."
+  },
+  {
+    "id": "shell.help.001",
+    "type": "reveal",
+    "topic": "shell",
+    "tags": [
+      "shell"
+    ],
+    "difficulty": 1,
+    "prompt": "Comment obtenir l'aide d'une commande ?",
+    "explanation": "`man` ouvre le manuel, avec les options et des exemples. `--help` affiche un résumé plus court dans le terminal. On quitte `man` avec `q`.",
+    "answer": "`man commande`, ou souvent `commande --help`."
+  },
+  {
+    "id": "shell.home.001",
+    "type": "reveal",
+    "topic": "shell",
+    "tags": [
+      "shell"
+    ],
+    "difficulty": 1,
+    "prompt": "Que désignent `$HOME` et `~` ?",
+    "explanation": "`cd ~` ou `cd` sans argument y ramène, dans un shell usuel. `$HOME` est la variable. On peut l'écrire dans un chemin : `$HOME/dev`.",
+    "answer": "Le dossier personnel de l'utilisateur. `~` est le raccourci du shell pour ce dossier."
+  },
+  {
+    "id": "shell.path.001",
+    "type": "reveal",
+    "topic": "shell",
+    "tags": [
+      "shell"
+    ],
+    "difficulty": 1,
+    "prompt": "Que veulent dire `/`, `.` et `..` dans un chemin ?",
+    "explanation": "Un chemin qui commence par `/` est absolu : il ne dépend pas d'où l'on est. Un chemin relatif part du dossier courant. `../autre` remonte d'un cran, puis entre dans `autre`.",
+    "answer": "`/` est la racine. `.` est le dossier courant. `..` est son parent."
+  },
+  {
+    "id": "shell.pipe.001",
+    "type": "reveal",
+    "topic": "shell",
+    "tags": [
+      "shell"
+    ],
+    "difficulty": 1,
+    "prompt": "Que fait `|` entre deux commandes ?",
+    "explanation": "`ls | grep test` ne crée pas un fichier. La liste produite par `ls` devient le texte que `grep` lit. La sortie d'erreur ne passe pas dans le tuyau, sauf si on l'y redirige.",
+    "answer": "Il envoie la sortie standard de la première à l'entrée de la seconde."
+  },
+  {
+    "id": "shell.pwd.001",
+    "type": "reveal",
+    "topic": "shell",
+    "tags": [
+      "shell"
+    ],
+    "difficulty": 1,
+    "prompt": "Que fait `pwd` ?",
+    "explanation": "Le shell a toujours un dossier de travail. Les chemins relatifs partent de là. `pwd` (*print working directory*) dit lequel c'est.",
+    "answer": "Il affiche le dossier courant."
+  },
+  {
+    "id": "shell.redirect.001",
+    "type": "mcq",
+    "topic": "shell",
+    "tags": [
+      "shell"
+    ],
+    "difficulty": 2,
+    "prompt": "Quelle différence y a-t-il entre `>` et `>>` ?",
+    "explanation": "Les deux envoient la sortie standard dans un fichier. `>` le crée ou le vide d'abord. `>>` conserve ce qui était déjà écrit et ajoute après. Pour garder un journal, on veut `>>`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`>` écrit le fichier en remplaçant son contenu. `>>` ajoute à la fin"
+      },
+      {
+        "id": "b",
+        "text": "`>` ajoute à la fin. `>>` envoie vers une autre commande"
+      },
+      {
+        "id": "c",
+        "text": "les deux effacent le fichier"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
+    "id": "web.cors.001",
+    "type": "reveal",
+    "topic": "web",
+    "tags": [
+      "web",
+      "cors"
+    ],
+    "difficulty": 2,
+    "prompt": "Qu'est-ce que CORS ?",
+    "explanation": "Une origine, c'est le schéma, l'hôte et le port. `https://a.dev` et `https://b.dev` sont deux origines. Le serveur autorise la lecture avec des en-têtes, dont `Access-Control-Allow-Origin`. CORS ne remplace pas l'authentification.",
+    "answer": "Une règle du navigateur : un script ne lit la réponse d'une autre origine que si le serveur l'y autorise."
+  },
+  {
+    "id": "web.dns.001",
+    "type": "reveal",
+    "topic": "web",
+    "tags": [
+      "web",
+      "dns"
+    ],
+    "difficulty": 1,
+    "prompt": "À quoi sert le DNS ?",
+    "explanation": "`sillon.dev` est un nom. Le DNS le traduit en adresse IP, que le réseau sait joindre. Sans cette traduction, le navigateur ne saurait pas où ouvrir la connexion.",
+    "answer": "À trouver l'adresse d'une machine à partir d'un nom."
+  },
+  {
+    "id": "web.dom.001",
+    "type": "reveal",
+    "topic": "web",
+    "tags": [
+      "web",
+      "dom"
+    ],
+    "difficulty": 1,
+    "prompt": "Qu'est-ce que le DOM ?",
+    "explanation": "DOM veut dire Document Object Model. Le HTML est le texte source. Le DOM est la structure vivante : éléments, textes, attributs. Changer le DOM change ce qui est affiché.",
+    "answer": "L'arbre de la page, construit par le navigateur, que le JavaScript peut lire et modifier."
+  },
+  {
+    "id": "web.https.001",
+    "type": "reveal",
+    "topic": "web",
+    "tags": [
+      "web",
+      "https"
+    ],
+    "difficulty": 1,
+    "prompt": "Que protège HTTPS ?",
+    "explanation": "HTTPS, c'est HTTP au-dessus de TLS. Quelqu'un sur le réseau ne lit pas la requête ni la réponse en clair, et ne les modifie pas sans qu'on s'en aperçoive. Ça ne dit pas que le site est honnête, ni que le serveur stocke bien les données.",
+    "answer": "Le trajet entre le navigateur et le serveur. Le contenu est chiffré."
+  },
+  {
+    "id": "web.method.001",
+    "type": "mcq",
+    "topic": "web",
+    "tags": [
+      "web",
+      "http"
+    ],
+    "difficulty": 1,
+    "prompt": "À quoi servent surtout `GET` et `POST` ?",
+    "explanation": "`GET` demande une représentation. Il ne devrait pas être le moyen de modifier des données. `POST` envoie un contenu que le serveur traite, souvent pour créer quelque chose. L'adresse peut être la même : la méthode change le sens.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`GET` lit, `POST` envoie des données à traiter"
+      },
+      {
+        "id": "b",
+        "text": "`GET` supprime, `POST` ne fait que lire"
+      },
+      {
+        "id": "c",
+        "text": "les deux font exactement la même chose"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
+    "id": "web.roles.001",
+    "type": "reveal",
+    "topic": "web",
+    "tags": [
+      "web",
+      "html"
+    ],
+    "difficulty": 1,
+    "prompt": "À quoi servent HTML, CSS et JavaScript dans une page ?",
+    "explanation": "Le navigateur lit le HTML pour construire la page. Le CSS dit comment l'afficher. Le JavaScript réagit et modifie la page ensuite. On peut avoir une page sans JavaScript. On ne peut pas afficher un document sans structure.",
+    "answer": "HTML décrit le contenu, CSS son apparence, JavaScript son comportement."
+  },
+  {
+    "id": "web.storage.001",
+    "type": "mcq",
+    "topic": "web",
+    "tags": [
+      "web",
+      "storage"
+    ],
+    "difficulty": 2,
+    "prompt": "Quelle différence utile y a-t-il entre un cookie et `localStorage` ?",
+    "explanation": "Le navigateur renvoie le cookie au serveur quand le domaine et le chemin correspondent. `localStorage` n'est pas joint aux requêtes : seul le JavaScript de l'origine le lit. Ni l'un ni l'autre n'est un coffre secret contre la personne qui utilise la machine.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "le cookie peut être renvoyé au serveur, `localStorage` reste dans le navigateur"
+      },
+      {
+        "id": "b",
+        "text": "les deux sont envoyés à chaque requête"
+      },
+      {
+        "id": "c",
+        "text": "`localStorage` est chiffré par HTTPS, le cookie ne l'est pas"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
+    "id": "web.url.001",
+    "type": "reveal",
+    "topic": "web",
+    "tags": [
+      "web",
+      "url"
+    ],
+    "difficulty": 2,
+    "prompt": "Dans `https://sillon.dev/cartes?tag=git`, quels sont le schéma, l'hôte, le chemin et la requête ?",
+    "explanation": "Le schéma dit comment parler. L'hôte dit à quelle machine. Le chemin désigne la ressource. La requête, après `?`, ajoute des paramètres. Le fragment après `#` reste dans le navigateur et n'est pas envoyé au serveur.",
+    "answer": "Schéma `https`, hôte `sillon.dev`, chemin `/cartes`, requête `tag=git`."
   }
 ]

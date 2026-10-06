@@ -1,5 +1,5 @@
 import { parse } from "yaml"
-import type { Card } from "../src/shared/content/types.ts"
+import { cardTopics, type Card } from "../src/shared/content/types.ts"
 
 export function parseCard(source: string): Card {
   const frontmatter = source.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/)
@@ -84,10 +84,12 @@ function readString(value: unknown, field: string): string {
 }
 
 function readTopic(value: unknown): Card["topic"] {
-  if (value === "javascript") {
-    return value
+  if (typeof value === "string" && cardTopics.includes(value as Card["topic"])) {
+    return value as Card["topic"]
   }
-  throw new Error('Le champ topic doit être "javascript"')
+  throw new Error(
+    'Le champ topic doit être "javascript", "http", "web", "git", "docker", "shell" ou "architecture"',
+  )
 }
 
 function readType(value: unknown): Card["type"] {
