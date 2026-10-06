@@ -4,6 +4,7 @@ import { localDate } from "../../../shared/lib/dates.ts"
 import { Screen } from "../../../shared/ui/Screen.tsx"
 import { TabBar } from "../../../shared/ui/TabBar.tsx"
 import { useSettings, type SettingsSummary } from "../hooks/useSettings.ts"
+import { useAccount } from "../hooks/useAccount.ts"
 import { readExport, type ProgressFile } from "../model/export.ts"
 import { maxDailyCount } from "../model/goals.ts"
 import { parseProgressFile, replaceMemory } from "../model/import.ts"
@@ -124,6 +125,7 @@ export function SettingsPage({
           <ThemeChip label="Sombre" selected={theme === "dark"} onSelect={() => chooseTheme("dark")} />
         </div>
       </section>
+      <AccountSection />
       <input
         ref={fileInput}
         type="file"
@@ -161,6 +163,142 @@ export function SettingsPage({
       />
     </Screen>
   )
+}
+
+function AccountSection() {
+  const account = useAccount()
+  const [address, setAddress] = useState("")
+  const [password, setPassword] = useState("")
+  const [busy, setBusy] = useState(false)
+  const [problem, setProblem] = useState<string | null>(null)
+  const [note, setNote] = useState<string | null>(null)
+
+  if (!account.enabled) {
+    return null
+  }
+
+  async function enter() {
+    setBusy(true)
+    setProblem(null)
+    setNote(null)
+    try {
+      await account.signIn(address, password)
+      setPassword("")
+    } catch (error) {
+      setProblem(accountProblem(error))
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function register() {
+    setBusy(true)
+    setProblem(null)
+    setNote(null)
+    try {
+      const session = await account.signUp(address, password)
+      setPassword("")
+      if (!session) {
+        setNote("Compte créé. Confirme l'e-mail, puis connecte-toi.")
+      }
+    } catch (error) {
+      setProblem(accountProblem(error))
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function leave() {
+    setBusy(true)
+    setProblem(null)
+    setNote(null)
+    try {
+      await account.signOut()
+      setNote("Déconnecté. La mémoire de cet appareil reste ici.")
+    } catch {
+      setProblem("La déconnexion a échoué.")
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return (
+    <section className="mt-8">
+      <h2 className="text-sm font-medium text-neutral-500">Compte</h2>
+      {!account.ready ? <p className="mt-3 text-lg text-neutral-500">Chargement…</p> : null}
+      {account.ready && account.email ? (
+        <>
+          <p className="mt-3 text-lg">{account.email}</p>
+          <button
+            type="button"
+            onClick={() => void leave()}
+            disabled={busy}
+            className="mt-3 w-full rounded-2xl border border-neutral-300 px-6 py-4 text-lg font-medium disabled:opacity-40"
+          >
+            Se déconnecter
+          </button>
+        </>
+      ) : null}
+      {account.ready && !account.email ? (
+        <form
+          className="mt-3"
+          onSubmit={(event) => {
+            event.preventDefault()
+            void enter()
+          }}
+        >
+          <input
+            type="email"
+            value={address}
+            onChange={(event) => setAddress(event.target.value)}
+            aria-label="E-mail"
+            autoCapitalize="off"
+            autoCorrect="off"
+            spellCheck={false}
+            className="w-full rounded-2xl border border-neutral-300 px-4 py-4 text-lg"
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            aria-label="Mot de passe"
+            className="mt-3 w-full rounded-2xl border border-neutral-300 px-4 py-4 text-lg"
+          />
+          <button
+            type="submit"
+            disabled={busy}
+            className="mt-3 w-full rounded-2xl bg-neutral-900 px-6 py-4 text-lg font-medium text-white disabled:opacity-40"
+          >
+            Se connecter
+          </button>
+          <button
+            type="button"
+            onClick={() => void register()}
+            disabled={busy}
+            className="mt-3 w-full rounded-2xl border border-neutral-300 px-6 py-4 text-lg font-medium disabled:opacity-40"
+          >
+            Créer un compte
+          </button>
+        </form>
+      ) : null}
+      {problem ? <p className="mt-3 text-lg">{problem}</p> : null}
+      {note ? <p className="mt-3 text-lg">{note}</p> : null}
+    </section>
+  )
+}
+
+function accountProblem(error: unknown): string {
+  const message = error instanceof Error ? error.message : ""
+  if (message.includes("email")) {
+    return "Cet e-mail n'est pas valide."
+  }
+  if (message.includes("8 characters")) {
+    return "Le mot de passe doit avoir au moins 8 caractères."
+  }
+  if (message.includes("Sign up")) {
+    return "Le compte n'a pas pu être créé."
+  }
+  return "La connexion a échoué."
 }
 
 function ThemeChip({
