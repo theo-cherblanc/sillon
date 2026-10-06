@@ -104,6 +104,58 @@
     "correctChoiceId": "b"
   },
   {
+    "id": "js.async.005",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "async"
+    ],
+    "difficulty": 2,
+    "prompt": "Que produit l'appel `run()` ?\n\n```js\nasync function run() {\n  throw new Error(\"rate\")\n}\n```",
+    "explanation": "Un `throw` dans une fonction `async` ne sort pas chez l'appelant. Il rejette la promesse que `run` a renvoyée. On l'attrape avec `.catch`, ou avec `try` autour d'un `await`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "une exception tout de suite"
+      },
+      {
+        "id": "b",
+        "text": "une promesse rejetée"
+      },
+      {
+        "id": "c",
+        "text": "undefined"
+      }
+    ],
+    "correctChoiceId": "b"
+  },
+  {
+    "id": "js.async.006",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "async"
+    ],
+    "difficulty": 2,
+    "prompt": "Avec quoi `run()` résout-il sa promesse ?\n\n```js\nasync function run() {\n  return await 1\n}\n```",
+    "explanation": "`await` sur une valeur qui n'est pas une promesse la reprend telle quelle. `return await 1` résout donc la promesse de `run` avec `1`, pas avec une promesse imbriquée.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "1"
+      },
+      {
+        "id": "b",
+        "text": "une promesse dans une promesse"
+      },
+      {
+        "id": "c",
+        "text": "undefined"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
     "id": "js.closures.001",
     "type": "mcq",
     "topic": "javascript",
@@ -177,6 +229,32 @@
     "prompt": "Que renvoie `fns[0]()` ?\n\n```js\nconst fns = []\nfor (let i = 0; i < 3; i++) {\n  fns.push(() => i)\n}\n```",
     "explanation": "`let` crée une variable par tour de boucle. `fns[0]` a capturé le `i` du premier tour, qui reste `0`. Avec `var`, les trois fonctions auraient lu la même variable, valant `3` à la fin.",
     "answer": "`0`"
+  },
+  {
+    "id": "js.closures.005",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "closures"
+    ],
+    "difficulty": 2,
+    "prompt": "Que renvoie `read()` ?\n\n```js\nlet n = 1\nconst read = () => n\nn = 2\n```",
+    "explanation": "`read` retient la variable `n`, pas la valeur qu'elle avait à sa création. L'appel lit `n` à ce moment-là, et `n` vaut alors `2`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "1"
+      },
+      {
+        "id": "b",
+        "text": "2"
+      },
+      {
+        "id": "c",
+        "text": "undefined"
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "js.prototypes.001",
@@ -260,6 +338,58 @@
       {
         "id": "b",
         "text": "\"redefini\""
+      },
+      {
+        "id": "c",
+        "text": "undefined"
+      }
+    ],
+    "correctChoiceId": "b"
+  },
+  {
+    "id": "js.prototypes.005",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "prototypes"
+    ],
+    "difficulty": 2,
+    "prompt": "Que vaut `ada instanceof User` ?\n\n```js\nfunction User(name) {\n  this.name = name\n}\nconst ada = new User(\"Ada\")\n```",
+    "explanation": "`instanceof` suit la chaîne de prototypes. `new User` relie `ada` à `User.prototype`, donc `ada` est une instance de `User`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "true"
+      },
+      {
+        "id": "b",
+        "text": "false"
+      },
+      {
+        "id": "c",
+        "text": "une TypeError est lancée"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
+    "id": "js.prototypes.006",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "prototypes"
+    ],
+    "difficulty": 2,
+    "prompt": "Que vaut `ada.name` ?\n\n```js\nfunction User() {}\nUser.prototype.name = \"proto\"\nconst ada = new User()\nada.name = \"Ada\"\n```",
+    "explanation": "La propriété posée sur l'instance masque celle du prototype. `ada.name` trouve `\"Ada\"` tout de suite, sans continuer vers `User.prototype`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "\"proto\""
+      },
+      {
+        "id": "b",
+        "text": "\"Ada\""
       },
       {
         "id": "c",
@@ -373,6 +503,58 @@
     "correctChoiceId": "a"
   },
   {
+    "id": "js.scope.005",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "scope"
+    ],
+    "difficulty": 2,
+    "prompt": "Qu'affiche ce code ?\n\n```js\nif (true) {\n  var x = 1\n}\nconsole.log(x)\n```",
+    "explanation": "`var` ignore les blocs `if` et appartient à la fonction, ou au script s'il n'y en a pas. Le `if` ne cache pas `x`. Après le bloc, `x` vaut `1`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "1 s'affiche"
+      },
+      {
+        "id": "b",
+        "text": "undefined s'affiche"
+      },
+      {
+        "id": "c",
+        "text": "une ReferenceError est lancée"
+      }
+    ],
+    "correctChoiceId": "a"
+  },
+  {
+    "id": "js.scope.006",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "scope"
+    ],
+    "difficulty": 1,
+    "prompt": "Qu'affiche ce code ?\n\n```js\nconst n = 1\n{\n  const n = 2\n  console.log(n)\n}\n```",
+    "explanation": "Le `n` du bloc masque celui de l'extérieur, mais seulement entre les accolades. `console.log` lit celui du bloc, qui vaut `2`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "1"
+      },
+      {
+        "id": "b",
+        "text": "2"
+      },
+      {
+        "id": "c",
+        "text": "une ReferenceError est lancée"
+      }
+    ],
+    "correctChoiceId": "b"
+  },
+  {
     "id": "js.this.001",
     "type": "mcq",
     "topic": "javascript",
@@ -475,6 +657,32 @@
       }
     ],
     "correctChoiceId": "a"
+  },
+  {
+    "id": "js.this.005",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "this"
+    ],
+    "difficulty": 3,
+    "prompt": "En mode strict, que se passe-t-il ?\n\n```js\nconst user = {\n  name: \"Ada\",\n  later() {\n    setTimeout(function () {\n      console.log(this.name)\n    }, 0)\n  },\n}\nuser.later()\n```",
+    "explanation": "La fonction passée à `setTimeout` n'est pas appelée comme méthode de `user`. En mode strict, son `this` vaut `undefined`, et lire `this.name` lance une `TypeError`. Une fonction flèche aurait repris le `this` de `later`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "\"Ada\" s'affiche"
+      },
+      {
+        "id": "b",
+        "text": "undefined s'affiche"
+      },
+      {
+        "id": "c",
+        "text": "une TypeError est lancée"
+      }
+    ],
+    "correctChoiceId": "c"
   },
   {
     "id": "js.types.001",
@@ -583,5 +791,53 @@
       }
     ],
     "correctChoiceId": "b"
+  },
+  {
+    "id": "js.types.006",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "types"
+    ],
+    "difficulty": 1,
+    "prompt": "Que vaut `\"1\" + 1` ?",
+    "explanation": "Quand l'un des deux côtés est une chaîne, `+` concatène. Le nombre `1` est converti en `\"1\"`, et le résultat vaut `\"11\"`. Pour additionner, il faut deux nombres : `Number(\"1\") + 1` vaut `2`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "2"
+      },
+      {
+        "id": "b",
+        "text": "\"11\""
+      },
+      {
+        "id": "c",
+        "text": "NaN"
+      }
+    ],
+    "correctChoiceId": "b"
+  },
+  {
+    "id": "js.types.007",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "types"
+    ],
+    "difficulty": 2,
+    "prompt": "Que vaut `null == undefined` ?",
+    "explanation": "`==` traite `null` et `undefined` comme égaux, sans autre conversion. `null === undefined` reste `false` : ce ne sont pas la même valeur.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "true"
+      },
+      {
+        "id": "b",
+        "text": "false"
+      }
+    ],
+    "correctChoiceId": "a"
   }
 ]
