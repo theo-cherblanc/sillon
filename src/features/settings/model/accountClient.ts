@@ -12,14 +12,26 @@ export type AccountClient = {
   signOut(): Promise<void>
 }
 
+let shared: SupabaseClient | null = null
+let sharedKey = ""
+
+export function sharedSupabase(config: AccountConfig): SupabaseClient {
+  const key = `${config.url}\n${config.anonKey}`
+  if (!shared || sharedKey !== key) {
+    shared = createClient(config.url, config.anonKey, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: false,
+      },
+    })
+    sharedKey = key
+  }
+  return shared
+}
+
 export function createAccountClient(config: AccountConfig): AccountClient {
-  const supabase = createClient(config.url, config.anonKey, {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-      detectSessionInUrl: false,
-    },
-  })
+  const supabase = sharedSupabase(config)
   return {
     current: () => current(supabase),
     signIn: (email, password) => signIn(supabase, email, password),

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict"
 import { describe, it } from "node:test"
-import { decideSync } from "./sync.ts"
+import { decideSync, memoryFreshness, planSync } from "./sync.ts"
 
 describe("decideSync", () => {
   it("sends the local memory when it is newer, or when nothing is stored remotely", () => {
@@ -21,5 +21,34 @@ describe("decideSync", () => {
   it("rejects a time that is not finite", () => {
     assert.throws(() => decideSync(Number.NaN, 1), /finite time/)
     assert.throws(() => decideSync(1, Number.POSITIVE_INFINITY), /finite time/)
+  })
+})
+
+describe("memoryFreshness", () => {
+  it("uses the latest review or card update, and the profile when nothing has moved", () => {
+    assert.equal(
+      memoryFreshness({
+        profile: { createdAt: 5 },
+        progress: [{ updatedAt: 8 }],
+        reviews: [{ at: 12 }],
+      }),
+      12,
+    )
+    assert.equal(memoryFreshness({ profile: { createdAt: 5 }, progress: [], reviews: [] }), 5)
+  })
+})
+
+describe("planSync", () => {
+  it("sends the local stamp when this browser is ahead", () => {
+    assert.deepEqual(planSync(20, 10, 5), { action: "push", exportedAt: 20 })
+  })
+
+  it("falls back to the memory's own time when this browser has no stamp", () => {
+    assert.deepEqual(planSync(null, null, 5), { action: "push", exportedAt: 5 })
+    assert.deepEqual(planSync(null, 5, 5), { action: "keep", stamp: 5 })
+  })
+
+  it("pulls only when the remote copy is strictly newer", () => {
+    assert.deepEqual(planSync(5, 9, 5), { action: "pull" })
   })
 })

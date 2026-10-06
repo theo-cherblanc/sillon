@@ -12,7 +12,7 @@ import { recordGrade } from "../model/record.ts"
 import { formatDelay, previewForProgress, type DelayPreview } from "../model/schedule.ts"
 import { soonestDue } from "../model/today.ts"
 
-export function SessionPage({ onClose }: { onClose: () => void }) {
+export function SessionPage({ onClose, onRecorded }: { onClose: () => void; onRecorded?: (at: number) => void }) {
   const { summary, queue, progress, error } = useToday()
   const [index, setIndex] = useState(0)
   const [saving, setSaving] = useState(false)
@@ -45,6 +45,7 @@ export function SessionPage({ onClose }: { onClose: () => void }) {
         finishesQueue: lastCard,
         queueSize: lastCard ? queue.length : undefined,
       })
+      onRecorded?.(now.getTime())
       if (lastCard) {
         const profile = await database.profile.get(localProfileId)
         const reviews = await database.reviews.toArray()

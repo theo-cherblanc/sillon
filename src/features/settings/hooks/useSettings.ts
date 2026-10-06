@@ -3,6 +3,7 @@ import { getDatabase } from "../../../shared/db/client.ts"
 import { ensureProfile } from "../../../shared/db/profile.ts"
 import type { Profile } from "../../../shared/db/types.ts"
 import { saveDailyGoals } from "../model/saveGoals.ts"
+import { publishMemory } from "../model/remoteMemory.ts"
 
 export type SettingsSummary = {
   dailyGoal: number
@@ -61,6 +62,7 @@ export function useSettings(): {
           newPerDay: profile.newPerDay,
           schemaVersion: profile.schemaVersion,
         })
+        void publishMemory(Date.now())
       })
       .catch(() => {
         setError("Le réglage n'a pas pu être enregistré.")

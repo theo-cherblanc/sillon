@@ -9,6 +9,7 @@ import { readExport, type ProgressFile } from "../model/export.ts"
 import { maxDailyCount } from "../model/goals.ts"
 import { parseProgressFile, replaceMemory } from "../model/import.ts"
 import { lastExportNote, readLastExport, rememberExport } from "../model/lastExport.ts"
+import { publishMemory } from "../model/remoteMemory.ts"
 import { paintTheme, readTheme, rememberTheme, type Theme } from "../model/theme.ts"
 
 export function SettingsPage({
@@ -108,6 +109,7 @@ export function SettingsPage({
       adopt(await replaceMemory(getDatabase(), pending))
       setPending(null)
       setNotice("Mémoire remplacée.")
+      void publishMemory(Date.now())
     } catch {
       setFileError("L'import n'a pas pu être enregistré.")
     } finally {
