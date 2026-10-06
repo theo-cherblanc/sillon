@@ -60,6 +60,29 @@ export function shuffledSteps(steps: readonly string[], random: () => number): s
   return next
 }
 
+export function bugMatches(chosen: number, bugLine: number): boolean {
+  if (!Number.isInteger(bugLine) || bugLine < 1) {
+    throw new Error("A bug card needs a line number")
+  }
+  if (!Number.isInteger(chosen) || chosen < 1) {
+    return false
+  }
+  return chosen === bugLine
+}
+
+function missingResult(type: GradedCardType): string {
+  if (type === "cloze") {
+    return "A cloze grade needs to know whether the hole was filled"
+  }
+  if (type === "order") {
+    return "An order grade needs to know whether the steps were sorted"
+  }
+  if (type === "bug") {
+    return "A bug grade needs to know whether the line was found"
+  }
+  return "An MCQ grade needs to know whether the answer was correct"
+}
+
 export function gradeChoices(
   type: GradedCardType,
   mcqCorrect: boolean | null,
@@ -72,13 +95,7 @@ export function gradeChoices(
   }
 
   if (mcqCorrect === null) {
-    throw new Error(
-      type === "cloze"
-        ? "A cloze grade needs to know whether the hole was filled"
-        : type === "order"
-          ? "An order grade needs to know whether the steps were sorted"
-          : "An MCQ grade needs to know whether the answer was correct",
-    )
+    throw new Error(missingResult(type))
   }
 
   if (!mcqCorrect) {

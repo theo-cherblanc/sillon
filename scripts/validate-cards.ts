@@ -15,6 +15,8 @@ export function validateCards(cards: Card[]): void {
       validateCloze(card)
     } else if (card.type === "order") {
       validateOrder(card)
+    } else if (card.type === "bug") {
+      validateBug(card)
     } else {
       validateReveal(card)
     }
@@ -40,7 +42,7 @@ function validateMcq(card: Card): void {
     throw new Error(`${card.id} : le bon choix doit être l'un des choix`)
   }
 
-  if (card.steps !== undefined) {
+  if (card.steps !== undefined || card.lines !== undefined || card.bugLine !== undefined) {
     throw new Error(`${card.id} : un QCM n'a pas d'étapes`)
   }
 }
@@ -50,7 +52,7 @@ function validateCloze(card: Card): void {
     throw new Error(`${card.id} : une carte à trous doit avoir une réponse`)
   }
 
-  if (card.choices !== undefined || card.correctChoiceId !== undefined || card.steps !== undefined) {
+  if (card.choices !== undefined || card.correctChoiceId !== undefined || card.steps !== undefined || card.lines !== undefined || card.bugLine !== undefined) {
     throw new Error(`${card.id} : une carte à trous n'a pas de choix`)
   }
 
@@ -60,7 +62,7 @@ function validateCloze(card: Card): void {
 }
 
 function validateOrder(card: Card): void {
-  if (card.answer !== undefined || card.choices !== undefined || card.correctChoiceId !== undefined) {
+  if (card.answer !== undefined || card.choices !== undefined || card.correctChoiceId !== undefined || card.lines !== undefined || card.bugLine !== undefined) {
     throw new Error(`${card.id} : une carte d'ordre n'a ni réponse révélée ni choix`)
   }
 
@@ -74,12 +76,27 @@ function validateOrder(card: Card): void {
   }
 }
 
+function validateBug(card: Card): void {
+  if (card.answer !== undefined || card.choices !== undefined || card.correctChoiceId !== undefined || card.steps !== undefined) {
+    throw new Error(`${card.id} : une carte trouve-le-bug n'a ni réponse révélée, ni choix, ni étapes`)
+  }
+
+  const lines = card.lines
+  if (!lines || lines.length < 2) {
+    throw new Error(`${card.id} : une carte trouve-le-bug doit avoir au moins deux lignes`)
+  }
+
+  if (card.bugLine === undefined || card.bugLine > lines.length) {
+    throw new Error(`${card.id} : la ligne fausse doit être l'une des lignes`)
+  }
+}
+
 function validateReveal(card: Card): void {
   if (!card.answer) {
     throw new Error(`${card.id} : une carte à révéler doit avoir une réponse`)
   }
 
-  if (card.choices !== undefined || card.correctChoiceId !== undefined || card.steps !== undefined) {
+  if (card.choices !== undefined || card.correctChoiceId !== undefined || card.steps !== undefined || card.lines !== undefined || card.bugLine !== undefined) {
     throw new Error(`${card.id} : une carte à révéler n'a pas de choix`)
   }
 }

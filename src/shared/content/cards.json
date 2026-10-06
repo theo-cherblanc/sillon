@@ -902,6 +902,73 @@
     ]
   },
   {
+    "id": "js.bug.001",
+    "type": "bug",
+    "topic": "javascript",
+    "tags": [
+      "types"
+    ],
+    "difficulty": 1,
+    "prompt": "Quelle ligne fait échouer ce programme ?",
+    "explanation": "`const` interdit de donner une nouvelle valeur à `n`. La première ligne est valide. La seconde lève une erreur.",
+    "lines": [
+      "const n = 1",
+      "n = 2"
+    ],
+    "bugLine": 2
+  },
+  {
+    "id": "js.bug.002",
+    "type": "bug",
+    "topic": "javascript",
+    "tags": [
+      "types"
+    ],
+    "difficulty": 2,
+    "prompt": "Quelle ligne fait échouer l'intention de ce test ?",
+    "explanation": "`=` range `true` dans `ready` et le test est toujours vrai. Pour comparer, il faut `===`.",
+    "lines": [
+      "if (ready = true) {",
+      "start()",
+      "}"
+    ],
+    "bugLine": 1
+  },
+  {
+    "id": "js.bug.003",
+    "type": "bug",
+    "topic": "javascript",
+    "tags": [
+      "prototypes"
+    ],
+    "difficulty": 2,
+    "prompt": "Quelle ligne fait que `doubled` ne contient pas les doubles ?",
+    "explanation": "Les accolades créent un bloc. `n * 2` est calculé, puis jeté, parce que rien n'est renvoyé. `doubled` devient une liste de `undefined`. Un `return`, ou l'absence d'accolades, garderait les produits.",
+    "lines": [
+      "const doubled = numbers.map((n) => {",
+      "n * 2",
+      "})"
+    ],
+    "bugLine": 2
+  },
+  {
+    "id": "js.bug.004",
+    "type": "bug",
+    "topic": "javascript",
+    "tags": [
+      "async"
+    ],
+    "difficulty": 2,
+    "prompt": "Quelle ligne empêche ce programme de démarrer ?",
+    "explanation": "`await` ne s'écrit que dans une fonction `async`. `load` est une fonction ordinaire, donc la seconde ligne est refusée avant même l'appel.",
+    "lines": [
+      "function load() {",
+      "const value = await fetch(\"/api\")",
+      "}"
+    ],
+    "bugLine": 2
+  },
+  {
     "id": "js.closures.001",
     "type": "mcq",
     "topic": "javascript",

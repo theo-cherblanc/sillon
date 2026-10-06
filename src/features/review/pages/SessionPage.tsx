@@ -7,7 +7,7 @@ import { localDate } from "../../../shared/lib/dates.ts"
 import { Screen } from "../../../shared/ui/Screen.tsx"
 import { PromptText } from "../components/PromptText.tsx"
 import { useToday } from "../hooks/useToday.ts"
-import { clozeMatches, gradeChoices, shuffledSteps, stepsMatch, type GradeChoice } from "../model/grade.ts"
+import { bugMatches, clozeMatches, gradeChoices, shuffledSteps, stepsMatch, type GradeChoice } from "../model/grade.ts"
 import { recordGrade } from "../model/record.ts"
 import { formatDelay, previewForProgress, type DelayPreview } from "../model/schedule.ts"
 import { soonestDue } from "../model/today.ts"
@@ -183,6 +183,7 @@ function SessionCard({
     card.type === "order" && card.steps ? shuffledSteps(card.steps, Math.random) : [],
   )
   const [orderChecked, setOrderChecked] = useState(false)
+  const [lineNumber, setLineNumber] = useState<number | null>(null)
   const [now] = useState(() => new Date())
   const mcqCorrect =
     card.type === "mcq"
@@ -197,7 +198,11 @@ function SessionCard({
           ? !orderChecked || !card.steps
             ? null
             : stepsMatch(arranged, card.steps)
-          : null
+          : card.type === "bug"
+            ? lineNumber === null || card.bugLine === undefined
+              ? null
+              : bugMatches(lineNumber, card.bugLine)
+            : null
   const answered = card.type === "reveal" ? revealed : mcqCorrect !== null
   const correctText =
     card.type === "cloze" ? card.answer : card.choices?.find((choice) => choice.id === card.correctChoiceId)?.text
@@ -277,6 +282,30 @@ function SessionCard({
           </button>
         </form>
       ) : null}
+      {card.type === "bug" && card.lines ? (
+        <div className="mt-8 flex flex-col gap-3">
+          {card.lines.map((line, index) => {
+            const number = index + 1
+            const selected = number === lineNumber
+            return (
+              <button
+                key={number}
+                type="button"
+                aria-pressed={selected}
+                onClick={() => setLineNumber(number)}
+                className={
+                  selected
+                    ? "rounded-2xl bg-neutral-900 px-4 py-4 text-left font-mono text-sm text-white"
+                    : "rounded-2xl border border-neutral-300 px-4 py-4 text-left font-mono text-sm"
+                }
+              >
+                <span className="mr-3 text-neutral-500">{number}</span>
+                {line}
+              </button>
+            )
+          })}
+        </div>
+      ) : null}
       {card.type === "order" && !orderChecked ? (
         <form
           className="mt-8"
@@ -342,7 +371,10 @@ function SessionCard({
               </ol>
             </div>
           ) : null}
-          {mcqCorrect === false && card.type !== "order" ? (
+          {mcqCorrect === false && card.type === "bug" ? (
+            <p className="text-lg font-medium">Mauvaise réponse. La ligne fausse est la {card.bugLine}.</p>
+          ) : null}
+          {mcqCorrect === false && card.type !== "order" && card.type !== "bug" ? (
             <p className="text-lg font-medium">
               Mauvaise réponse. La bonne réponse : <span className="font-mono">{correctText}</span>.
             </p>

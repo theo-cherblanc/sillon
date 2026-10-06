@@ -1,6 +1,6 @@
 import assert from "node:assert/strict"
 import { describe, it } from "node:test"
-import { clozeMatches, gradeChoices, shuffledSteps, stepsMatch, toRating } from "./grade.ts"
+import { bugMatches, clozeMatches, gradeChoices, shuffledSteps, stepsMatch, toRating } from "./grade.ts"
 
 describe("gradeChoices", () => {
   it("offers three self-assessments after a correct MCQ", () => {
@@ -40,6 +40,15 @@ describe("gradeChoices", () => {
   it("rejects an order graded before the steps are checked", () => {
     assert.throws(() => gradeChoices("order", null), /whether the steps were sorted/)
   })
+
+  it("offers three self-assessments when the faulty line is found, and only again when it is not", () => {
+    assert.deepEqual(gradeChoices("bug", true), ["guessed", "hesitated", "knew"])
+    assert.deepEqual(gradeChoices("bug", false), ["again"])
+  })
+
+  it("rejects a bug graded before a line is chosen", () => {
+    assert.throws(() => gradeChoices("bug", null), /whether the line was found/)
+  })
 })
 
 describe("stepsMatch", () => {
@@ -62,6 +71,17 @@ describe("stepsMatch", () => {
   it("rejects an empty step or a repeated step", () => {
     assert.throws(() => stepsMatch(["git add", ""], ["git add", "  "]), /text for each step/)
     assert.throws(() => stepsMatch(["git add", "git add"], ["git add", "git add"]), /distinct steps/)
+  })
+})
+
+describe("bugMatches", () => {
+  it("accepts the faulty line and rejects another line", () => {
+    assert.equal(bugMatches(2, 2), true)
+    assert.equal(bugMatches(1, 2), false)
+  })
+
+  it("rejects a card without a real line number", () => {
+    assert.throws(() => bugMatches(1, 0), /line number/)
   })
 })
 
@@ -111,6 +131,12 @@ describe("toRating", () => {
   it("refuses a self-assessment after a wrong MCQ", () => {
     assert.equal(toRating("mcq", false, "again"), "again")
     assert.throws(() => toRating("mcq", false, "knew"), /not available/)
+  })
+
+  it("maps a found bug the same way as a correct MCQ", () => {
+    assert.equal(toRating("bug", true, "knew"), "good")
+    assert.equal(toRating("bug", false, "again"), "again")
+    assert.throws(() => toRating("bug", false, "knew"), /not available/)
   })
 
   it("maps a sorted order the same way as a correct MCQ", () => {

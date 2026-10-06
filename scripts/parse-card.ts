@@ -37,6 +37,12 @@ export function parseCard(source: string): Card {
   if (front.steps !== undefined) {
     card.steps = readSteps(front.steps)
   }
+  if (front.lines !== undefined) {
+    card.lines = readLines(front.lines)
+  }
+  if (front.bugLine !== undefined) {
+    card.bugLine = readBugLine(front.bugLine)
+  }
 
   return card
 }
@@ -96,10 +102,10 @@ function readTopic(value: unknown): Card["topic"] {
 }
 
 function readType(value: unknown): Card["type"] {
-  if (value === "mcq" || value === "reveal" || value === "cloze" || value === "order") {
+  if (value === "mcq" || value === "reveal" || value === "cloze" || value === "order" || value === "bug") {
     return value
   }
-  throw new Error('Le champ type doit être "mcq", "reveal", "cloze" ou "order"')
+  throw new Error('Le champ type doit être "mcq", "reveal", "cloze", "order" ou "bug"')
 }
 
 function readDifficulty(value: unknown): Card["difficulty"] {
@@ -116,16 +122,31 @@ function readTags(value: unknown): string[] {
   return value
 }
 
-function readSteps(value: unknown): string[] {
-  if (!Array.isArray(value)) {
-    throw new Error("Le champ steps doit être une liste de textes")
+function readBugLine(value: unknown): number {
+  if (typeof value !== "number" || !Number.isInteger(value) || value < 1) {
+    throw new Error("Le champ bugLine doit être un numéro de ligne")
   }
-  return value.map((step) => {
-    if (typeof step !== "string" || step.trim().length === 0) {
-      throw new Error("Le champ steps doit être une liste de textes")
+  return value
+}
+
+function readTextList(value: unknown, field: string): string[] {
+  if (!Array.isArray(value)) {
+    throw new Error(`Le champ ${field} doit être une liste de textes`)
+  }
+  return value.map((item) => {
+    if (typeof item !== "string" || item.trim().length === 0) {
+      throw new Error(`Le champ ${field} doit être une liste de textes`)
     }
-    return step.trim()
+    return item.trim()
   })
+}
+
+function readSteps(value: unknown): string[] {
+  return readTextList(value, "steps")
+}
+
+function readLines(value: unknown): string[] {
+  return readTextList(value, "lines")
 }
 
 function readChoices(value: unknown): NonNullable<Card["choices"]> {
