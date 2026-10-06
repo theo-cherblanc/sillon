@@ -93,10 +93,10 @@ function readTopic(value: unknown): Card["topic"] {
 }
 
 function readType(value: unknown): Card["type"] {
-  if (value === "mcq" || value === "reveal") {
+  if (value === "mcq" || value === "reveal" || value === "cloze") {
     return value
   }
-  throw new Error('Le champ type doit être "mcq" ou "reveal"')
+  throw new Error('Le champ type doit être "mcq", "reveal" ou "cloze"')
 }
 
 function readDifficulty(value: unknown): Card["difficulty"] {

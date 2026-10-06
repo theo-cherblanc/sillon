@@ -3,6 +3,7 @@ import type { Card } from "../../../shared/content/types.ts"
 export type Rating = "again" | "hard" | "good"
 export type SelfAssessment = "guessed" | "hesitated" | "knew"
 export type GradeChoice = SelfAssessment | "again"
+export type GradedCardType = Card["type"]
 
 const ratingByAssessment = {
   guessed: "again",
@@ -10,8 +11,15 @@ const ratingByAssessment = {
   knew: "good",
 } as const satisfies Record<SelfAssessment, Rating>
 
+export function clozeMatches(typed: string, expected: string): boolean {
+  if (expected.trim().length === 0) {
+    throw new Error("A cloze needs an expected answer")
+  }
+  return typed.trim() === expected.trim()
+}
+
 export function gradeChoices(
-  type: Card["type"],
+  type: GradedCardType,
   mcqCorrect: boolean | null,
 ): GradeChoice[] {
   if (type === "reveal") {
@@ -22,7 +30,11 @@ export function gradeChoices(
   }
 
   if (mcqCorrect === null) {
-    throw new Error("An MCQ grade needs to know whether the answer was correct")
+    throw new Error(
+      type === "cloze"
+        ? "A cloze grade needs to know whether the hole was filled"
+        : "An MCQ grade needs to know whether the answer was correct",
+    )
   }
 
   if (!mcqCorrect) {
@@ -33,7 +45,7 @@ export function gradeChoices(
 }
 
 export function toRating(
-  type: Card["type"],
+  type: GradedCardType,
   mcqCorrect: boolean | null,
   choice: GradeChoice,
 ): Rating {

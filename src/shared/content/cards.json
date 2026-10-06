@@ -125,6 +125,18 @@
     "answer": "Chaque requête contient ce qu'il faut pour la traiter. Le serveur ne dépend pas du souvenir de la précédente."
   },
   {
+    "id": "docker.cloze.001",
+    "type": "cloze",
+    "topic": "docker",
+    "tags": [
+      "docker"
+    ],
+    "difficulty": 2,
+    "prompt": "Quel drapeau court publie le port 80 du conteneur sur le port 8080 de la machine ?\n\n```\ndocker run ____ 8080:80 nginx\n```",
+    "explanation": "L'ordre est le port de la machine, puis celui du conteneur. La forme longue de `-p` est `--publish`. Sans ce drapeau, le port ouvert dans le conteneur ne s'atteint pas depuis l'extérieur.",
+    "answer": "-p"
+  },
+  {
     "id": "docker.compose.001",
     "type": "reveal",
     "topic": "docker",
@@ -259,6 +271,18 @@
     "answer": "Il copie un dépôt sur la machine, historique compris."
   },
   {
+    "id": "git.cloze.001",
+    "type": "cloze",
+    "topic": "git",
+    "tags": [
+      "git"
+    ],
+    "difficulty": 1,
+    "prompt": "Quelle commande crée un commit local à partir de l'index ?\n\n```\ngit ____ -m \"message\"\n```",
+    "explanation": "`git commit` enregistre l'index dans l'historique de ce dépôt. Il ne publie rien sur le dépôt distant : ça, c'est `git push`.",
+    "answer": "commit"
+  },
+  {
     "id": "git.commit.001",
     "type": "reveal",
     "topic": "git",
@@ -381,6 +405,19 @@
     "prompt": "À quoi sert la zone d'index, celle que `git add` remplit ?",
     "explanation": "Le dossier de travail peut contenir d'autres modifications. `git add` en copie dans l'index. Le commit enregistre l'index, pas forcément tout ce qui est modifié sur le disque.",
     "answer": "À choisir ce que le prochain commit contiendra."
+  },
+  {
+    "id": "http.cloze.001",
+    "type": "cloze",
+    "topic": "http",
+    "tags": [
+      "http",
+      "status"
+    ],
+    "difficulty": 1,
+    "prompt": "Quel code numérique répond qu'aucune ressource ne correspond à l'URL ?\n\nLe serveur répond ____.",
+    "explanation": "`404` veut dire que le serveur a compris la requête et qu'il n'a rien à cette adresse. Ce n'est ni un refus (`403`) ni une identité manquante (`401`).",
+    "answer": "404"
   },
   {
     "id": "http.status.200",
@@ -789,6 +826,18 @@
     "correctChoiceId": "b"
   },
   {
+    "id": "js.async.cloze.001",
+    "type": "cloze",
+    "topic": "javascript",
+    "tags": [
+      "async"
+    ],
+    "difficulty": 1,
+    "prompt": "Quel mot manque pour attendre une promesse dans une fonction `async` ?\n\n```js\nconst value = ____ promise\n```",
+    "explanation": "`await` suspend la fonction jusqu'à ce que la promesse aboutisse, puis donne sa valeur. Il ne s'écrit que dans une fonction `async`.",
+    "answer": "await"
+  },
+  {
     "id": "js.closures.001",
     "type": "mcq",
     "topic": "javascript",
@@ -1108,6 +1157,18 @@
       }
     ],
     "correctChoiceId": "b"
+  },
+  {
+    "id": "js.prototypes.cloze.001",
+    "type": "cloze",
+    "topic": "javascript",
+    "tags": [
+      "prototypes"
+    ],
+    "difficulty": 1,
+    "prompt": "Quelle méthode renvoie un nouveau tableau, avec un résultat par élément ?\n\n```js\nconst doubled = numbers.____((n) => n * 2)\n```",
+    "explanation": "`map` vit sur `Array.prototype`. Elle ne modifie pas `numbers` : elle appelle la fonction pour chaque élément et renvoie le tableau des valeurs renvoyées.",
+    "answer": "map"
   },
   {
     "id": "js.scope.001",
@@ -1678,6 +1739,30 @@
     "correctChoiceId": "a"
   },
   {
+    "id": "js.types.cloze.001",
+    "type": "cloze",
+    "topic": "javascript",
+    "tags": [
+      "types"
+    ],
+    "difficulty": 2,
+    "prompt": "Quel opérateur manque pour dire que ces deux valeurs sont différentes, sans conversion ?\n\n```js\nnull ____ undefined\n```",
+    "explanation": "`!=` convertit `null` et `undefined` vers la même valeur, donc il les trouve égaux. `!==` ne convertit pas : ce sont deux valeurs différentes.",
+    "answer": "!=="
+  },
+  {
+    "id": "shell.cloze.001",
+    "type": "cloze",
+    "topic": "shell",
+    "tags": [
+      "shell"
+    ],
+    "difficulty": 2,
+    "prompt": "Quel symbole ajoute du texte à la fin du fichier, sans effacer ce qui s'y trouve ?\n\n```\necho bonjour ____ notes.txt\n```",
+    "explanation": "`>` crée le fichier ou le vide avant d'écrire. `>>` garde le contenu et écrit à la suite. Les deux envoient la sortie standard, pas l'erreur.",
+    "answer": ">>"
+  },
+  {
     "id": "shell.exit.001",
     "type": "reveal",
     "topic": "shell",
@@ -1786,6 +1871,19 @@
       }
     ],
     "correctChoiceId": "a"
+  },
+  {
+    "id": "web.cloze.001",
+    "type": "cloze",
+    "topic": "web",
+    "tags": [
+      "web",
+      "http"
+    ],
+    "difficulty": 2,
+    "prompt": "Quelle méthode HTTP, en majuscules, remplace une ressource et peut être répétée sans changer le résultat ?\n\nLa méthode ____ remplace la ressource à cette URL.",
+    "explanation": "Deux `PUT` identiques laissent la ressource dans le même état. Un `POST` qui crée quelque chose à chaque appel ne le fait pas : le second appel peut créer une seconde ressource.",
+    "answer": "PUT"
   },
   {
     "id": "web.cors.001",

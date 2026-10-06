@@ -11,6 +11,8 @@ export function validateCards(cards: Card[]): void {
 
     if (card.type === "mcq") {
       validateMcq(card)
+    } else if (card.type === "cloze") {
+      validateCloze(card)
     } else {
       validateReveal(card)
     }
@@ -34,6 +36,20 @@ function validateMcq(card: Card): void {
 
   if (!card.correctChoiceId || !ids.has(card.correctChoiceId)) {
     throw new Error(`${card.id} : le bon choix doit être l'un des choix`)
+  }
+}
+
+function validateCloze(card: Card): void {
+  if (!card.answer) {
+    throw new Error(`${card.id} : une carte à trous doit avoir une réponse`)
+  }
+
+  if (card.choices !== undefined || card.correctChoiceId !== undefined) {
+    throw new Error(`${card.id} : une carte à trous n'a pas de choix`)
+  }
+
+  if (card.prompt.split("____").length - 1 !== 1) {
+    throw new Error(`${card.id} : une carte à trous doit contenir un seul ____`)
   }
 }
 

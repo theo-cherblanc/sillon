@@ -4,7 +4,7 @@ export type CardTopic = (typeof cardTopics)[number]
 
 export type Card = {
   id: string
-  type: "mcq" | "reveal"
+  type: "mcq" | "reveal" | "cloze"
   topic: CardTopic
   tags: string[]
   difficulty: 1 | 2 | 3

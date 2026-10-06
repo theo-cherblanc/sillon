@@ -7,7 +7,7 @@ import { localDate } from "../../../shared/lib/dates.ts"
 import { Screen } from "../../../shared/ui/Screen.tsx"
 import { PromptText } from "../components/PromptText.tsx"
 import { useToday } from "../hooks/useToday.ts"
-import { gradeChoices, type GradeChoice } from "../model/grade.ts"
+import { clozeMatches, gradeChoices, type GradeChoice } from "../model/grade.ts"
 import { recordGrade } from "../model/record.ts"
 import { formatDelay, previewForProgress, type DelayPreview } from "../model/schedule.ts"
 import { soonestDue } from "../model/today.ts"
@@ -177,11 +177,22 @@ function SessionCard({
 }) {
   const [choiceId, setChoiceId] = useState<string | null>(null)
   const [revealed, setRevealed] = useState(false)
+  const [hole, setHole] = useState("")
+  const [holeChecked, setHoleChecked] = useState(false)
   const [now] = useState(() => new Date())
   const mcqCorrect =
-    card.type !== "mcq" || choiceId === null ? null : choiceId === card.correctChoiceId
+    card.type === "mcq"
+      ? choiceId === null
+        ? null
+        : choiceId === card.correctChoiceId
+      : card.type === "cloze"
+        ? !holeChecked || !card.answer
+          ? null
+          : clozeMatches(hole, card.answer)
+        : null
   const answered = card.type === "reveal" ? revealed : mcqCorrect !== null
-  const correctText = card.choices?.find((choice) => choice.id === card.correctChoiceId)?.text
+  const correctText =
+    card.type === "cloze" ? card.answer : card.choices?.find((choice) => choice.id === card.correctChoiceId)?.text
 
   return (
     <>
@@ -215,6 +226,35 @@ function SessionCard({
           <PromptText text={card.answer} />
         </div>
       ) : null}
+      {card.type === "cloze" && !holeChecked ? (
+        <form
+          className="mt-auto pt-8"
+          onSubmit={(event) => {
+            event.preventDefault()
+            if (hole.trim().length === 0) {
+              return
+            }
+            setHoleChecked(true)
+          }}
+        >
+          <input
+            value={hole}
+            onChange={(event) => setHole(event.target.value)}
+            aria-label="Texte manquant"
+            autoCapitalize="off"
+            autoCorrect="off"
+            spellCheck={false}
+            className="w-full rounded-2xl border border-neutral-300 px-4 py-4 font-mono text-lg"
+          />
+          <button
+            type="submit"
+            disabled={hole.trim().length === 0}
+            className="mt-3 w-full rounded-2xl bg-neutral-900 px-6 py-4 text-lg font-medium text-white disabled:opacity-40"
+          >
+            Vérifier
+          </button>
+        </form>
+      ) : null}
       {card.type === "reveal" && !revealed ? (
         <div className="mt-auto pt-8">
           <button
@@ -231,7 +271,7 @@ function SessionCard({
           {mcqCorrect === true ? <p className="text-lg font-medium">Bonne réponse.</p> : null}
           {mcqCorrect === false ? (
             <p className="text-lg font-medium">
-              Mauvaise réponse. La bonne réponse : {correctText}.
+              Mauvaise réponse. La bonne réponse : <span className="font-mono">{correctText}</span>.
             </p>
           ) : null}
           <h2 className="mt-6 text-sm font-medium text-neutral-500">Explication</h2>
