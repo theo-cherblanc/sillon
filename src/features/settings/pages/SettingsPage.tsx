@@ -8,6 +8,7 @@ import { readExport, type ProgressFile } from "../model/export.ts"
 import { maxDailyCount } from "../model/goals.ts"
 import { parseProgressFile, replaceMemory } from "../model/import.ts"
 import { lastExportNote, readLastExport, rememberExport } from "../model/lastExport.ts"
+import { paintTheme, readTheme, rememberTheme, type Theme } from "../model/theme.ts"
 
 export function SettingsPage({
   onToday,
@@ -30,7 +31,25 @@ export function SettingsPage({
       return null
     }
   })
+  const [theme, setTheme] = useState<Theme>(() => {
+    try {
+      return readTheme(localStorage)
+    } catch {
+      return "light"
+    }
+  })
   const busy = saving || exporting || importing || pending !== null
+
+  function chooseTheme(next: Theme) {
+    try {
+      rememberTheme(localStorage, next)
+      paintTheme(document.documentElement, next)
+      document.querySelector('meta[name="theme-color"]')?.setAttribute("content", next === "dark" ? "#171717" : "#ffffff")
+      setTheme(next)
+    } catch {
+      // The previous theme stays if the browser refuses the write.
+    }
+  }
 
   async function download() {
     setExporting(true)
@@ -98,6 +117,13 @@ export function SettingsPage({
   return (
     <Screen>
       <h1 className="text-3xl font-semibold tracking-tight">Réglages</h1>
+      <section className="mt-8">
+        <h2 className="text-sm font-medium text-neutral-500">Apparence</h2>
+        <div className="mt-3 flex gap-3">
+          <ThemeChip label="Clair" selected={theme === "light"} onSelect={() => chooseTheme("light")} />
+          <ThemeChip label="Sombre" selected={theme === "dark"} onSelect={() => chooseTheme("dark")} />
+        </div>
+      </section>
       <input
         ref={fileInput}
         type="file"
@@ -134,6 +160,31 @@ export function SettingsPage({
         className="mt-auto"
       />
     </Screen>
+  )
+}
+
+function ThemeChip({
+  label,
+  selected,
+  onSelect,
+}: {
+  label: string
+  selected: boolean
+  onSelect: () => void
+}) {
+  return (
+    <button
+      type="button"
+      aria-pressed={selected}
+      onClick={onSelect}
+      className={
+        selected
+          ? "rounded-full bg-neutral-900 px-4 py-2 text-lg font-medium text-white"
+          : "rounded-full border border-neutral-300 px-4 py-2 text-lg font-medium"
+      }
+    >
+      {label}
+    </button>
   )
 }
 

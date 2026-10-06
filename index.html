@@ -10,6 +10,19 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <title>Sillon</title>
+    <script>
+      try {
+        if (localStorage.getItem("sillon.theme") === "dark") {
+          document.documentElement.dataset.theme = "dark"
+          var themeColor = document.querySelector('meta[name="theme-color"]')
+          if (themeColor) {
+            themeColor.setAttribute("content", "#171717")
+          }
+        }
+      } catch (error) {
+        // A blocked store leaves the light theme in place.
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
