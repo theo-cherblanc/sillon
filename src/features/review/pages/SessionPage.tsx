@@ -7,7 +7,7 @@ import { localDate } from "../../../shared/lib/dates.ts"
 import { Screen } from "../../../shared/ui/Screen.tsx"
 import { PromptText } from "../components/PromptText.tsx"
 import { useToday } from "../hooks/useToday.ts"
-import { clozeMatches, gradeChoices, type GradeChoice } from "../model/grade.ts"
+import { clozeMatches, gradeChoices, shuffledSteps, stepsMatch, type GradeChoice } from "../model/grade.ts"
 import { recordGrade } from "../model/record.ts"
 import { formatDelay, previewForProgress, type DelayPreview } from "../model/schedule.ts"
 import { soonestDue } from "../model/today.ts"
@@ -179,6 +179,10 @@ function SessionCard({
   const [revealed, setRevealed] = useState(false)
   const [hole, setHole] = useState("")
   const [holeChecked, setHoleChecked] = useState(false)
+  const [arranged, setArranged] = useState<string[]>(() =>
+    card.type === "order" && card.steps ? shuffledSteps(card.steps, Math.random) : [],
+  )
+  const [orderChecked, setOrderChecked] = useState(false)
   const [now] = useState(() => new Date())
   const mcqCorrect =
     card.type === "mcq"
@@ -189,10 +193,28 @@ function SessionCard({
         ? !holeChecked || !card.answer
           ? null
           : clozeMatches(hole, card.answer)
-        : null
+        : card.type === "order"
+          ? !orderChecked || !card.steps
+            ? null
+            : stepsMatch(arranged, card.steps)
+          : null
   const answered = card.type === "reveal" ? revealed : mcqCorrect !== null
   const correctText =
     card.type === "cloze" ? card.answer : card.choices?.find((choice) => choice.id === card.correctChoiceId)?.text
+
+  function moveStep(index: number, direction: -1 | 1) {
+    setArranged((current) => {
+      const target = index + direction
+      if (target < 0 || target >= current.length) {
+        return current
+      }
+      const next = [...current]
+      const item = next[index]
+      next[index] = next[target]
+      next[target] = item
+      return next
+    })
+  }
 
   return (
     <>
@@ -255,6 +277,47 @@ function SessionCard({
           </button>
         </form>
       ) : null}
+      {card.type === "order" && !orderChecked ? (
+        <form
+          className="mt-8"
+          onSubmit={(event) => {
+            event.preventDefault()
+            setOrderChecked(true)
+          }}
+        >
+          <ul className="flex flex-col">
+            {arranged.map((step, index) => (
+              <li key={step} className="flex items-center gap-3 border-t border-neutral-200 py-3">
+                <p className="min-w-0 flex-1 text-lg">{step}</p>
+                <button
+                  type="button"
+                  aria-label={`Monter ${step}`}
+                  disabled={index === 0}
+                  onClick={() => moveStep(index, -1)}
+                  className="h-12 w-12 shrink-0 rounded-2xl border border-neutral-300 text-lg disabled:opacity-40"
+                >
+                  ↑
+                </button>
+                <button
+                  type="button"
+                  aria-label={`Descendre ${step}`}
+                  disabled={index === arranged.length - 1}
+                  onClick={() => moveStep(index, 1)}
+                  className="h-12 w-12 shrink-0 rounded-2xl border border-neutral-300 text-lg disabled:opacity-40"
+                >
+                  ↓
+                </button>
+              </li>
+            ))}
+          </ul>
+          <button
+            type="submit"
+            className="mt-6 w-full rounded-2xl bg-neutral-900 px-6 py-4 text-lg font-medium text-white"
+          >
+            Vérifier
+          </button>
+        </form>
+      ) : null}
       {card.type === "reveal" && !revealed ? (
         <div className="mt-auto pt-8">
           <button
@@ -269,7 +332,17 @@ function SessionCard({
       {answered ? (
         <div className="mt-8">
           {mcqCorrect === true ? <p className="text-lg font-medium">Bonne réponse.</p> : null}
-          {mcqCorrect === false ? (
+          {mcqCorrect === false && card.type === "order" ? (
+            <div>
+              <p className="text-lg font-medium">Mauvaise réponse.</p>
+              <ol className="mt-3 list-decimal space-y-2 pl-5 text-lg">
+                {card.steps?.map((step) => (
+                  <li key={step}>{step}</li>
+                ))}
+              </ol>
+            </div>
+          ) : null}
+          {mcqCorrect === false && card.type !== "order" ? (
             <p className="text-lg font-medium">
               Mauvaise réponse. La bonne réponse : <span className="font-mono">{correctText}</span>.
             </p>

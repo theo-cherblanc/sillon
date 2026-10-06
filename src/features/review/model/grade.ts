@@ -18,6 +18,48 @@ export function clozeMatches(typed: string, expected: string): boolean {
   return typed.trim() === expected.trim()
 }
 
+export function stepsMatch(given: readonly string[], expected: readonly string[]): boolean {
+  if (expected.length < 2) {
+    throw new Error("An order needs at least two steps")
+  }
+  const steps = expected.map((step) => step.trim())
+  if (steps.some((step) => step.length === 0)) {
+    throw new Error("An order needs a text for each step")
+  }
+  if (new Set(steps).size !== steps.length) {
+    throw new Error("An order needs distinct steps")
+  }
+  return given.length === steps.length && given.every((step, index) => step.trim() === steps[index])
+}
+
+export function shuffledSteps(steps: readonly string[], random: () => number): string[] {
+  if (steps.length < 2) {
+    throw new Error("An order needs at least two steps")
+  }
+  if (new Set(steps).size !== steps.length) {
+    throw new Error("An order needs distinct steps")
+  }
+
+  const next = [...steps]
+  for (let index = next.length - 1; index > 0; index -= 1) {
+    const roll = random()
+    if (roll < 0 || roll >= 1) {
+      throw new Error("A shuffle needs a number from 0 inclusive to 1 exclusive")
+    }
+    const swap = Math.floor(roll * (index + 1))
+    const current = next[index]
+    next[index] = next[swap]
+    next[swap] = current
+  }
+
+  if (next.every((step, index) => step === steps[index])) {
+    const first = next[0]
+    next[0] = next[1]
+    next[1] = first
+  }
+  return next
+}
+
 export function gradeChoices(
   type: GradedCardType,
   mcqCorrect: boolean | null,
@@ -33,7 +75,9 @@ export function gradeChoices(
     throw new Error(
       type === "cloze"
         ? "A cloze grade needs to know whether the hole was filled"
-        : "An MCQ grade needs to know whether the answer was correct",
+        : type === "order"
+          ? "An order grade needs to know whether the steps were sorted"
+          : "An MCQ grade needs to know whether the answer was correct",
     )
   }
 

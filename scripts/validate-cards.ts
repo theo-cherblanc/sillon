@@ -13,6 +13,8 @@ export function validateCards(cards: Card[]): void {
       validateMcq(card)
     } else if (card.type === "cloze") {
       validateCloze(card)
+    } else if (card.type === "order") {
+      validateOrder(card)
     } else {
       validateReveal(card)
     }
@@ -37,6 +39,10 @@ function validateMcq(card: Card): void {
   if (!card.correctChoiceId || !ids.has(card.correctChoiceId)) {
     throw new Error(`${card.id} : le bon choix doit être l'un des choix`)
   }
+
+  if (card.steps !== undefined) {
+    throw new Error(`${card.id} : un QCM n'a pas d'étapes`)
+  }
 }
 
 function validateCloze(card: Card): void {
@@ -44,7 +50,7 @@ function validateCloze(card: Card): void {
     throw new Error(`${card.id} : une carte à trous doit avoir une réponse`)
   }
 
-  if (card.choices !== undefined || card.correctChoiceId !== undefined) {
+  if (card.choices !== undefined || card.correctChoiceId !== undefined || card.steps !== undefined) {
     throw new Error(`${card.id} : une carte à trous n'a pas de choix`)
   }
 
@@ -53,12 +59,27 @@ function validateCloze(card: Card): void {
   }
 }
 
+function validateOrder(card: Card): void {
+  if (card.answer !== undefined || card.choices !== undefined || card.correctChoiceId !== undefined) {
+    throw new Error(`${card.id} : une carte d'ordre n'a ni réponse révélée ni choix`)
+  }
+
+  const steps = card.steps
+  if (!steps || steps.length < 2) {
+    throw new Error(`${card.id} : une carte d'ordre doit avoir au moins deux étapes`)
+  }
+
+  if (new Set(steps).size !== steps.length) {
+    throw new Error(`${card.id} : les étapes doivent être distinctes`)
+  }
+}
+
 function validateReveal(card: Card): void {
   if (!card.answer) {
     throw new Error(`${card.id} : une carte à révéler doit avoir une réponse`)
   }
 
-  if (card.choices !== undefined || card.correctChoiceId !== undefined) {
+  if (card.choices !== undefined || card.correctChoiceId !== undefined || card.steps !== undefined) {
     throw new Error(`${card.id} : une carte à révéler n'a pas de choix`)
   }
 }

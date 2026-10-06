@@ -34,6 +34,9 @@ export function parseCard(source: string): Card {
   if (sections.answer !== undefined) {
     card.answer = sections.answer
   }
+  if (front.steps !== undefined) {
+    card.steps = readSteps(front.steps)
+  }
 
   return card
 }
@@ -93,10 +96,10 @@ function readTopic(value: unknown): Card["topic"] {
 }
 
 function readType(value: unknown): Card["type"] {
-  if (value === "mcq" || value === "reveal" || value === "cloze") {
+  if (value === "mcq" || value === "reveal" || value === "cloze" || value === "order") {
     return value
   }
-  throw new Error('Le champ type doit être "mcq", "reveal" ou "cloze"')
+  throw new Error('Le champ type doit être "mcq", "reveal", "cloze" ou "order"')
 }
 
 function readDifficulty(value: unknown): Card["difficulty"] {
@@ -111,6 +114,18 @@ function readTags(value: unknown): string[] {
     throw new Error("Le champ tags doit être une liste de textes")
   }
   return value
+}
+
+function readSteps(value: unknown): string[] {
+  if (!Array.isArray(value)) {
+    throw new Error("Le champ steps doit être une liste de textes")
+  }
+  return value.map((step) => {
+    if (typeof step !== "string" || step.trim().length === 0) {
+      throw new Error("Le champ steps doit être une liste de textes")
+    }
+    return step.trim()
+  })
 }
 
 function readChoices(value: unknown): NonNullable<Card["choices"]> {

@@ -199,6 +199,22 @@
     "answer": "Chaque instruction est une couche. Docker réutilise le cache tant que la couche n'a pas changé."
   },
   {
+    "id": "docker.order.001",
+    "type": "order",
+    "topic": "docker",
+    "tags": [
+      "docker"
+    ],
+    "difficulty": 1,
+    "prompt": "Dans quel ordre obtient-on un conteneur qui tourne, en partant de zéro ?",
+    "explanation": "Le Dockerfile décrit l'image. `docker build` lit ce fichier et produit l'image. `docker run` crée ensuite un conteneur à partir de cette image. L'image existe avant le conteneur.",
+    "steps": [
+      "Écrire le Dockerfile",
+      "Construire l'image",
+      "Lancer le conteneur"
+    ]
+  },
+  {
     "id": "docker.port.001",
     "type": "reveal",
     "topic": "docker",
@@ -355,6 +371,37 @@
     "prompt": "Que fait un merge ?",
     "explanation": "Si une seule branche a avancé, le merge se contente d'avancer le pointeur. Si les deux ont des commits propres, Git crée un commit de merge qui a deux parents, après avoir combiné les fichiers. Un même endroit modifié des deux côtés devient un conflit à trancher.",
     "answer": "Il réunit deux historiques."
+  },
+  {
+    "id": "git.order.001",
+    "type": "order",
+    "topic": "git",
+    "tags": [
+      "git"
+    ],
+    "difficulty": 1,
+    "prompt": "Dans quel ordre ces commandes publient-elles une modification déjà écrite dans un fichier suivi ?",
+    "explanation": "`git add` met le fichier dans l'index. `git commit` enregistre cet index sur la machine. `git push` envoie le commit au dépôt distant. Le commit existe avant d'être publié.",
+    "steps": [
+      "git add",
+      "git commit",
+      "git push"
+    ]
+  },
+  {
+    "id": "git.order.002",
+    "type": "order",
+    "topic": "git",
+    "tags": [
+      "git"
+    ],
+    "difficulty": 2,
+    "prompt": "Dans quel ordre `git pull` agit-il, par défaut ?",
+    "explanation": "Par défaut, `git pull` fait un fetch, puis un merge. Le fetch ramène les commits distants sans modifier les fichiers de la branche en cours. Le merge les réunit ensuite avec cette branche.",
+    "steps": [
+      "Récupérer les commits du dépôt distant",
+      "Les fusionner dans la branche actuelle"
+    ]
   },
   {
     "id": "git.pull.001",
@@ -836,6 +883,23 @@
     "prompt": "Quel mot manque pour attendre une promesse dans une fonction `async` ?\n\n```js\nconst value = ____ promise\n```",
     "explanation": "`await` suspend la fonction jusqu'à ce que la promesse aboutisse, puis donne sa valeur. Il ne s'écrit que dans une fonction `async`.",
     "answer": "await"
+  },
+  {
+    "id": "js.async.order.001",
+    "type": "order",
+    "topic": "javascript",
+    "tags": [
+      "async"
+    ],
+    "difficulty": 3,
+    "prompt": "Dans quel ordre ces lettres s'affichent-elles ?\n\n```js\nconsole.log(\"A\")\nsetTimeout(() => console.log(\"B\"), 0)\nPromise.resolve().then(() => console.log(\"C\"))\nconsole.log(\"D\")\n```",
+    "explanation": "`A` et `D` s'affichent tout de suite, dans cet ordre. La promesse de `C` est traitée avant le `setTimeout` de `B`, même avec un délai de 0. L'ordre est donc A, D, C, B.",
+    "steps": [
+      "A",
+      "D",
+      "C",
+      "B"
+    ]
   },
   {
     "id": "js.closures.001",
@@ -1811,6 +1875,22 @@
     "answer": "Le dossier personnel de l'utilisateur. `~` est le raccourci du shell pour ce dossier."
   },
   {
+    "id": "shell.order.001",
+    "type": "order",
+    "topic": "shell",
+    "tags": [
+      "shell"
+    ],
+    "difficulty": 1,
+    "prompt": "Dans quel ordre ces actions envoient-elles un texte filtré dans un fichier ?",
+    "explanation": "Le shell lit un tube de gauche à droite. `echo` produit le texte, `grep` n'en garde qu'une partie, puis `>` écrit cette sortie dans le fichier. Le fichier reçoit le texte déjà filtré.",
+    "steps": [
+      "Produire le texte",
+      "Garder les lignes qui correspondent",
+      "Écrire le résultat dans le fichier"
+    ]
+  },
+  {
     "id": "shell.path.001",
     "type": "reveal",
     "topic": "shell",
@@ -1963,6 +2043,24 @@
       }
     ],
     "correctChoiceId": "a"
+  },
+  {
+    "id": "web.order.001",
+    "type": "order",
+    "topic": "web",
+    "tags": [
+      "web",
+      "dns",
+      "http"
+    ],
+    "difficulty": 2,
+    "prompt": "Dans quel ordre un navigateur demande-t-il une page en HTTP, une fois l'URL connue ?",
+    "explanation": "Le nom du site n'est pas une adresse. Le navigateur la demande d'abord (DNS), ouvre ensuite la connexion vers cette adresse, puis envoie la requête HTTP. Sans l'adresse, il ne sait pas qui joindre.",
+    "steps": [
+      "Trouver l'adresse qui correspond au nom",
+      "Ouvrir la connexion vers cette adresse",
+      "Envoyer la requête HTTP"
+    ]
   },
   {
     "id": "web.roles.001",

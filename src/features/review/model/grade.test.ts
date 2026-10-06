@@ -1,6 +1,6 @@
 import assert from "node:assert/strict"
 import { describe, it } from "node:test"
-import { clozeMatches, gradeChoices, toRating } from "./grade.ts"
+import { clozeMatches, gradeChoices, shuffledSteps, stepsMatch, toRating } from "./grade.ts"
 
 describe("gradeChoices", () => {
   it("offers three self-assessments after a correct MCQ", () => {
@@ -30,6 +30,54 @@ describe("gradeChoices", () => {
 
   it("rejects a cloze graded before the hole is checked", () => {
     assert.throws(() => gradeChoices("cloze", null), /whether the hole was filled/)
+  })
+
+  it("offers three self-assessments when the steps are sorted, and only again when they are not", () => {
+    assert.deepEqual(gradeChoices("order", true), ["guessed", "hesitated", "knew"])
+    assert.deepEqual(gradeChoices("order", false), ["again"])
+  })
+
+  it("rejects an order graded before the steps are checked", () => {
+    assert.throws(() => gradeChoices("order", null), /whether the steps were sorted/)
+  })
+})
+
+describe("stepsMatch", () => {
+  const expected = ["git add", "git commit", "git push"]
+
+  it("accepts the steps in the expected order, ignoring space at the ends", () => {
+    assert.equal(stepsMatch([" git add ", "git commit", "git push"], expected), true)
+  })
+
+  it("rejects a swap, a change of case, or a list of the wrong length", () => {
+    assert.equal(stepsMatch(["git commit", "git add", "git push"], expected), false)
+    assert.equal(stepsMatch(["Git add", "git commit", "git push"], expected), false)
+    assert.equal(stepsMatch(["git add", "git commit"], expected), false)
+  })
+
+  it("rejects an order with fewer than two steps", () => {
+    assert.throws(() => stepsMatch(["git add"], ["git add"]), /at least two steps/)
+  })
+
+  it("rejects an empty step or a repeated step", () => {
+    assert.throws(() => stepsMatch(["git add", ""], ["git add", "  "]), /text for each step/)
+    assert.throws(() => stepsMatch(["git add", "git add"], ["git add", "git add"]), /distinct steps/)
+  })
+})
+
+describe("shuffledSteps", () => {
+  const steps = ["git add", "git commit", "git push"]
+
+  it("keeps every step and avoids the original order", () => {
+    for (const random of [() => 0, () => 0.999]) {
+      const shuffled = shuffledSteps(steps, random)
+      assert.deepEqual([...shuffled].sort(), [...steps].sort())
+      assert.notDeepEqual(shuffled, steps)
+    }
+  })
+
+  it("rejects a shuffle that is not a fraction below 1", () => {
+    assert.throws(() => shuffledSteps(steps, () => 1), /0 inclusive to 1 exclusive/)
   })
 })
 
@@ -63,6 +111,12 @@ describe("toRating", () => {
   it("refuses a self-assessment after a wrong MCQ", () => {
     assert.equal(toRating("mcq", false, "again"), "again")
     assert.throws(() => toRating("mcq", false, "knew"), /not available/)
+  })
+
+  it("maps a sorted order the same way as a correct MCQ", () => {
+    assert.equal(toRating("order", true, "knew"), "good")
+    assert.equal(toRating("order", false, "again"), "again")
+    assert.throws(() => toRating("order", false, "knew"), /not available/)
   })
 
   it("maps a filled hole the same way as a correct MCQ", () => {
