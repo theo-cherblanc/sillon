@@ -1,6 +1,7 @@
 import { Screen } from "../../../shared/ui/Screen.tsx"
 import { TabBar } from "../../../shared/ui/TabBar.tsx"
 import { useProgress, type ProgressSummary } from "../hooks/useProgress.ts"
+import { earnedBadges } from "../model/badges.ts"
 
 export function ProgressPage({
   onToday,
@@ -40,6 +41,19 @@ function ProgressBody({ summary, onLibrary }: { summary: ProgressSummary; onLibr
       <p className="mt-3 text-lg">{label(summary.fresh, "nouvelle", "nouvelles")}</p>
       <p className="mt-1 text-lg">{label(summary.learning, "en apprentissage", "en apprentissage")}</p>
       <p className="mt-1 text-lg">{label(summary.review, "à jour", "à jour")}</p>
+      <h2 className="mt-8 text-sm font-medium text-neutral-500">Badges</h2>
+      <ul className="mt-3">
+        {earnedBadges({
+          bestStreak: summary.bestStreak,
+          xp: summary.xp,
+          seen: summary.learning + summary.review,
+          finishedDays: summary.finishedDays,
+        }).map((badge) => (
+          <li key={badge.id} className={badge.earned ? "mt-1 text-lg" : "mt-1 text-lg text-neutral-400"}>
+            {badge.earned ? badge.label : `${badge.label} · pas encore`}
+          </li>
+        ))}
+      </ul>
       <button
         type="button"
         onClick={onLibrary}

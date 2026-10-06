@@ -8,6 +8,7 @@ export type ProgressSummary = CardCounts & {
   streak: number
   bestStreak: number
   xp: number
+  finishedDays: number
 }
 
 export function useProgress(): { summary: ProgressSummary | null; error: string | null } {
@@ -22,6 +23,7 @@ export function useProgress(): { summary: ProgressSummary | null; error: string 
         const database = getDatabase()
         const profile = await ensureProfile(database, Date.now())
         const saved = await database.progress.toArray()
+        const days = await database.days.toArray()
         const counts = countCards(
           cards.map((card) => card.id),
           saved.map((row) => ({ cardId: row.cardId, state: row.state })),
@@ -33,6 +35,7 @@ export function useProgress(): { summary: ProgressSummary | null; error: string 
           streak: profile.streak,
           bestStreak: profile.bestStreak,
           xp: profile.xp,
+          finishedDays: days.filter((day) => day.goalMet).length,
           ...counts,
         })
       } catch {
