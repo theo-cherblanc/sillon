@@ -5,7 +5,7 @@ export function TabBar({
   onSettings,
   className = "",
 }: {
-  current: "today" | "progress" | "settings"
+  current?: "today" | "progress" | "settings"
   onToday: () => void
   onProgress: () => void
   onSettings: () => void
