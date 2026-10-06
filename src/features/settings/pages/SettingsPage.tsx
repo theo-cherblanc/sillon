@@ -1,12 +1,18 @@
 import { useRef, useState, type ChangeEvent } from "react"
 import { getDatabase } from "../../../shared/db/client.ts"
 import { localDate } from "../../../shared/lib/dates.ts"
+import { Button } from "../../../shared/ui/Button.tsx"
+import { Chip } from "../../../shared/ui/Chip.tsx"
+import { Cluster, Stack } from "../../../shared/ui/Stack.tsx"
+import { Field } from "../../../shared/ui/Field.tsx"
 import { Screen } from "../../../shared/ui/Screen.tsx"
+import { Section } from "../../../shared/ui/Section.tsx"
 import { TabBar } from "../../../shared/ui/TabBar.tsx"
+import { Lede, Meta } from "../../../shared/ui/Type.tsx"
+import { Stepper } from "../components/Stepper.tsx"
 import { useSettings, type SettingsSummary } from "../hooks/useSettings.ts"
 import { useAccount } from "../hooks/useAccount.ts"
 import { readExport, type ProgressFile } from "../model/export.ts"
-import { maxDailyCount } from "../model/goals.ts"
 import { parseProgressFile, replaceMemory } from "../model/import.ts"
 import { lastExportNote, readLastExport, rememberExport } from "../model/lastExport.ts"
 import { publishMemory } from "../model/remoteMemory.ts"
@@ -46,7 +52,7 @@ export function SettingsPage({
     try {
       rememberTheme(localStorage, next)
       paintTheme(document.documentElement, next)
-      document.querySelector('meta[name="theme-color"]')?.setAttribute("content", next === "dark" ? "#171717" : "#ffffff")
+      document.querySelector('meta[name="theme-color"]')?.setAttribute("content", next === "dark" ? "#0f1923" : "#ece8e1")
       setTheme(next)
     } catch {
       // The previous theme stays if the browser refuses the write.
@@ -118,51 +124,51 @@ export function SettingsPage({
   }
 
   return (
-    <Screen>
-      <h1 className="text-3xl font-semibold tracking-tight">Réglages</h1>
-      <section className="mt-8">
-        <h2 className="text-sm font-medium text-neutral-500">Apparence</h2>
-        <div className="mt-3 flex gap-3">
-          <ThemeChip label="Clair" selected={theme === "light"} onSelect={() => chooseTheme("light")} />
-          <ThemeChip label="Sombre" selected={theme === "dark"} onSelect={() => chooseTheme("dark")} />
-        </div>
-      </section>
-      <AccountSection />
-      <input
-        ref={fileInput}
-        type="file"
-        accept="application/json,.json"
-        className="hidden"
-        onChange={(event) => void choose(event)}
-      />
-      {error ? <p className="mt-8 text-lg">{error}</p> : null}
-      {fileError ? <p className="mt-8 text-lg">{fileError}</p> : null}
-      {notice ? <p className="mt-8 text-lg">{notice}</p> : null}
-      {!error && !summary ? <p className="mt-8 text-lg text-neutral-500">Chargement…</p> : null}
-      {summary ? (
-        <SettingsBody
-          summary={summary}
-          busy={busy}
-          importing={importing}
-          pending={pending}
-          onChange={(dailyGoal, newPerDay) => {
-            setNotice(null)
-            change(dailyGoal, newPerDay)
-          }}
-          onExport={download}
-          exportNote={lastExportNote(lastExport)}
-          onImport={() => fileInput.current?.click()}
-          onConfirm={() => void confirm()}
-          onCancel={() => setPending(null)}
+    <Screen
+      title="Réglages"
+      tabs={<TabBar current="settings" onToday={onToday} onProgress={onProgress} onSettings={() => undefined} />}
+    >
+      <Stack gap={6} pad={6}>
+        <Section title="Apparence">
+          <Cluster>
+            <Chip pressed={theme === "light"} onClick={() => chooseTheme("light")}>
+              Clair
+            </Chip>
+            <Chip pressed={theme === "dark"} onClick={() => chooseTheme("dark")}>
+              Sombre
+            </Chip>
+          </Cluster>
+        </Section>
+        <AccountSection />
+        <input
+          ref={fileInput}
+          type="file"
+          accept="application/json,.json"
+          hidden
+          onChange={(event) => void choose(event)}
         />
-      ) : null}
-      <TabBar
-        current="settings"
-        onToday={onToday}
-        onProgress={onProgress}
-        onSettings={() => undefined}
-        className="mt-auto"
-      />
+        {error ? <p>{error}</p> : null}
+        {fileError ? <p>{fileError}</p> : null}
+        {notice ? <p>{notice}</p> : null}
+        {!error && !summary ? <Meta>Chargement…</Meta> : null}
+        {summary ? (
+          <SettingsBody
+            summary={summary}
+            busy={busy}
+            importing={importing}
+            pending={pending}
+            onChange={(dailyGoal, newPerDay) => {
+              setNotice(null)
+              change(dailyGoal, newPerDay)
+            }}
+            onExport={download}
+            exportNote={lastExportNote(lastExport)}
+            onImport={() => fileInput.current?.click()}
+            onConfirm={() => void confirm()}
+            onCancel={() => setPending(null)}
+          />
+        ) : null}
+      </Stack>
     </Screen>
   )
 }
@@ -225,67 +231,51 @@ function AccountSection() {
   }
 
   return (
-    <section className="mt-8">
-      <h2 className="text-sm font-medium text-neutral-500">Compte</h2>
-      {!account.ready ? <p className="mt-3 text-lg text-neutral-500">Chargement…</p> : null}
+    <Section title="Compte">
+      {!account.ready ? <Meta>Chargement…</Meta> : null}
       {account.ready && account.email ? (
-        <>
-          <p className="mt-3 text-lg">{account.email}</p>
-          <button
-            type="button"
-            onClick={() => void leave()}
-            disabled={busy}
-            className="mt-3 w-full rounded-2xl border border-neutral-300 px-6 py-4 text-lg font-medium disabled:opacity-40"
-          >
+        <Stack gap={3}>
+          <p>{account.email}</p>
+          <Button disabled={busy} onClick={() => void leave()}>
             Se déconnecter
-          </button>
-        </>
+          </Button>
+        </Stack>
       ) : null}
       {account.ready && !account.email ? (
         <form
-          className="mt-3"
           onSubmit={(event) => {
             event.preventDefault()
             void enter()
           }}
         >
-          <input
-            type="email"
-            value={address}
-            onChange={(event) => setAddress(event.target.value)}
-            aria-label="E-mail"
-            autoCapitalize="off"
-            autoCorrect="off"
-            spellCheck={false}
-            className="w-full rounded-2xl border border-neutral-300 px-4 py-4 text-lg"
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            aria-label="Mot de passe"
-            className="mt-3 w-full rounded-2xl border border-neutral-300 px-4 py-4 text-lg"
-          />
-          <button
-            type="submit"
-            disabled={busy}
-            className="mt-3 w-full rounded-2xl bg-neutral-900 px-6 py-4 text-lg font-medium text-white disabled:opacity-40"
-          >
-            Se connecter
-          </button>
-          <button
-            type="button"
-            onClick={() => void register()}
-            disabled={busy}
-            className="mt-3 w-full rounded-2xl border border-neutral-300 px-6 py-4 text-lg font-medium disabled:opacity-40"
-          >
-            Créer un compte
-          </button>
+          <Stack gap={3}>
+            <Field
+              type="email"
+              value={address}
+              onChange={(event) => setAddress(event.target.value)}
+              aria-label="E-mail"
+              autoCapitalize="off"
+              autoCorrect="off"
+              spellCheck={false}
+            />
+            <Field
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              aria-label="Mot de passe"
+            />
+            <Button variant="accent" type="submit" disabled={busy}>
+              Se connecter
+            </Button>
+            <Button disabled={busy} onClick={() => void register()}>
+              Créer un compte
+            </Button>
+          </Stack>
         </form>
       ) : null}
-      {problem ? <p className="mt-3 text-lg">{problem}</p> : null}
-      {note ? <p className="mt-3 text-lg">{note}</p> : null}
-    </section>
+      {problem ? <p>{problem}</p> : null}
+      {note ? <p>{note}</p> : null}
+    </Section>
   )
 }
 
@@ -301,31 +291,6 @@ function accountProblem(error: unknown): string {
     return "Le compte n'a pas pu être créé."
   }
   return "La connexion a échoué."
-}
-
-function ThemeChip({
-  label,
-  selected,
-  onSelect,
-}: {
-  label: string
-  selected: boolean
-  onSelect: () => void
-}) {
-  return (
-    <button
-      type="button"
-      aria-pressed={selected}
-      onClick={onSelect}
-      className={
-        selected
-          ? "rounded-full bg-neutral-900 px-4 py-2 text-lg font-medium text-white"
-          : "rounded-full border border-neutral-300 px-4 py-2 text-lg font-medium"
-      }
-    >
-      {label}
-    </button>
-  )
 }
 
 function SettingsBody({
@@ -367,89 +332,34 @@ function SettingsBody({
         onDecrease={() => onChange(summary.dailyGoal, summary.newPerDay - 1)}
         onIncrease={() => onChange(summary.dailyGoal, summary.newPerDay + 1)}
       />
-      <button
-        type="button"
-        onClick={onExport}
-        disabled={busy}
-        className="mt-8 w-full rounded-2xl border border-neutral-300 px-6 py-4 text-lg font-medium disabled:opacity-40"
-      >
-        Exporter
-      </button>
-      <p className="mt-3 text-sm text-neutral-500">{exportNote}</p>
-      <button
-        type="button"
-        onClick={onImport}
-        disabled={busy}
-        className="mt-3 w-full rounded-2xl border border-neutral-300 px-6 py-4 text-lg font-medium disabled:opacity-40"
-      >
-        Importer
-      </button>
+      <Stack gap={3}>
+        <Button disabled={busy} onClick={onExport}>
+          Exporter
+        </Button>
+        <Meta>{exportNote}</Meta>
+        <Button disabled={busy} onClick={onImport}>
+          Importer
+        </Button>
+      </Stack>
       {pending ? (
-        <section className="mt-8">
-          <h2 className="text-lg font-medium">Remplacer la mémoire actuelle ?</h2>
-          <p className="mt-2 text-neutral-500">
-            Export du {localDate(new Date(pending.exportedAt))} · Série {pending.profile.streak} · {pending.profile.xp} XP
-          </p>
-          <button
-            type="button"
-            onClick={onConfirm}
-            disabled={importing}
-            className="mt-4 w-full rounded-2xl bg-neutral-900 px-6 py-4 text-lg font-medium text-white disabled:opacity-40"
-          >
-            Remplacer
-          </button>
-          <button
-            type="button"
-            onClick={onCancel}
-            disabled={importing}
-            className="mt-3 w-full rounded-2xl border border-neutral-300 px-6 py-4 text-lg font-medium disabled:opacity-40"
-          >
-            Annuler
-          </button>
-        </section>
+        <Stack gap={4}>
+          <Stack gap={2}>
+            <Lede>Remplacer la mémoire actuelle ?</Lede>
+            <Meta>
+              Export du {localDate(new Date(pending.exportedAt))} · Série {pending.profile.streak} · {pending.profile.xp} XP
+            </Meta>
+          </Stack>
+          <Stack gap={3}>
+            <Button variant="accent" disabled={importing} onClick={onConfirm}>
+              Remplacer
+            </Button>
+            <Button disabled={importing} onClick={onCancel}>
+              Annuler
+            </Button>
+          </Stack>
+        </Stack>
       ) : null}
-      <p className="mt-8 text-sm text-neutral-500">Schéma {summary.schemaVersion}</p>
+      <Meta>Schéma {summary.schemaVersion}</Meta>
     </>
-  )
-}
-
-function Stepper({
-  label,
-  value,
-  saving,
-  onDecrease,
-  onIncrease,
-}: {
-  label: string
-  value: number
-  saving: boolean
-  onDecrease: () => void
-  onIncrease: () => void
-}) {
-  return (
-    <section className="mt-8">
-      <h2 className="text-sm font-medium text-neutral-500">{label}</h2>
-      <div className="mt-3 flex items-center justify-between">
-        <button
-          type="button"
-          aria-label={`Diminuer ${label}`}
-          disabled={saving || value === 0}
-          onClick={onDecrease}
-          className="h-12 w-12 rounded-2xl border border-neutral-300 text-2xl leading-none disabled:opacity-40"
-        >
-          −
-        </button>
-        <p className="text-3xl font-medium">{value}</p>
-        <button
-          type="button"
-          aria-label={`Augmenter ${label}`}
-          disabled={saving || value === maxDailyCount}
-          onClick={onIncrease}
-          className="h-12 w-12 rounded-2xl border border-neutral-300 text-2xl leading-none disabled:opacity-40"
-        >
-          +
-        </button>
-      </div>
-    </section>
   )
 }

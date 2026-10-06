@@ -1,5 +1,11 @@
+import { Button } from "../../../shared/ui/Button.tsx"
 import { Screen } from "../../../shared/ui/Screen.tsx"
+import { Stack } from "../../../shared/ui/Stack.tsx"
 import { TabBar } from "../../../shared/ui/TabBar.tsx"
+import { XpMeter } from "../../../shared/ui/Meter.tsx"
+import { Stat } from "../../../shared/ui/Stat.tsx"
+import { Lede, Meta } from "../../../shared/ui/Type.tsx"
+import { Lobby } from "../components/Lobby.tsx"
 import { useToday } from "../hooks/useToday.ts"
 import { todayStatus, type TodaySummary } from "../model/today.ts"
 
@@ -13,39 +19,41 @@ export function TodayPage({
   onSettings: () => void
 }) {
   const { summary, error } = useToday()
+  const ready = summary !== null && summary.queueSize > 0
 
   return (
-    <Screen>
-      <h1 className="text-3xl font-semibold tracking-tight">Aujourd'hui</h1>
-      {error ? <p className="mt-8 text-lg">{error}</p> : null}
-      {!error && !summary ? <p className="mt-8 text-lg text-neutral-500">Chargement…</p> : null}
-      {summary ? <TodayBody summary={summary} onReview={onReview} /> : null}
-      <TabBar
-        current="today"
-        onToday={() => undefined}
-        onProgress={onProgress}
-        onSettings={onSettings}
-        className={summary && summary.queueSize > 0 ? "" : "mt-auto"}
-      />
+    <Screen
+      title="Aujourd'hui"
+      largeMark
+      dock={
+        ready ? (
+          <Button variant="accent" onClick={onReview}>
+            Réviser
+          </Button>
+        ) : null
+      }
+      tabs={<TabBar current="today" onToday={() => undefined} onProgress={onProgress} onSettings={onSettings} />}
+    >
+      {error ? <p>{error}</p> : null}
+      {!error && !summary ? <Meta>Chargement…</Meta> : null}
+      {summary ? <TodayBody summary={summary} /> : null}
     </Screen>
   )
 }
 
-function TodayBody({ summary, onReview }: { summary: TodaySummary; onReview: () => void }) {
+function TodayBody({ summary }: { summary: TodaySummary }) {
+  const waiting = summary.queueSize === 0
   return (
-    <>
-      <p className="mt-8 text-lg">Série {summary.streak}</p>
-      <p className="mt-1 text-lg">{summary.xp} XP</p>
-      <p className="mt-8 text-2xl font-medium">{todayStatus(summary)}</p>
-      {summary.queueSize > 0 ? (
-        <button
-          type="button"
-          onClick={onReview}
-          className="mt-auto w-full rounded-2xl bg-neutral-900 px-6 py-4 text-lg font-medium text-white"
-        >
-          Réviser
-        </button>
-      ) : null}
-    </>
+    <Stack gap={6}>
+      {waiting ? (
+        <Lede>{todayStatus(summary)}</Lede>
+      ) : (
+        <Lobby count={summary.queueSize} label={summary.queueSize === 1 ? "carte en file" : "cartes en file"} />
+      )}
+      <Stack gap={4}>
+        <Stat value={String(summary.streak).padStart(2, "0")} label="Série" />
+        <XpMeter xp={summary.xp} />
+      </Stack>
+    </Stack>
   )
 }

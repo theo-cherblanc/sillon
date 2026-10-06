@@ -1,5 +1,11 @@
+import { Badge, BadgeGrid } from "../../../shared/ui/Badge.tsx"
+import { Button } from "../../../shared/ui/Button.tsx"
 import { Screen } from "../../../shared/ui/Screen.tsx"
+import { Stack } from "../../../shared/ui/Stack.tsx"
 import { TabBar } from "../../../shared/ui/TabBar.tsx"
+import { XpMeter } from "../../../shared/ui/Meter.tsx"
+import { PlateGrid, Stat } from "../../../shared/ui/Stat.tsx"
+import { Kicker, Meta } from "../../../shared/ui/Type.tsx"
 import { useProgress, type ProgressSummary } from "../hooks/useProgress.ts"
 import { earnedBadges } from "../model/badges.ts"
 
@@ -15,56 +21,50 @@ export function ProgressPage({
   const { summary, error } = useProgress()
 
   return (
-    <Screen>
-      <h1 className="text-3xl font-semibold tracking-tight">Progression</h1>
-      {error ? <p className="mt-8 text-lg">{error}</p> : null}
-      {!error && !summary ? <p className="mt-8 text-lg text-neutral-500">Chargement…</p> : null}
+    <Screen
+      title="Progression"
+      tabs={<TabBar current="progress" onToday={onToday} onProgress={() => undefined} onSettings={onSettings} />}
+    >
+      {error ? <p>{error}</p> : null}
+      {!error && !summary ? <Meta>Chargement…</Meta> : null}
       {summary ? <ProgressBody summary={summary} onLibrary={onLibrary} /> : null}
-      <TabBar
-        current="progress"
-        onToday={onToday}
-        onProgress={() => undefined}
-        onSettings={onSettings}
-        className="mt-auto"
-      />
     </Screen>
   )
 }
 
 function ProgressBody({ summary, onLibrary }: { summary: ProgressSummary; onLibrary: () => void }) {
   return (
-    <>
-      <p className="mt-8 text-lg">Série {summary.streak}</p>
-      <p className="mt-1 text-lg">Record {summary.bestStreak}</p>
-      <p className="mt-1 text-lg">{summary.xp} XP</p>
-      <h2 className="mt-8 text-sm font-medium text-neutral-500">Cartes</h2>
-      <p className="mt-3 text-lg">{label(summary.fresh, "nouvelle", "nouvelles")}</p>
-      <p className="mt-1 text-lg">{label(summary.learning, "en apprentissage", "en apprentissage")}</p>
-      <p className="mt-1 text-lg">{label(summary.review, "à jour", "à jour")}</p>
-      <h2 className="mt-8 text-sm font-medium text-neutral-500">Badges</h2>
-      <ul className="mt-3">
-        {earnedBadges({
-          bestStreak: summary.bestStreak,
-          xp: summary.xp,
-          seen: summary.learning + summary.review,
-          finishedDays: summary.finishedDays,
-        }).map((badge) => (
-          <li key={badge.id} className={badge.earned ? "mt-1 text-lg" : "mt-1 text-lg text-neutral-400"}>
-            {badge.earned ? badge.label : `${badge.label} · pas encore`}
-          </li>
-        ))}
-      </ul>
-      <button
-        type="button"
-        onClick={onLibrary}
-        className="mt-8 w-full rounded-2xl border border-neutral-300 px-6 py-4 text-lg font-medium"
-      >
-        Voir les cartes
-      </button>
-    </>
+    <Stack gap={6}>
+      <Stack gap={8}>
+        <Stack gap={6}>
+          <Stack gap={4}>
+            <PlateGrid columns={2}>
+              <Stat value={String(summary.streak).padStart(2, "0")} label="Série" />
+              <Stat value={String(summary.bestStreak).padStart(2, "0")} label="Record" />
+            </PlateGrid>
+            <XpMeter xp={summary.xp} />
+          </Stack>
+          <PlateGrid columns={3}>
+            <Stat value={String(summary.fresh)} label={summary.fresh === 1 ? "nouvelle" : "nouvelles"} />
+            <Stat value={String(summary.learning)} label="apprentissage" />
+            <Stat value={String(summary.review)} label="à jour" />
+          </PlateGrid>
+        </Stack>
+        <Stack gap={3}>
+          <Kicker as="h2">Badges</Kicker>
+          <BadgeGrid>
+            {earnedBadges({
+              bestStreak: summary.bestStreak,
+              xp: summary.xp,
+              seen: summary.learning + summary.review,
+              finishedDays: summary.finishedDays,
+            }).map((badge) => (
+              <Badge key={badge.id} earned={badge.earned} label={badge.label} />
+            ))}
+          </BadgeGrid>
+        </Stack>
+      </Stack>
+      <Button onClick={onLibrary}>Voir les cartes</Button>
+    </Stack>
   )
-}
-
-function label(count: number, singular: string, plural: string) {
-  return `${count} ${count === 1 ? singular : plural}`
 }

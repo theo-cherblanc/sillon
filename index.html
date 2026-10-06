@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#0f1923" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Sillon" />
     <link rel="icon" href="/icon-192.png" sizes="192x192" />
@@ -12,15 +12,15 @@
     <title>Sillon</title>
     <script>
       try {
-        if (localStorage.getItem("sillon.theme") === "dark") {
-          document.documentElement.dataset.theme = "dark"
+        if (localStorage.getItem("sillon.theme") === "light") {
+          document.documentElement.dataset.theme = "light"
           var themeColor = document.querySelector('meta[name="theme-color"]')
           if (themeColor) {
-            themeColor.setAttribute("content", "#171717")
+            themeColor.setAttribute("content", "#ece8e1")
           }
         }
       } catch (error) {
-        // A blocked store leaves the light theme in place.
+        // A blocked store leaves the dark theme in place.
       }
     </script>
   </head>

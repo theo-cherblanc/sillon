@@ -2,7 +2,10 @@ import { useState } from "react"
 import type { ProgressFile } from "../model/export.ts"
 import { acceptRemoteMemory } from "../model/remoteMemory.ts"
 import { localDate } from "../../../shared/lib/dates.ts"
+import { Button } from "../../../shared/ui/Button.tsx"
 import { Screen } from "../../../shared/ui/Screen.tsx"
+import { Stack } from "../../../shared/ui/Stack.tsx"
+import { Lede, Meta } from "../../../shared/ui/Type.tsx"
 
 export function RemotePrompt({
   file,
@@ -29,28 +32,28 @@ export function RemotePrompt({
   }
 
   return (
-    <Screen>
-      <h1 className="text-3xl font-semibold tracking-tight">Remplacer la mémoire actuelle ?</h1>
-      <p className="mt-8 text-neutral-500">
-        Copie du {localDate(new Date(file.exportedAt))} · Série {file.profile.streak} · {file.profile.xp} XP
-      </p>
-      {problem ? <p className="mt-8 text-lg">{problem}</p> : null}
-      <button
-        type="button"
-        onClick={() => void accept()}
-        disabled={busy}
-        className="mt-8 w-full rounded-2xl bg-neutral-900 px-6 py-4 text-lg font-medium text-white disabled:opacity-40"
-      >
-        Remplacer
-      </button>
-      <button
-        type="button"
-        onClick={onDismiss}
-        disabled={busy}
-        className="mt-3 w-full rounded-2xl border border-neutral-300 px-6 py-4 text-lg font-medium disabled:opacity-40"
-      >
-        Annuler
-      </button>
+    <Screen
+      title="Mémoire"
+      dock={
+        <>
+          <Button variant="accent" disabled={busy} onClick={() => void accept()}>
+            Remplacer
+          </Button>
+          <Button disabled={busy} onClick={onDismiss}>
+            Annuler
+          </Button>
+        </>
+      }
+    >
+      <Stack gap={6}>
+        <Stack gap={3}>
+          <Lede>Remplacer la mémoire actuelle ?</Lede>
+          <Meta>
+            Copie du {localDate(new Date(file.exportedAt))} · Série {file.profile.streak} · {file.profile.xp} XP
+          </Meta>
+        </Stack>
+        {problem ? <p>{problem}</p> : null}
+      </Stack>
     </Screen>
   )
 }

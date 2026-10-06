@@ -3,16 +3,14 @@ export function TabBar({
   onToday,
   onProgress,
   onSettings,
-  className = "",
 }: {
   current?: "today" | "progress" | "settings"
   onToday: () => void
   onProgress: () => void
   onSettings: () => void
-  className?: string
 }) {
   return (
-    <nav className={`flex justify-between gap-3 pt-6 ${className}`}>
+    <nav className="grid grid-cols-3 border-t border-line pb-[env(safe-area-inset-bottom)]">
       <Tab current={current === "today"} onClick={onToday} label="Aujourd'hui" />
       <Tab current={current === "progress"} onClick={onProgress} label="Progression" />
       <Tab current={current === "settings"} onClick={onSettings} label="Réglages" />
@@ -26,7 +24,7 @@ function Tab({ current, onClick, label }: { current: boolean; onClick: () => voi
       type="button"
       onClick={onClick}
       aria-current={current ? "page" : undefined}
-      className={current ? "text-base font-medium" : "text-base text-neutral-500"}
+      className="relative min-h-13 border-0 bg-transparent px-1 pt-2 font-display text-xs leading-[1.2] font-medium tracking-[0.04em] text-muted uppercase aria-[current=page]:text-ink aria-[current=page]:shadow-[inset_0_3px_0_var(--color-accent)]"
     >
       {label}
     </button>

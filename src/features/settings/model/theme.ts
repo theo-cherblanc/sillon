@@ -12,7 +12,7 @@ type ThemeRoot = {
 }
 
 export function readTheme(memory: Pick<ThemeMemory, "getItem">): Theme {
-  return memory.getItem(themeKey) === "dark" ? "dark" : "light"
+  return memory.getItem(themeKey) === "light" ? "light" : "dark"
 }
 
 export function rememberTheme(memory: ThemeMemory, theme: Theme): void {

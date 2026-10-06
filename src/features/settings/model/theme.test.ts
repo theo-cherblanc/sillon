@@ -3,13 +3,13 @@ import { describe, it } from "node:test"
 import { paintTheme, readTheme, rememberTheme, themeKey } from "./theme.ts"
 
 describe("readTheme", () => {
-  it("stays light when nothing is stored or the value is unknown", () => {
-    assert.equal(readTheme({ getItem: () => null }), "light")
-    assert.equal(readTheme({ getItem: () => "blue" }), "light")
+  it("stays dark when nothing is stored or the value is unknown", () => {
+    assert.equal(readTheme({ getItem: () => null }), "dark")
+    assert.equal(readTheme({ getItem: () => "blue" }), "dark")
   })
 
-  it("keeps a stored dark theme", () => {
-    assert.equal(readTheme({ getItem: () => "dark" }), "dark")
+  it("keeps a stored light theme", () => {
+    assert.equal(readTheme({ getItem: () => "light" }), "light")
   })
 })
 

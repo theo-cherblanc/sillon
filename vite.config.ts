@@ -39,7 +39,7 @@ export default defineConfig({
       registerType: "autoUpdate",
       manifest: false,
       workbox: {
-        globPatterns: ["**/*.{js,css,html,png,webmanifest}"],
+        globPatterns: ["**/*.{js,css,html,png,ttf,woff2,webmanifest}"],
         navigateFallback: "index.html",
       },
       devOptions: {
