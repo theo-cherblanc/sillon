@@ -1,9 +1,14 @@
 ---
 id: js.prototypes.002
-type: reveal
+type: mcq
 topic: javascript
 tags: [prototypes]
 difficulty: 2
+choices:
+  - { id: a, text: "`ada`" }
+  - { id: b, text: "`User.prototype`" }
+  - { id: c, text: "`Function.prototype`" }
+correctChoiceId: b
 ---
 
 Juste après `const ada = new User("Ada")`, que renvoie `Object.getPrototypeOf(ada)` ?
@@ -14,10 +19,6 @@ function User(name) {
 }
 const ada = new User("Ada")
 ```
-
-## Réponse
-
-`User.prototype`
 
 ## Explication
 

@@ -1,16 +1,17 @@
 ---
 id: git.stage.001
-type: reveal
+type: mcq
 topic: git
 tags: [git]
 difficulty: 1
+choices:
+  - { id: a, text: "À publier le commit sur le dépôt distant." }
+  - { id: b, text: "À choisir ce que le prochain commit contiendra." }
+  - { id: c, text: "À nommer la branche en cours." }
+correctChoiceId: b
 ---
 
 À quoi sert la zone d'index, celle que `git add` remplit ?
-
-## Réponse
-
-À choisir ce que le prochain commit contiendra.
 
 ## Explication
 

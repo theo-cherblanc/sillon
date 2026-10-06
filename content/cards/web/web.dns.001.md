@@ -1,16 +1,17 @@
 ---
 id: web.dns.001
-type: reveal
+type: mcq
 topic: web
 tags: [web, dns]
 difficulty: 1
+choices:
+  - { id: a, text: "À chiffrer l'échange entre le navigateur et le serveur." }
+  - { id: b, text: "À trouver l'adresse d'une machine à partir d'un nom." }
+  - { id: c, text: "À décider quel CSS s'applique à un élément." }
+correctChoiceId: b
 ---
 
 À quoi sert le DNS ?
-
-## Réponse
-
-À trouver l'adresse d'une machine à partir d'un nom.
 
 ## Explication
 

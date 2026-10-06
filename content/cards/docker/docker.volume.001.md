@@ -1,16 +1,17 @@
 ---
 id: docker.volume.001
-type: reveal
+type: mcq
 topic: docker
 tags: [docker]
 difficulty: 2
+choices:
+  - { id: a, text: "À garder des données après la suppression du conteneur." }
+  - { id: b, text: "À publier les ports du conteneur sur la machine." }
+  - { id: c, text: "À partager le réseau avec les autres conteneurs." }
+correctChoiceId: a
 ---
 
 À quoi sert un volume ?
-
-## Réponse
-
-À garder des données après la suppression du conteneur.
 
 ## Explication
 

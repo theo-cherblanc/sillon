@@ -1,16 +1,17 @@
 ---
 id: git.commit.001
-type: reveal
+type: mcq
 topic: git
 tags: [git]
 difficulty: 1
+choices:
+  - { id: a, text: "Le dossier où Git range les fichiers ignorés." }
+  - { id: b, text: "Un instantané enregistré du projet, avec un auteur et un message." }
+  - { id: c, text: "La branche qui reçoit les commits des autres." }
+correctChoiceId: b
 ---
 
 Qu'est-ce qu'un commit ?
-
-## Réponse
-
-Un instantané enregistré du projet, avec un auteur et un message.
 
 ## Explication
 

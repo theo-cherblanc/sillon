@@ -1,16 +1,17 @@
 ---
 id: shell.grep.001
-type: reveal
+type: mcq
 topic: shell
 tags: [shell]
 difficulty: 1
+choices:
+  - { id: a, text: "Il affiche les lignes qui correspondent à un motif." }
+  - { id: b, text: "Il compte les fichiers d'un dossier." }
+  - { id: c, text: "Il change les droits d'un fichier." }
+correctChoiceId: a
 ---
 
 Que fait `grep` ?
-
-## Réponse
-
-Il affiche les lignes qui correspondent à un motif.
 
 ## Explication
 

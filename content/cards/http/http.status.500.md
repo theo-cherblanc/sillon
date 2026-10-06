@@ -1,16 +1,17 @@
 ---
 id: http.status.500
-type: reveal
+type: mcq
 topic: http
 tags: [http, status]
 difficulty: 1
+choices:
+  - { id: a, text: "`Internal Server Error`. Le serveur a échoué en traitant la requête." }
+  - { id: b, text: "`Bad Request`. Le serveur n'a pas compris la requête." }
+  - { id: c, text: "`Not Found`. Cette adresse ne correspond à aucune ressource." }
+correctChoiceId: a
 ---
 
 Que signifie le statut HTTP `500` ?
-
-## Réponse
-
-`Internal Server Error`. Le serveur a échoué en traitant la requête.
 
 ## Explication
 

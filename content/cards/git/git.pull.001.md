@@ -1,16 +1,17 @@
 ---
 id: git.pull.001
-type: reveal
+type: mcq
 topic: git
 tags: [git]
 difficulty: 2
+choices:
+  - { id: a, text: "Il crée une branche locale à partir du commit actuel." }
+  - { id: b, text: "Il récupère les commits distants, puis les intègre. Par défaut, cette intégration est un merge." }
+  - { id: c, text: "Il jette les commits locaux et remet le dossier comme le distant." }
+correctChoiceId: b
 ---
 
 Que fait `git pull` ?
-
-## Réponse
-
-Il récupère les commits distants, puis les intègre. Par défaut, cette intégration est un merge.
 
 ## Explication
 

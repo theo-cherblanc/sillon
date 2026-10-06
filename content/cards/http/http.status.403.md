@@ -1,16 +1,17 @@
 ---
 id: http.status.403
-type: reveal
+type: mcq
 topic: http
 tags: [http, status]
 difficulty: 2
+choices:
+  - { id: a, text: "`Not Found`. Cette adresse ne correspond à aucune ressource." }
+  - { id: b, text: "`Unauthorized`. Le client n'a pas prouvé qui il est." }
+  - { id: c, text: "`Forbidden`. Le serveur refuse l'action." }
+correctChoiceId: c
 ---
 
 Que signifie le statut HTTP `403` ?
-
-## Réponse
-
-`Forbidden`. Le serveur refuse l'action.
 
 ## Explication
 

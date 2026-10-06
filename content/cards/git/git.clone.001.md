@@ -1,16 +1,17 @@
 ---
 id: git.clone.001
-type: reveal
+type: mcq
 topic: git
 tags: [git]
 difficulty: 1
+choices:
+  - { id: a, text: "Il crée un commit avec les fichiers du dossier courant." }
+  - { id: b, text: "Il copie un dépôt sur la machine, historique compris." }
+  - { id: c, text: "Il envoie la branche locale vers le dépôt distant." }
+correctChoiceId: b
 ---
 
 Que fait `git clone` ?
-
-## Réponse
-
-Il copie un dépôt sur la machine, historique compris.
 
 ## Explication
 

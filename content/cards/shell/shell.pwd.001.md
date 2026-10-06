@@ -1,16 +1,17 @@
 ---
 id: shell.pwd.001
-type: reveal
+type: mcq
 topic: shell
 tags: [shell]
 difficulty: 1
+choices:
+  - { id: a, text: "Il affiche le dossier courant." }
+  - { id: b, text: "Il affiche le dossier personnel." }
+  - { id: c, text: "Il change le dossier courant." }
+correctChoiceId: a
 ---
 
 Que fait `pwd` ?
-
-## Réponse
-
-Il affiche le dossier courant.
 
 ## Explication
 

@@ -1,16 +1,17 @@
 ---
 id: web.dom.001
-type: reveal
+type: mcq
 topic: web
 tags: [web, dom]
 difficulty: 1
+choices:
+  - { id: a, text: "Le protocole qui charge la page." }
+  - { id: b, text: "Le fichier qui liste les scripts autorisés." }
+  - { id: c, text: "L'arbre de la page, construit par le navigateur, que le JavaScript peut lire et modifier." }
+correctChoiceId: c
 ---
 
 Qu'est-ce que le DOM ?
-
-## Réponse
-
-L'arbre de la page, construit par le navigateur, que le JavaScript peut lire et modifier.
 
 ## Explication
 

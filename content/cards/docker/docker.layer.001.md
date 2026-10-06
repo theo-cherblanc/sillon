@@ -1,16 +1,17 @@
 ---
 id: docker.layer.001
-type: reveal
+type: mcq
 topic: docker
 tags: [docker]
 difficulty: 3
+choices:
+  - { id: a, text: "Chaque instruction est une couche. Docker réutilise le cache tant que la couche n'a pas changé." }
+  - { id: b, text: "Docker reconstruit toujours tout, l'ordre ne change que la lisibilité." }
+  - { id: c, text: "La dernière instruction efface les couches précédentes." }
+correctChoiceId: a
 ---
 
 Pourquoi l'ordre des instructions d'un Dockerfile change-t-il la vitesse de construction ?
-
-## Réponse
-
-Chaque instruction est une couche. Docker réutilise le cache tant que la couche n'a pas changé.
 
 ## Explication
 

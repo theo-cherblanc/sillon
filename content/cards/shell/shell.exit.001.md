@@ -1,16 +1,17 @@
 ---
 id: shell.exit.001
-type: reveal
+type: mcq
 topic: shell
 tags: [shell]
 difficulty: 2
+choices:
+  - { id: a, text: "`0` veut dire succès. Un autre nombre veut dire échec." }
+  - { id: b, text: "`0` veut dire échec. `1` veut dire succès." }
+  - { id: c, text: "Le code de sortie est le nombre de lignes affichées." }
+correctChoiceId: a
 ---
 
 Que veut dire le code de sortie d'une commande ?
-
-## Réponse
-
-`0` veut dire succès. Un autre nombre veut dire échec.
 
 ## Explication
 

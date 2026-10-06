@@ -1,16 +1,17 @@
 ---
 id: shell.path.001
-type: reveal
+type: mcq
 topic: shell
 tags: [shell]
 difficulty: 1
+choices:
+  - { id: a, text: "`/` est le dossier courant. `.` est son parent. `..` est la racine." }
+  - { id: b, text: "Les trois désignent le dossier personnel." }
+  - { id: c, text: "`/` est la racine. `.` est le dossier courant. `..` est son parent." }
+correctChoiceId: c
 ---
 
 Que veulent dire `/`, `.` et `..` dans un chemin ?
-
-## Réponse
-
-`/` est la racine. `.` est le dossier courant. `..` est son parent.
 
 ## Explication
 

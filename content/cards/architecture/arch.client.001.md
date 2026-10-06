@@ -1,16 +1,17 @@
 ---
 id: arch.client.001
-type: reveal
+type: mcq
 topic: architecture
 tags: [architecture]
 difficulty: 1
+choices:
+  - { id: a, text: "Le client envoie une requête. Le serveur renvoie une réponse." }
+  - { id: b, text: "Le serveur envoie la page, puis le client la renvoie corrigée." }
+  - { id: c, text: "Les deux écrivent dans la même base, chacun à son tour." }
+correctChoiceId: a
 ---
 
 Dans un échange client-serveur, qui fait quoi ?
-
-## Réponse
-
-Le client envoie une requête. Le serveur renvoie une réponse.
 
 ## Explication
 

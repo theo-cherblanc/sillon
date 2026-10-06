@@ -1,16 +1,17 @@
 ---
 id: http.status.200
-type: reveal
+type: mcq
 topic: http
 tags: [http, status]
 difficulty: 1
+choices:
+  - { id: a, text: "`OK`. La requête a réussi, et la réponse apporte son résultat." }
+  - { id: b, text: "`Created`. La requête a réussi, et une ressource a été créée." }
+  - { id: c, text: "`Not Found`. Cette adresse ne correspond à aucune ressource." }
+correctChoiceId: a
 ---
 
 Que signifie le statut HTTP `200` ?
-
-## Réponse
-
-`OK`. La requête a réussi, et la réponse apporte son résultat.
 
 ## Explication
 

@@ -1,16 +1,17 @@
 ---
 id: http.status.429
-type: reveal
+type: mcq
 topic: http
 tags: [http, status]
 difficulty: 2
+choices:
+  - { id: a, text: "`Bad Request`. Le serveur n'a pas compris la requête." }
+  - { id: b, text: "`Too Many Requests`. Le client a envoyé trop de requêtes." }
+  - { id: c, text: "`Internal Server Error`. Le serveur a échoué en traitant la requête." }
+correctChoiceId: b
 ---
 
 Que signifie le statut HTTP `429` ?
-
-## Réponse
-
-`Too Many Requests`. Le client a envoyé trop de requêtes.
 
 ## Explication
 

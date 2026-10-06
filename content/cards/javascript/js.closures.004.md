@@ -1,9 +1,14 @@
 ---
 id: js.closures.004
-type: reveal
+type: mcq
 topic: javascript
 tags: [closures, scope]
 difficulty: 3
+choices:
+  - { id: a, text: "`0`" }
+  - { id: b, text: "`3`" }
+  - { id: c, text: "`undefined`" }
+correctChoiceId: a
 ---
 
 Que renvoie `fns[0]()` ?
@@ -14,10 +19,6 @@ for (let i = 0; i < 3; i++) {
   fns.push(() => i)
 }
 ```
-
-## Réponse
-
-`0`
 
 ## Explication
 

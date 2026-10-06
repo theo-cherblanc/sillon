@@ -1,16 +1,17 @@
 ---
 id: docker.secret.001
-type: reveal
+type: mcq
 topic: docker
 tags: [docker]
 difficulty: 2
+choices:
+  - { id: a, text: "L'image se partage et se conserve. Le secret resterait dans ses couches." }
+  - { id: b, text: "Docker chiffre automatiquement chaque mot de passe écrit dans l'image." }
+  - { id: c, text: "Un mot de passe dans l'image n'est lisible que pendant `docker build`." }
+correctChoiceId: a
 ---
 
 Pourquoi ne pas écrire un mot de passe dans l'image ?
-
-## Réponse
-
-L'image se partage et se conserve. Le secret resterait dans ses couches.
 
 ## Explication
 

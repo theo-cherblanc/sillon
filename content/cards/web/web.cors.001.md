@@ -1,16 +1,17 @@
 ---
 id: web.cors.001
-type: reveal
+type: mcq
 topic: web
 tags: [web, cors]
 difficulty: 2
+choices:
+  - { id: a, text: "Un cache partagé entre tous les sites ouverts." }
+  - { id: b, text: "Une règle du navigateur : un script ne lit la réponse d'une autre origine que si le serveur l'y autorise." }
+  - { id: c, text: "Le certificat qui chiffre la page." }
+correctChoiceId: b
 ---
 
 Qu'est-ce que CORS ?
-
-## Réponse
-
-Une règle du navigateur : un script ne lit la réponse d'une autre origine que si le serveur l'y autorise.
 
 ## Explication
 

@@ -1,7 +1,7 @@
 [
   {
     "id": "arch.api.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "architecture",
     "tags": [
       "architecture"
@@ -9,11 +9,25 @@
     "difficulty": 1,
     "prompt": "Qu'est-ce qu'une API ?",
     "explanation": "Deux programmes se parlent à travers ce contrat, sans partager leur intérieur. Une API HTTP en est une forme. Une bibliothèque a aussi une API : les fonctions publiques qu'on a le droit d'appeler.",
-    "answer": "Un contrat : quels appels existent, ce qu'ils acceptent, ce qu'ils renvoient."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une base de données partagée entre deux programmes."
+      },
+      {
+        "id": "b",
+        "text": "Le style visuel commun à toutes les pages."
+      },
+      {
+        "id": "c",
+        "text": "Un contrat : quels appels existent, ce qu'ils acceptent, ce qu'ils renvoient."
+      }
+    ],
+    "correctChoiceId": "c"
   },
   {
     "id": "arch.cache.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "architecture",
     "tags": [
       "architecture"
@@ -21,11 +35,25 @@
     "difficulty": 1,
     "prompt": "À quoi sert un cache ?",
     "explanation": "Le navigateur, un serveur ou une base peuvent cacher une réponse. Le gain est la vitesse. Le risque est une copie périmée : il faut savoir quand elle n'est plus valable.",
-    "answer": "À garder une copie d'un résultat pour ne pas refaire le travail."
+    "choices": [
+      {
+        "id": "a",
+        "text": "À chiffrer les données avant de les envoyer."
+      },
+      {
+        "id": "b",
+        "text": "À supprimer les fichiers temporaires à chaque requête."
+      },
+      {
+        "id": "c",
+        "text": "À garder une copie d'un résultat pour ne pas refaire le travail."
+      }
+    ],
+    "correctChoiceId": "c"
   },
   {
     "id": "arch.client.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "architecture",
     "tags": [
       "architecture"
@@ -33,11 +61,25 @@
     "difficulty": 1,
     "prompt": "Dans un échange client-serveur, qui fait quoi ?",
     "explanation": "Le navigateur est un client. L'API qu'il appelle est le serveur de cet échange. Le même programme peut être client d'un autre service une seconde plus tard. Les rôles décrivent l'échange, pas une machine pour toujours.",
-    "answer": "Le client envoie une requête. Le serveur renvoie une réponse."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le client envoie une requête. Le serveur renvoie une réponse."
+      },
+      {
+        "id": "b",
+        "text": "Le serveur envoie la page, puis le client la renvoie corrigée."
+      },
+      {
+        "id": "c",
+        "text": "Les deux écrivent dans la même base, chacun à son tour."
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "arch.idempotent.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "architecture",
     "tags": [
       "architecture",
@@ -46,11 +88,25 @@
     "difficulty": 2,
     "prompt": "Qu'est-ce qu'une opération idempotente ?",
     "explanation": "`PUT` avec le même corps deux fois laisse la ressource dans le même état. `POST` qui crée à chaque appel ne l'est pas : deux appels peuvent créer deux ressources. Réessayer une opération idempotente est sans surprise.",
-    "answer": "La refaire une fois de plus laisse le même résultat que l'avoir faite une seule fois."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Elle ne peut réussir qu'une seule fois, puis elle est refusée."
+      },
+      {
+        "id": "b",
+        "text": "La refaire une fois de plus laisse le même résultat que l'avoir faite une seule fois."
+      },
+      {
+        "id": "c",
+        "text": "Elle s'exécute plus vite à chaque appel."
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "arch.monolith.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "architecture",
     "tags": [
       "architecture"
@@ -58,7 +114,21 @@
     "difficulty": 2,
     "prompt": "Qu'est-ce qu'un monolithe ?",
     "explanation": "L'interface, l'API et l'accès aux données peuvent vivre dans ce même livrable. Plusieurs services, à l'inverse, sont plusieurs programmes déployés séparément, qui se parlent. Le mot décrit le découpage, pas la qualité.",
-    "answer": "Un seul programme, déployé ensemble, qui porte plusieurs responsabilités."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Plusieurs services, chacun déployé de son côté."
+      },
+      {
+        "id": "b",
+        "text": "Un seul programme, déployé ensemble, qui porte plusieurs responsabilités."
+      },
+      {
+        "id": "c",
+        "text": "Une base qui stocke tout l'historique du projet."
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "arch.persist.001",
@@ -88,7 +158,7 @@
   },
   {
     "id": "arch.rest.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "architecture",
     "tags": [
       "architecture",
@@ -97,11 +167,25 @@
     "difficulty": 2,
     "prompt": "Qu'est-ce qu'une API REST, dans l'usage courant ?",
     "explanation": "`GET /cartes/1` lit, `POST /cartes` crée, `DELETE /cartes/1` supprime. REST n'est pas un format de fichier imposé. C'est une façon de caler l'API sur HTTP. Le corps est souvent du JSON.",
-    "answer": "Une API qui nomme des ressources par des URL et utilise les méthodes HTTP pour les actions."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une API qui n'accepte que du JSON et interdit les erreurs."
+      },
+      {
+        "id": "b",
+        "text": "Une API qui garde la session du client entre chaque appel."
+      },
+      {
+        "id": "c",
+        "text": "Une API qui nomme des ressources par des URL et utilise les méthodes HTTP pour les actions."
+      }
+    ],
+    "correctChoiceId": "c"
   },
   {
     "id": "arch.spa.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "architecture",
     "tags": [
       "architecture",
@@ -110,11 +194,25 @@
     "difficulty": 2,
     "prompt": "Qu'est-ce qu'une SPA ?",
     "explanation": "SPA veut dire single-page application. Changer de vue ne recharge pas forcément un nouveau document HTML. Le serveur fournit souvent une API, et le navigateur compose l'interface.",
-    "answer": "Une application d'une seule page : le navigateur charge un document, puis le JavaScript change l'écran."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une application d'une seule page : le navigateur charge un document, puis le JavaScript change l'écran."
+      },
+      {
+        "id": "b",
+        "text": "Une page qui ne contient ni CSS ni JavaScript."
+      },
+      {
+        "id": "c",
+        "text": "Un site où chaque lien recharge un document complet depuis le serveur."
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "arch.stateless.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "architecture",
     "tags": [
       "architecture"
@@ -122,7 +220,21 @@
     "difficulty": 2,
     "prompt": "Que veut dire qu'un serveur est sans état ?",
     "explanation": "Deux requêtes identiques peuvent être reçues par deux machines différentes. Ce dont le serveur a besoin voyage avec la requête, ou se trouve dans un stockage partagé. Ce n'est pas « l'application n'a aucune donnée ».",
-    "answer": "Chaque requête contient ce qu'il faut pour la traiter. Le serveur ne dépend pas du souvenir de la précédente."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Chaque requête contient ce qu'il faut pour la traiter. Le serveur ne dépend pas du souvenir de la précédente."
+      },
+      {
+        "id": "b",
+        "text": "Le serveur ne répond jamais deux fois à la même adresse."
+      },
+      {
+        "id": "c",
+        "text": "Le serveur garde l'utilisateur en mémoire entre deux requêtes."
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "docker.cloze.001",
@@ -138,7 +250,7 @@
   },
   {
     "id": "docker.compose.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "docker",
     "tags": [
       "docker"
@@ -146,11 +258,25 @@
     "difficulty": 2,
     "prompt": "À quoi sert Docker Compose ?",
     "explanation": "Le fichier nomme les services, leurs images, leurs ports et leurs volumes. Une commande lance l'ensemble au lieu d'enchaîner les `docker run` à la main. Compose ne remplace pas l'idée d'image et de conteneur.",
-    "answer": "À décrire et lancer plusieurs services ensemble, depuis un fichier."
+    "choices": [
+      {
+        "id": "a",
+        "text": "À compiler le Dockerfile plus vite grâce au cache."
+      },
+      {
+        "id": "b",
+        "text": "À décrire et lancer plusieurs services ensemble, depuis un fichier."
+      },
+      {
+        "id": "c",
+        "text": "À publier une image sur un registre public."
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "docker.file.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "docker",
     "tags": [
       "docker"
@@ -158,7 +284,21 @@
     "difficulty": 1,
     "prompt": "Qu'est-ce qu'un Dockerfile ?",
     "explanation": "Chaque instruction (`FROM`, `COPY`, `RUN`…) est une étape du build. `docker build` lit ce fichier et produit une image. Le Dockerfile n'est pas le conteneur qui tourne.",
-    "answer": "Le fichier texte qui décrit comment construire une image."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le fichier qui liste les conteneurs en cours d'exécution."
+      },
+      {
+        "id": "b",
+        "text": "Le fichier texte qui décrit comment construire une image."
+      },
+      {
+        "id": "c",
+        "text": "Le volume où le conteneur écrit ses données."
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "docker.image.001",
@@ -188,7 +328,7 @@
   },
   {
     "id": "docker.layer.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "docker",
     "tags": [
       "docker"
@@ -196,7 +336,21 @@
     "difficulty": 3,
     "prompt": "Pourquoi l'ordre des instructions d'un Dockerfile change-t-il la vitesse de construction ?",
     "explanation": "Si une instruction change, elle et toutes celles d'après sont reconstruites. On place donc d'abord ce qui bouge peu, comme l'installation des dépendances, et ensuite le code qui change souvent.",
-    "answer": "Chaque instruction est une couche. Docker réutilise le cache tant que la couche n'a pas changé."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Chaque instruction est une couche. Docker réutilise le cache tant que la couche n'a pas changé."
+      },
+      {
+        "id": "b",
+        "text": "Docker reconstruit toujours tout, l'ordre ne change que la lisibilité."
+      },
+      {
+        "id": "c",
+        "text": "La dernière instruction efface les couches précédentes."
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "docker.order.001",
@@ -216,7 +370,7 @@
   },
   {
     "id": "docker.port.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "docker",
     "tags": [
       "docker"
@@ -224,11 +378,25 @@
     "difficulty": 2,
     "prompt": "Que fait `docker run -p 8080:80 …` ?",
     "explanation": "L'ordre est hôte, puis conteneur. Sans publication, un port ouvert dans le conteneur n'est pas joignable depuis l'extérieur. `http://localhost:8080` arrive alors sur le service qui écoute sur `80` dedans.",
-    "answer": "Il publie le port `80` du conteneur sur le port `8080` de la machine."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Il limite le conteneur à 8080 Mo de mémoire et 80 processus."
+      },
+      {
+        "id": "b",
+        "text": "Il copie le dossier `8080` de la machine vers le dossier `80` du conteneur."
+      },
+      {
+        "id": "c",
+        "text": "Il publie le port `80` du conteneur sur le port `8080` de la machine."
+      }
+    ],
+    "correctChoiceId": "c"
   },
   {
     "id": "docker.run.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "docker",
     "tags": [
       "docker"
@@ -236,11 +404,25 @@
     "difficulty": 1,
     "prompt": "Que change l'option `-d` de `docker run` ?",
     "explanation": "Sans `-d`, le terminal reste attaché à la sortie du processus. Avec `--detach`, on récupère la main. Le conteneur tourne quand même. `docker logs` permet de revoir sa sortie.",
-    "answer": "Le conteneur continue en arrière-plan, sans occuper le terminal."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le conteneur s'arrête dès que la commande a écrit sa sortie."
+      },
+      {
+        "id": "b",
+        "text": "Le conteneur continue en arrière-plan, sans occuper le terminal."
+      },
+      {
+        "id": "c",
+        "text": "Le conteneur est supprimé avant même de démarrer."
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "docker.secret.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "docker",
     "tags": [
       "docker"
@@ -248,11 +430,25 @@
     "difficulty": 2,
     "prompt": "Pourquoi ne pas écrire un mot de passe dans l'image ?",
     "explanation": "Copier un secret pendant le build l'inscrit dans l'historique de l'image, même si un `RUN` suivant efface le fichier. On le fournit au moment de lancer le conteneur, par une variable ou un mécanisme de secrets.",
-    "answer": "L'image se partage et se conserve. Le secret resterait dans ses couches."
+    "choices": [
+      {
+        "id": "a",
+        "text": "L'image se partage et se conserve. Le secret resterait dans ses couches."
+      },
+      {
+        "id": "b",
+        "text": "Docker chiffre automatiquement chaque mot de passe écrit dans l'image."
+      },
+      {
+        "id": "c",
+        "text": "Un mot de passe dans l'image n'est lisible que pendant `docker build`."
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "docker.volume.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "docker",
     "tags": [
       "docker"
@@ -260,11 +456,25 @@
     "difficulty": 2,
     "prompt": "À quoi sert un volume ?",
     "explanation": "Le système de fichiers que le conteneur peut modifier disparaît avec lui. Un volume est un stockage monté dedans, géré à part. La base ou les fichiers qu'on veut conserver vont là, pas seulement dans la couche du conteneur.",
-    "answer": "À garder des données après la suppression du conteneur."
+    "choices": [
+      {
+        "id": "a",
+        "text": "À garder des données après la suppression du conteneur."
+      },
+      {
+        "id": "b",
+        "text": "À publier les ports du conteneur sur la machine."
+      },
+      {
+        "id": "c",
+        "text": "À partager le réseau avec les autres conteneurs."
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "git.branch.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "git",
     "tags": [
       "git"
@@ -272,11 +482,25 @@
     "difficulty": 2,
     "prompt": "Qu'est-ce qu'une branche ?",
     "explanation": "La branche n'est pas une copie des fichiers. C'est une étiquette mobile. Deux branches peuvent partager tout l'historique jusqu'au point où elles divergent.",
-    "answer": "Un nom qui pointe vers un commit, et qui avance quand on commit dessus."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une copie complète du dépôt, rangée à part."
+      },
+      {
+        "id": "b",
+        "text": "Un nom qui pointe vers un commit, et qui avance quand on commit dessus."
+      },
+      {
+        "id": "c",
+        "text": "La liste des fichiers modifiés et pas encore commités."
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "git.clone.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "git",
     "tags": [
       "git"
@@ -284,7 +508,21 @@
     "difficulty": 1,
     "prompt": "Que fait `git clone` ?",
     "explanation": "On obtient les commits, les branches distantes que Git a récupérées, et une copie de travail. Ce n'est pas un téléchargement du seul dernier dossier : l'historique vient avec.",
-    "answer": "Il copie un dépôt sur la machine, historique compris."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Il crée un commit avec les fichiers du dossier courant."
+      },
+      {
+        "id": "b",
+        "text": "Il copie un dépôt sur la machine, historique compris."
+      },
+      {
+        "id": "c",
+        "text": "Il envoie la branche locale vers le dépôt distant."
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "git.cloze.001",
@@ -300,7 +538,7 @@
   },
   {
     "id": "git.commit.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "git",
     "tags": [
       "git"
@@ -308,7 +546,21 @@
     "difficulty": 1,
     "prompt": "Qu'est-ce qu'un commit ?",
     "explanation": "Git garde l'historique comme une suite de commits. Chacun désigne l'état des fichiers à ce moment-là, et le commit d'avant. Tant qu'on ne l'a pas poussé, il reste sur la machine.",
-    "answer": "Un instantané enregistré du projet, avec un auteur et un message."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le dossier où Git range les fichiers ignorés."
+      },
+      {
+        "id": "b",
+        "text": "Un instantané enregistré du projet, avec un auteur et un message."
+      },
+      {
+        "id": "c",
+        "text": "La branche qui reçoit les commits des autres."
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "git.diff.001",
@@ -338,7 +590,7 @@
   },
   {
     "id": "git.head.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "git",
     "tags": [
       "git"
@@ -346,11 +598,25 @@
     "difficulty": 2,
     "prompt": "Qu'est-ce que `HEAD` ?",
     "explanation": "Les commandes qui regardent « où l'on est » partent de `HEAD`. Si l'on extrait un commit précis au lieu d'une branche, `HEAD` ne porte plus de nom de branche : on dit qu'il est détaché.",
-    "answer": "Le commit actuellement extrait. En général, le bout de la branche en cours."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le commit actuellement extrait. En général, le bout de la branche en cours."
+      },
+      {
+        "id": "b",
+        "text": "Le premier commit du dépôt, celui qui n'a pas de parent."
+      },
+      {
+        "id": "c",
+        "text": "Le fichier qui liste les dépôts distants."
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "git.ignore.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "git",
     "tags": [
       "git"
@@ -358,11 +624,25 @@
     "difficulty": 1,
     "prompt": "À quoi sert `.gitignore` ?",
     "explanation": "On y met souvent les dépendances, les builds et les secrets. Un fichier déjà suivi reste suivi : l'ignorer ensuite ne le retire pas de l'historique.",
-    "answer": "À dire à Git quels fichiers ne pas suivre."
+    "choices": [
+      {
+        "id": "a",
+        "text": "À choisir le message du prochain commit."
+      },
+      {
+        "id": "b",
+        "text": "À fusionner deux branches sans conflit."
+      },
+      {
+        "id": "c",
+        "text": "À dire à Git quels fichiers ne pas suivre."
+      }
+    ],
+    "correctChoiceId": "c"
   },
   {
     "id": "git.merge.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "git",
     "tags": [
       "git"
@@ -370,7 +650,21 @@
     "difficulty": 2,
     "prompt": "Que fait un merge ?",
     "explanation": "Si une seule branche a avancé, la fusion se contente de faire avancer l'autre jusqu'à elle. Si les deux ont des commits propres, Git crée un commit de fusion qui a deux parents, après avoir combiné les fichiers. Un même endroit modifié des deux côtés devient un conflit à trancher.",
-    "answer": "Il réunit deux historiques."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Il réunit deux historiques."
+      },
+      {
+        "id": "b",
+        "text": "Il efface une branche et ses commits."
+      },
+      {
+        "id": "c",
+        "text": "Il envoie les commits vers le dépôt distant."
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "git.order.001",
@@ -405,7 +699,7 @@
   },
   {
     "id": "git.pull.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "git",
     "tags": [
       "git"
@@ -413,7 +707,21 @@
     "difficulty": 2,
     "prompt": "Que fait `git pull` ?",
     "explanation": "Récupérer sans intégrer, c'est `git fetch`. `git pull` enchaîne les deux. Si les deux côtés ont bougé, Git peut demander de résoudre un conflit avant de finir.",
-    "answer": "Il récupère les commits distants, puis les intègre. Par défaut, cette intégration est un merge."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Il crée une branche locale à partir du commit actuel."
+      },
+      {
+        "id": "b",
+        "text": "Il récupère les commits distants, puis les intègre. Par défaut, cette intégration est un merge."
+      },
+      {
+        "id": "c",
+        "text": "Il jette les commits locaux et remet le dossier comme le distant."
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "git.push.001",
@@ -443,7 +751,7 @@
   },
   {
     "id": "git.stage.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "git",
     "tags": [
       "git"
@@ -451,7 +759,21 @@
     "difficulty": 1,
     "prompt": "À quoi sert la zone d'index, celle que `git add` remplit ?",
     "explanation": "Le dossier de travail peut contenir d'autres modifications. `git add` en copie dans l'index. Le commit enregistre l'index, pas forcément tout ce qui est modifié sur le disque.",
-    "answer": "À choisir ce que le prochain commit contiendra."
+    "choices": [
+      {
+        "id": "a",
+        "text": "À publier le commit sur le dépôt distant."
+      },
+      {
+        "id": "b",
+        "text": "À choisir ce que le prochain commit contiendra."
+      },
+      {
+        "id": "c",
+        "text": "À nommer la branche en cours."
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "http.cloze.001",
@@ -468,7 +790,7 @@
   },
   {
     "id": "http.status.200",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "http",
     "tags": [
       "http",
@@ -477,11 +799,25 @@
     "difficulty": 1,
     "prompt": "Que signifie le statut HTTP `200` ?",
     "explanation": "`200` est le succès ordinaire, avec un corps de réponse. Un succès volontairement sans corps se note plutôt `204`.",
-    "answer": "`OK`. La requête a réussi, et la réponse apporte son résultat."
+    "choices": [
+      {
+        "id": "a",
+        "text": "`OK`. La requête a réussi, et la réponse apporte son résultat."
+      },
+      {
+        "id": "b",
+        "text": "`Created`. La requête a réussi, et une ressource a été créée."
+      },
+      {
+        "id": "c",
+        "text": "`Not Found`. Cette adresse ne correspond à aucune ressource."
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "http.status.201",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "http",
     "tags": [
       "http",
@@ -490,11 +826,25 @@
     "difficulty": 1,
     "prompt": "Que signifie le statut HTTP `201` ?",
     "explanation": "On le renvoie souvent après un `POST` qui crée quelque chose. L'en-tête `Location` peut donner l'adresse de la nouvelle ressource.",
-    "answer": "`Created`. La requête a réussi, et une ressource a été créée."
+    "choices": [
+      {
+        "id": "a",
+        "text": "`No Content`. La requête a réussi, et la réponse n'a pas de corps."
+      },
+      {
+        "id": "b",
+        "text": "`Created`. La requête a réussi, et une ressource a été créée."
+      },
+      {
+        "id": "c",
+        "text": "`Moved Permanently`. La ressource a changé d'adresse pour de bon."
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "http.status.204",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "http",
     "tags": [
       "http",
@@ -503,11 +853,25 @@
     "difficulty": 2,
     "prompt": "Que signifie le statut HTTP `204` ?",
     "explanation": "Le client n'a rien à lire en retour. C'est un statut fréquent après une suppression ou une mise à jour dont le résultat n'a pas besoin d'être renvoyé.",
-    "answer": "`No Content`. La requête a réussi, et la réponse n'a pas de corps."
+    "choices": [
+      {
+        "id": "a",
+        "text": "`Created`. La requête a réussi, et une ressource a été créée."
+      },
+      {
+        "id": "b",
+        "text": "`No Content`. La requête a réussi, et la réponse n'a pas de corps."
+      },
+      {
+        "id": "c",
+        "text": "`Internal Server Error`. Le serveur a échoué en traitant la requête."
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "http.status.301",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "http",
     "tags": [
       "http",
@@ -516,7 +880,21 @@
     "difficulty": 2,
     "prompt": "Que signifie le statut HTTP `301` ?",
     "explanation": "Le client et les caches peuvent retenir la nouvelle adresse. La prochaine fois, ils y vont directement, sans repasser par l'ancienne.",
-    "answer": "`Moved Permanently`. La ressource a changé d'adresse pour de bon."
+    "choices": [
+      {
+        "id": "a",
+        "text": "`Found`. La ressource a changé d'adresse, mais seulement pour cette fois."
+      },
+      {
+        "id": "b",
+        "text": "`Not Found`. Cette adresse ne correspond à aucune ressource."
+      },
+      {
+        "id": "c",
+        "text": "`Moved Permanently`. La ressource a changé d'adresse pour de bon."
+      }
+    ],
+    "correctChoiceId": "c"
   },
   {
     "id": "http.status.302",
@@ -547,7 +925,7 @@
   },
   {
     "id": "http.status.400",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "http",
     "tags": [
       "http",
@@ -556,7 +934,21 @@
     "difficulty": 1,
     "prompt": "Que signifie le statut HTTP `400` ?",
     "explanation": "Le problème est dans ce que le client a envoyé : JSON mal formé, champ manquant, valeur refusée. Ce n'est pas une panne du serveur.",
-    "answer": "`Bad Request`. Le serveur n'a pas compris la requête, ou elle est invalide."
+    "choices": [
+      {
+        "id": "a",
+        "text": "`Forbidden`. Le serveur refuse l'action."
+      },
+      {
+        "id": "b",
+        "text": "`Internal Server Error`. Le serveur a échoué en traitant la requête."
+      },
+      {
+        "id": "c",
+        "text": "`Bad Request`. Le serveur n'a pas compris la requête, ou elle est invalide."
+      }
+    ],
+    "correctChoiceId": "c"
   },
   {
     "id": "http.status.401",
@@ -587,7 +979,7 @@
   },
   {
     "id": "http.status.403",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "http",
     "tags": [
       "http",
@@ -596,11 +988,25 @@
     "difficulty": 2,
     "prompt": "Que signifie le statut HTTP `403` ?",
     "explanation": "La requête est comprise. L'identité peut même être connue. L'accès est quand même refusé. `401` demande d'abord de s'authentifier. `404` dit que l'adresse ne correspond à rien.",
-    "answer": "`Forbidden`. Le serveur refuse l'action."
+    "choices": [
+      {
+        "id": "a",
+        "text": "`Not Found`. Cette adresse ne correspond à aucune ressource."
+      },
+      {
+        "id": "b",
+        "text": "`Unauthorized`. Le client n'a pas prouvé qui il est."
+      },
+      {
+        "id": "c",
+        "text": "`Forbidden`. Le serveur refuse l'action."
+      }
+    ],
+    "correctChoiceId": "c"
   },
   {
     "id": "http.status.404",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "http",
     "tags": [
       "http",
@@ -609,11 +1015,25 @@
     "difficulty": 1,
     "prompt": "Que signifie le statut HTTP `404` ?",
     "explanation": "Le serveur a compris la requête, et il n'a rien à cette URL. Ce n'est pas un `400` : le message est lisible, la cible n'existe pas.",
-    "answer": "`Not Found`. Cette adresse ne correspond à aucune ressource."
+    "choices": [
+      {
+        "id": "a",
+        "text": "`Not Found`. Cette adresse ne correspond à aucune ressource."
+      },
+      {
+        "id": "b",
+        "text": "`Forbidden`. Le serveur refuse l'action."
+      },
+      {
+        "id": "c",
+        "text": "`Too Many Requests`. Le client a envoyé trop de requêtes."
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "http.status.429",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "http",
     "tags": [
       "http",
@@ -622,11 +1042,25 @@
     "difficulty": 2,
     "prompt": "Que signifie le statut HTTP `429` ?",
     "explanation": "Il faut ralentir. Le serveur peut indiquer quand réessayer avec l'en-tête `Retry-After`. Ce n'est pas une erreur de forme de la requête.",
-    "answer": "`Too Many Requests`. Le client a envoyé trop de requêtes."
+    "choices": [
+      {
+        "id": "a",
+        "text": "`Bad Request`. Le serveur n'a pas compris la requête."
+      },
+      {
+        "id": "b",
+        "text": "`Too Many Requests`. Le client a envoyé trop de requêtes."
+      },
+      {
+        "id": "c",
+        "text": "`Internal Server Error`. Le serveur a échoué en traitant la requête."
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "http.status.500",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "http",
     "tags": [
       "http",
@@ -635,7 +1069,21 @@
     "difficulty": 1,
     "prompt": "Que signifie le statut HTTP `500` ?",
     "explanation": "La requête pouvait être valide. La panne est du côté du serveur : une exception, une dépendance, un cas non prévu. Le client ne corrige pas ça en reformulant au hasard.",
-    "answer": "`Internal Server Error`. Le serveur a échoué en traitant la requête."
+    "choices": [
+      {
+        "id": "a",
+        "text": "`Internal Server Error`. Le serveur a échoué en traitant la requête."
+      },
+      {
+        "id": "b",
+        "text": "`Bad Request`. Le serveur n'a pas compris la requête."
+      },
+      {
+        "id": "c",
+        "text": "`Not Found`. Cette adresse ne correspond à aucune ressource."
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "http.status.502",
@@ -996,7 +1444,7 @@
   },
   {
     "id": "js.closures.002",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "javascript",
     "tags": [
       "closures",
@@ -1005,7 +1453,21 @@
     "difficulty": 3,
     "prompt": "Que renvoie `fns[0]()` ?\n\n```js\nconst fns = []\nfor (var i = 0; i < 3; i++) {\n  fns.push(() => i)\n}\n```",
     "explanation": "`var i` est une seule variable pour toute la boucle. Les trois fonctions lisent ce même `i`, qui vaut `3` une fois la boucle terminée. Avec `let`, chaque tour aurait eu son propre `i`.",
-    "answer": "`3`"
+    "choices": [
+      {
+        "id": "a",
+        "text": "`0`"
+      },
+      {
+        "id": "b",
+        "text": "`3`"
+      },
+      {
+        "id": "c",
+        "text": "`undefined`"
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "js.closures.003",
@@ -1032,7 +1494,7 @@
   },
   {
     "id": "js.closures.004",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "javascript",
     "tags": [
       "closures",
@@ -1041,7 +1503,21 @@
     "difficulty": 3,
     "prompt": "Que renvoie `fns[0]()` ?\n\n```js\nconst fns = []\nfor (let i = 0; i < 3; i++) {\n  fns.push(() => i)\n}\n```",
     "explanation": "`let` crée une variable par tour de boucle. `fns[0]` a capturé le `i` du premier tour, qui reste `0`. Avec `var`, les trois fonctions auraient lu la même variable, valant `3` à la fin.",
-    "answer": "`0`"
+    "choices": [
+      {
+        "id": "a",
+        "text": "`0`"
+      },
+      {
+        "id": "b",
+        "text": "`3`"
+      },
+      {
+        "id": "c",
+        "text": "`undefined`"
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "js.closures.005",
@@ -1123,7 +1599,7 @@
   },
   {
     "id": "js.prototypes.002",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "javascript",
     "tags": [
       "prototypes"
@@ -1131,7 +1607,21 @@
     "difficulty": 2,
     "prompt": "Juste après `const ada = new User(\"Ada\")`, que renvoie `Object.getPrototypeOf(ada)` ?\n\n```js\nfunction User(name) {\n  this.name = name\n}\nconst ada = new User(\"Ada\")\n```",
     "explanation": "`new` crée l'objet et le relie au `prototype` du constructeur. Les méthodes partagées vivent sur ce prototype, pas copiées sur chaque instance.",
-    "answer": "`User.prototype`"
+    "choices": [
+      {
+        "id": "a",
+        "text": "`ada`"
+      },
+      {
+        "id": "b",
+        "text": "`User.prototype`"
+      },
+      {
+        "id": "c",
+        "text": "`Function.prototype`"
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "js.prototypes.003",
@@ -1715,7 +2205,7 @@
   },
   {
     "id": "js.types.003",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "javascript",
     "tags": [
       "types"
@@ -1723,7 +2213,21 @@
     "difficulty": 2,
     "prompt": "Quelle est la différence entre `==` et `===` ?",
     "explanation": "`0 == false` est vrai, parce que `false` est converti en `0`. `0 === false` est faux : un nombre n'est pas un booléen.",
-    "answer": "`===` compare les deux valeurs sans les convertir. `==` les convertit d'abord vers un type commun."
+    "choices": [
+      {
+        "id": "a",
+        "text": "`==` compare sans convertir. `===` convertit d'abord vers un type commun."
+      },
+      {
+        "id": "b",
+        "text": "Les deux comparent pareil. `===` ne sert que pour les objets."
+      },
+      {
+        "id": "c",
+        "text": "`===` compare les deux valeurs sans les convertir. `==` les convertit d'abord vers un type commun."
+      }
+    ],
+    "correctChoiceId": "c"
   },
   {
     "id": "js.types.004",
@@ -1895,7 +2399,7 @@
   },
   {
     "id": "shell.exit.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "shell",
     "tags": [
       "shell"
@@ -1903,11 +2407,25 @@
     "difficulty": 2,
     "prompt": "Que veut dire le code de sortie d'une commande ?",
     "explanation": "Chaque programme s'arrête avec un statut. Le shell le garde. `echo $?` affiche celui de la commande précédente. Un script peut s'arrêter là où une commande a échoué, selon ses options.",
-    "answer": "`0` veut dire succès. Un autre nombre veut dire échec."
+    "choices": [
+      {
+        "id": "a",
+        "text": "`0` veut dire succès. Un autre nombre veut dire échec."
+      },
+      {
+        "id": "b",
+        "text": "`0` veut dire échec. `1` veut dire succès."
+      },
+      {
+        "id": "c",
+        "text": "Le code de sortie est le nombre de lignes affichées."
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "shell.grep.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "shell",
     "tags": [
       "shell"
@@ -1915,11 +2433,25 @@
     "difficulty": 1,
     "prompt": "Que fait `grep` ?",
     "explanation": "`grep erreur journal.txt` ne modifie pas le fichier. Il filtre. Avec un tuyau, il filtre la sortie d'une autre commande. Le motif est une expression régulière, pas seulement un mot fixe.",
-    "answer": "Il affiche les lignes qui correspondent à un motif."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Il affiche les lignes qui correspondent à un motif."
+      },
+      {
+        "id": "b",
+        "text": "Il compte les fichiers d'un dossier."
+      },
+      {
+        "id": "c",
+        "text": "Il change les droits d'un fichier."
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "shell.help.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "shell",
     "tags": [
       "shell"
@@ -1927,11 +2459,25 @@
     "difficulty": 1,
     "prompt": "Comment obtenir l'aide d'une commande ?",
     "explanation": "`man` ouvre le manuel, avec les options et des exemples. `--help` affiche un résumé plus court dans le terminal. On quitte `man` avec `q`.",
-    "answer": "`man commande`, ou souvent `commande --help`."
+    "choices": [
+      {
+        "id": "a",
+        "text": "`help commande` uniquement. Le shell n'a pas d'autre aide."
+      },
+      {
+        "id": "b",
+        "text": "`man commande`, ou souvent `commande --help`."
+      },
+      {
+        "id": "c",
+        "text": "`cat /help/commande`."
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "shell.home.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "shell",
     "tags": [
       "shell"
@@ -1939,7 +2485,21 @@
     "difficulty": 1,
     "prompt": "Que désignent `$HOME` et `~` ?",
     "explanation": "`cd ~` ou `cd` sans argument y ramène, dans un shell usuel. `$HOME` est la variable. On peut l'écrire dans un chemin : `$HOME/dev`.",
-    "answer": "Le dossier personnel de l'utilisateur. `~` est le raccourci du shell pour ce dossier."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le dossier courant. `~` veut dire la racine."
+      },
+      {
+        "id": "b",
+        "text": "Le dossier personnel de l'utilisateur. `~` est le raccourci du shell pour ce dossier."
+      },
+      {
+        "id": "c",
+        "text": "Le dossier parent. `~` veut dire le dossier d'avant."
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "shell.order.001",
@@ -1959,7 +2519,7 @@
   },
   {
     "id": "shell.path.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "shell",
     "tags": [
       "shell"
@@ -1967,11 +2527,25 @@
     "difficulty": 1,
     "prompt": "Que veulent dire `/`, `.` et `..` dans un chemin ?",
     "explanation": "Un chemin qui commence par `/` est absolu : il ne dépend pas d'où l'on est. Un chemin relatif part du dossier courant. `../autre` remonte d'un cran, puis entre dans `autre`.",
-    "answer": "`/` est la racine. `.` est le dossier courant. `..` est son parent."
+    "choices": [
+      {
+        "id": "a",
+        "text": "`/` est le dossier courant. `.` est son parent. `..` est la racine."
+      },
+      {
+        "id": "b",
+        "text": "Les trois désignent le dossier personnel."
+      },
+      {
+        "id": "c",
+        "text": "`/` est la racine. `.` est le dossier courant. `..` est son parent."
+      }
+    ],
+    "correctChoiceId": "c"
   },
   {
     "id": "shell.pipe.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "shell",
     "tags": [
       "shell"
@@ -1979,11 +2553,25 @@
     "difficulty": 1,
     "prompt": "Que fait `|` entre deux commandes ?",
     "explanation": "`ls | grep test` ne crée pas un fichier. La liste produite par `ls` devient le texte que `grep` lit. La sortie d'erreur ne passe pas dans le tuyau, sauf si on l'y redirige.",
-    "answer": "Il envoie la sortie standard de la première à l'entrée de la seconde."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Il envoie la sortie standard de la première à l'entrée de la seconde."
+      },
+      {
+        "id": "b",
+        "text": "Il lance les deux commandes en même temps, sans lien entre elles."
+      },
+      {
+        "id": "c",
+        "text": "Il écrit la sortie dans un fichier nommé par la seconde commande."
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "shell.pwd.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "shell",
     "tags": [
       "shell"
@@ -1991,7 +2579,21 @@
     "difficulty": 1,
     "prompt": "Que fait `pwd` ?",
     "explanation": "Le shell a toujours un dossier de travail. Les chemins relatifs partent de là. `pwd` (*print working directory*) dit lequel c'est.",
-    "answer": "Il affiche le dossier courant."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Il affiche le dossier courant."
+      },
+      {
+        "id": "b",
+        "text": "Il affiche le dossier personnel."
+      },
+      {
+        "id": "c",
+        "text": "Il change le dossier courant."
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "shell.redirect.001",
@@ -2034,7 +2636,7 @@
   },
   {
     "id": "web.cors.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "web",
     "tags": [
       "web",
@@ -2043,11 +2645,25 @@
     "difficulty": 2,
     "prompt": "Qu'est-ce que CORS ?",
     "explanation": "Une origine, c'est le schéma, l'hôte et le port. `https://a.dev` et `https://b.dev` sont deux origines. Le serveur autorise la lecture avec des en-têtes, dont `Access-Control-Allow-Origin`. CORS ne remplace pas l'authentification.",
-    "answer": "Une règle du navigateur : un script ne lit la réponse d'une autre origine que si le serveur l'y autorise."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un cache partagé entre tous les sites ouverts."
+      },
+      {
+        "id": "b",
+        "text": "Une règle du navigateur : un script ne lit la réponse d'une autre origine que si le serveur l'y autorise."
+      },
+      {
+        "id": "c",
+        "text": "Le certificat qui chiffre la page."
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "web.dns.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "web",
     "tags": [
       "web",
@@ -2056,11 +2672,25 @@
     "difficulty": 1,
     "prompt": "À quoi sert le DNS ?",
     "explanation": "`sillon.dev` est un nom. Le DNS le traduit en adresse IP, que le réseau sait joindre. Sans cette traduction, le navigateur ne saurait pas où ouvrir la connexion.",
-    "answer": "À trouver l'adresse d'une machine à partir d'un nom."
+    "choices": [
+      {
+        "id": "a",
+        "text": "À chiffrer l'échange entre le navigateur et le serveur."
+      },
+      {
+        "id": "b",
+        "text": "À trouver l'adresse d'une machine à partir d'un nom."
+      },
+      {
+        "id": "c",
+        "text": "À décider quel CSS s'applique à un élément."
+      }
+    ],
+    "correctChoiceId": "b"
   },
   {
     "id": "web.dom.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "web",
     "tags": [
       "web",
@@ -2069,11 +2699,25 @@
     "difficulty": 1,
     "prompt": "Qu'est-ce que le DOM ?",
     "explanation": "DOM veut dire Document Object Model. Le HTML est le texte source. Le DOM est la structure vivante : éléments, textes, attributs. Changer le DOM change ce qui est affiché.",
-    "answer": "L'arbre de la page, construit par le navigateur, que le JavaScript peut lire et modifier."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le protocole qui charge la page."
+      },
+      {
+        "id": "b",
+        "text": "Le fichier qui liste les scripts autorisés."
+      },
+      {
+        "id": "c",
+        "text": "L'arbre de la page, construit par le navigateur, que le JavaScript peut lire et modifier."
+      }
+    ],
+    "correctChoiceId": "c"
   },
   {
     "id": "web.https.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "web",
     "tags": [
       "web",
@@ -2082,7 +2726,21 @@
     "difficulty": 1,
     "prompt": "Que protège HTTPS ?",
     "explanation": "HTTPS, c'est HTTP au-dessus de TLS. Quelqu'un sur le réseau ne lit pas la requête ni la réponse en clair, et ne les modifie pas sans qu'on s'en aperçoive. Ça ne dit pas que le site est honnête, ni que le serveur stocke bien les données.",
-    "answer": "Le trajet entre le navigateur et le serveur. Le contenu est chiffré."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le mot de passe stocké dans la base du site."
+      },
+      {
+        "id": "b",
+        "text": "Le code JavaScript, pour qu'on ne puisse pas le lire."
+      },
+      {
+        "id": "c",
+        "text": "Le trajet entre le navigateur et le serveur. Le contenu est chiffré."
+      }
+    ],
+    "correctChoiceId": "c"
   },
   {
     "id": "web.method.001",
@@ -2131,7 +2789,7 @@
   },
   {
     "id": "web.roles.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "web",
     "tags": [
       "web",
@@ -2140,7 +2798,21 @@
     "difficulty": 1,
     "prompt": "À quoi servent HTML, CSS et JavaScript dans une page ?",
     "explanation": "Le navigateur lit le HTML pour construire la page. Le CSS dit comment l'afficher. Le JavaScript réagit et modifie la page ensuite. On peut avoir une page sans JavaScript. On ne peut pas afficher un document sans structure.",
-    "answer": "HTML décrit le contenu, CSS son apparence, JavaScript son comportement."
+    "choices": [
+      {
+        "id": "a",
+        "text": "HTML décrit le contenu, CSS son apparence, JavaScript son comportement."
+      },
+      {
+        "id": "b",
+        "text": "HTML décrit l'apparence, CSS le contenu, JavaScript le serveur."
+      },
+      {
+        "id": "c",
+        "text": "Les trois décrivent le même contenu, dans trois fichiers."
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "web.storage.001",
@@ -2171,7 +2843,7 @@
   },
   {
     "id": "web.url.001",
-    "type": "reveal",
+    "type": "mcq",
     "topic": "web",
     "tags": [
       "web",
@@ -2180,6 +2852,20 @@
     "difficulty": 2,
     "prompt": "Dans `https://sillon.dev/cartes?tag=git`, quels sont le schéma, l'hôte, le chemin et les paramètres après `?` ?",
     "explanation": "Le schéma dit comment parler. L'hôte dit à quelle machine. Le chemin désigne la ressource. Les paramètres, après `?`, précisent la demande. Le fragment après `#` reste dans le navigateur et n'est pas envoyé au serveur.",
-    "answer": "Schéma `https`, hôte `sillon.dev`, chemin `/cartes`, paramètres `tag=git`."
+    "choices": [
+      {
+        "id": "a",
+        "text": "Schéma `https`, hôte `sillon.dev`, chemin `/cartes`, paramètres `tag=git`."
+      },
+      {
+        "id": "b",
+        "text": "Schéma `sillon.dev`, hôte `https`, chemin `tag=git`, paramètres `/cartes`."
+      },
+      {
+        "id": "c",
+        "text": "Schéma `https`, hôte `cartes`, chemin `sillon.dev`, paramètres `git`."
+      }
+    ],
+    "correctChoiceId": "a"
   }
 ]

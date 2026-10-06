@@ -1,16 +1,17 @@
 ---
 id: arch.api.001
-type: reveal
+type: mcq
 topic: architecture
 tags: [architecture]
 difficulty: 1
+choices:
+  - { id: a, text: "Une base de données partagée entre deux programmes." }
+  - { id: b, text: "Le style visuel commun à toutes les pages." }
+  - { id: c, text: "Un contrat : quels appels existent, ce qu'ils acceptent, ce qu'ils renvoient." }
+correctChoiceId: c
 ---
 
 Qu'est-ce qu'une API ?
-
-## Réponse
-
-Un contrat : quels appels existent, ce qu'ils acceptent, ce qu'ils renvoient.
 
 ## Explication
 

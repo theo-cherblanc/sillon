@@ -1,16 +1,17 @@
 ---
 id: docker.compose.001
-type: reveal
+type: mcq
 topic: docker
 tags: [docker]
 difficulty: 2
+choices:
+  - { id: a, text: "À compiler le Dockerfile plus vite grâce au cache." }
+  - { id: b, text: "À décrire et lancer plusieurs services ensemble, depuis un fichier." }
+  - { id: c, text: "À publier une image sur un registre public." }
+correctChoiceId: b
 ---
 
 À quoi sert Docker Compose ?
-
-## Réponse
-
-À décrire et lancer plusieurs services ensemble, depuis un fichier.
 
 ## Explication
 

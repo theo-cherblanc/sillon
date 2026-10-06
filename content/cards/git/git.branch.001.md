@@ -1,16 +1,17 @@
 ---
 id: git.branch.001
-type: reveal
+type: mcq
 topic: git
 tags: [git]
 difficulty: 2
+choices:
+  - { id: a, text: "Une copie complète du dépôt, rangée à part." }
+  - { id: b, text: "Un nom qui pointe vers un commit, et qui avance quand on commit dessus." }
+  - { id: c, text: "La liste des fichiers modifiés et pas encore commités." }
+correctChoiceId: b
 ---
 
 Qu'est-ce qu'une branche ?
-
-## Réponse
-
-Un nom qui pointe vers un commit, et qui avance quand on commit dessus.
 
 ## Explication
 

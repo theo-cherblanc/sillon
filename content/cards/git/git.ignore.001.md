@@ -1,16 +1,17 @@
 ---
 id: git.ignore.001
-type: reveal
+type: mcq
 topic: git
 tags: [git]
 difficulty: 1
+choices:
+  - { id: a, text: "À choisir le message du prochain commit." }
+  - { id: b, text: "À fusionner deux branches sans conflit." }
+  - { id: c, text: "À dire à Git quels fichiers ne pas suivre." }
+correctChoiceId: c
 ---
 
 À quoi sert `.gitignore` ?
-
-## Réponse
-
-À dire à Git quels fichiers ne pas suivre.
 
 ## Explication
 

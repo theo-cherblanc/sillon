@@ -1,16 +1,17 @@
 ---
 id: http.status.204
-type: reveal
+type: mcq
 topic: http
 tags: [http, status]
 difficulty: 2
+choices:
+  - { id: a, text: "`Created`. La requête a réussi, et une ressource a été créée." }
+  - { id: b, text: "`No Content`. La requête a réussi, et la réponse n'a pas de corps." }
+  - { id: c, text: "`Internal Server Error`. Le serveur a échoué en traitant la requête." }
+correctChoiceId: b
 ---
 
 Que signifie le statut HTTP `204` ?
-
-## Réponse
-
-`No Content`. La requête a réussi, et la réponse n'a pas de corps.
 
 ## Explication
 

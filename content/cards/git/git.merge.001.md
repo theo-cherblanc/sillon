@@ -1,16 +1,17 @@
 ---
 id: git.merge.001
-type: reveal
+type: mcq
 topic: git
 tags: [git]
 difficulty: 2
+choices:
+  - { id: a, text: "Il réunit deux historiques." }
+  - { id: b, text: "Il efface une branche et ses commits." }
+  - { id: c, text: "Il envoie les commits vers le dépôt distant." }
+correctChoiceId: a
 ---
 
 Que fait un merge ?
-
-## Réponse
-
-Il réunit deux historiques.
 
 ## Explication
 

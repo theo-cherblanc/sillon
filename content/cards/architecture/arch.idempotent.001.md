@@ -1,16 +1,17 @@
 ---
 id: arch.idempotent.001
-type: reveal
+type: mcq
 topic: architecture
 tags: [architecture, http]
 difficulty: 2
+choices:
+  - { id: a, text: "Elle ne peut réussir qu'une seule fois, puis elle est refusée." }
+  - { id: b, text: "La refaire une fois de plus laisse le même résultat que l'avoir faite une seule fois." }
+  - { id: c, text: "Elle s'exécute plus vite à chaque appel." }
+correctChoiceId: b
 ---
 
 Qu'est-ce qu'une opération idempotente ?
-
-## Réponse
-
-La refaire une fois de plus laisse le même résultat que l'avoir faite une seule fois.
 
 ## Explication
 
