@@ -68,6 +68,36 @@ describe("recordGrade", () => {
   })
 })
 
+describe("recordGrade for a card opened from the library", () => {
+  const opened = new SillonDatabase("sillon-record-library-test")
+  const extra: Card = { ...card, id: "js.async.003" }
+
+  after(async () => {
+    await opened.delete()
+  })
+
+  it("schedules the card without XP, streak, or a finished day", async () => {
+    await ensureProfile(opened, now.getTime())
+    const next = await recordGrade(opened, {
+      card: extra,
+      progress: null,
+      choice: "knew",
+      mcqChoiceId: "b",
+      mcqCorrect: true,
+      now,
+      reviewId: "review-library",
+      fromQueue: false,
+    })
+
+    assert.equal(next.due, now.getTime() + 10 * 60_000)
+    assert.equal((await opened.reviews.get("review-library"))?.fromQueue, false)
+    assert.equal((await opened.reviews.get("review-library"))?.xp, 0)
+    assert.equal((await opened.profile.get(localProfileId))?.xp, 0)
+    assert.equal((await opened.profile.get(localProfileId))?.streak, 0)
+    assert.equal(await opened.days.count(), 0)
+  })
+})
+
 describe("recordGrade when the queue is finished", () => {
   const finished = new SillonDatabase("sillon-record-day-test")
   const dayCard: Card = { ...card, id: "js.async.002", difficulty: 1 }
@@ -123,6 +153,24 @@ describe("recordGrade when the queue is finished", () => {
     assert.equal(profile?.xp, 20)
     assert.equal((await finished.days.get(localDate(now)))?.xp, 10)
     assert.equal(await finished.days.count(), 1)
+  })
+
+  it("rejects finishing the day with a card opened outside the queue", async () => {
+    await assert.rejects(
+      () =>
+        recordGrade(finished, {
+          card: dayCard,
+          progress: null,
+          choice: "knew",
+          mcqChoiceId: "b",
+          mcqCorrect: true,
+          now,
+          fromQueue: false,
+          finishesQueue: true,
+          queueSize: 1,
+        }),
+      /day's queue/,
+    )
   })
 
   it("rejects a finished queue with no cards", async () => {

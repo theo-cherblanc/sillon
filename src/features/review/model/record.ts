@@ -16,6 +16,7 @@ export async function recordGrade(
     mcqCorrect,
     now,
     reviewId = crypto.randomUUID(),
+    fromQueue = true,
     finishesQueue = false,
     queueSize,
   }: {
@@ -26,15 +27,19 @@ export async function recordGrade(
     mcqCorrect: boolean | null
     now: Date
     reviewId?: string
+    fromQueue?: boolean
     finishesQueue?: boolean
     queueSize?: number
   },
 ): Promise<CardProgress> {
   const rating = toRating(card.type, mcqCorrect, choice)
   const next = scheduleReview(progress, card.id, rating, now)
-  const xp = reviewXp(choice, card.difficulty, true)
+  const xp = reviewXp(choice, card.difficulty, fromQueue)
   let finishedSize: number | null = null
   if (finishesQueue) {
+    if (!fromQueue) {
+      throw new Error("A finished queue only counts cards from the day's queue")
+    }
     if (queueSize === undefined || !Number.isInteger(queueSize) || queueSize < 1) {
       throw new Error("A finished queue needs at least one card")
     }
@@ -62,7 +67,7 @@ export async function recordGrade(
         mcqCorrect,
         scheduledDays: next.scheduled_days,
         xp,
-        fromQueue: true,
+        fromQueue,
       }
       await database.progress.put(next)
       await database.reviews.put(log)

@@ -19,10 +19,12 @@ export function LibraryPage({
   onToday,
   onProgress,
   onSettings,
+  onOpen,
 }: {
   onToday: () => void
   onProgress: () => void
   onSettings: () => void
+  onOpen: (cardId: string) => void
 }) {
   const { cards, tags, error } = useLibrary()
   const [tag, setTag] = useState<string | null>(null)
@@ -46,7 +48,13 @@ export function LibraryPage({
           </Cluster>
           <ul>
             {visible.map((card) => (
-              <CardRow key={card.id} title={card.label} meta={card.tags.join(" · ")} aside={markLabel[card.mark]} />
+              <CardRow
+                key={card.id}
+                title={card.label}
+                meta={card.tags.join(" · ")}
+                aside={markLabel[card.mark]}
+                onOpen={() => onOpen(card.id)}
+              />
             ))}
           </ul>
         </Stack>

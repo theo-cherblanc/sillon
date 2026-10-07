@@ -1,8 +1,9 @@
-import { useState, type ReactNode } from "react"
+import { useEffect, useState, type ReactNode } from "react"
 import { cards } from "../../../shared/content/cards.ts"
 import type { Card } from "../../../shared/content/types.ts"
 import { cardLabel } from "../../library/index.ts"
 import { getDatabase, localProfileId } from "../../../shared/db/client.ts"
+import { ensureProfile } from "../../../shared/db/profile.ts"
 import type { CardProgress } from "../../../shared/db/types.ts"
 import { localDate } from "../../../shared/lib/dates.ts"
 import { Button } from "../../../shared/ui/Button.tsx"
@@ -26,7 +27,23 @@ import { recordGrade } from "../model/record.ts"
 import { formatDelay, previewForProgress, type DelayPreview } from "../model/schedule.ts"
 import { soonestDue } from "../model/today.ts"
 
-export function SessionPage({ onClose, onRecorded }: { onClose: () => void; onRecorded?: (at: number) => void }) {
+export function SessionPage({
+  cardId,
+  onClose,
+  onRecorded,
+}: {
+  cardId?: string
+  onClose: () => void
+  onRecorded?: (at: number) => void
+}) {
+  if (cardId) {
+    return <OpenedCard cardId={cardId} onClose={onClose} onRecorded={onRecorded} />
+  }
+
+  return <TodaySession onClose={onClose} onRecorded={onRecorded} />
+}
+
+function TodaySession({ onClose, onRecorded }: { onClose: () => void; onRecorded?: (at: number) => void }) {
   const { summary, queue, progress, error } = useToday()
   const [index, setIndex] = useState(0)
   const [saving, setSaving] = useState(false)
@@ -159,6 +176,96 @@ export function SessionPage({ onClose, onRecorded }: { onClose: () => void; onRe
   )
 }
 
+function OpenedCard({
+  cardId,
+  onClose,
+  onRecorded,
+}: {
+  cardId: string
+  onClose: () => void
+  onRecorded?: (at: number) => void
+}) {
+  const card = cards.find((item) => item.id === cardId) ?? null
+  const [remembered, setRemembered] = useState<CardProgress | null | undefined>(undefined)
+  const [error, setError] = useState<string | null>(null)
+  const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+
+    async function load() {
+      try {
+        const database = getDatabase()
+        await ensureProfile(database, Date.now())
+        const row = (await database.progress.get(cardId)) ?? null
+        if (!cancelled) {
+          setRemembered(row)
+        }
+      } catch {
+        if (!cancelled) {
+          setError("La carte n'a pas pu être lue.")
+        }
+      }
+    }
+
+    void load()
+    return () => {
+      cancelled = true
+    }
+  }, [cardId])
+
+  async function grade(choice: GradeChoice, mcqChoiceId: string | null, mcqCorrect: boolean | null) {
+    if (!card || saving || remembered === undefined) {
+      return
+    }
+    setSaving(true)
+    setSaveError(null)
+    try {
+      const now = new Date()
+      await recordGrade(getDatabase(), {
+        card,
+        progress: remembered,
+        choice,
+        mcqChoiceId,
+        mcqCorrect,
+        now,
+        fromQueue: false,
+      })
+      onRecorded?.(now.getTime())
+      onClose()
+    } catch {
+      setSaveError("La note n'a pas pu être enregistrée.")
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  if (!card || remembered === undefined) {
+    return (
+      <Screen title="Carte" trailing={<TextButton onClick={onClose}>Fermer</TextButton>}>
+        {error ? <p>{error}</p> : null}
+        {saveError ? <p>{saveError}</p> : null}
+        {!error && !card ? <p>Cette carte est introuvable.</p> : null}
+        {!error && card && remembered === undefined ? <Meta>Chargement…</Meta> : null}
+      </Screen>
+    )
+  }
+
+  return (
+    <SessionCard
+      key={card.id}
+      card={card}
+      remembered={remembered}
+      saving={saving}
+      title="Carte"
+      error={saveError}
+      onClose={onClose}
+      onGrade={grade}
+    />
+  )
+}
+
 function delayFor(choice: GradeChoice, delays: DelayPreview) {
   if (choice === "hesitated") {
     return delays.hard
@@ -175,14 +282,18 @@ function SessionCard({
   saving,
   doneCount,
   total,
+  title = "Session",
+  error,
   onClose,
   onGrade,
 }: {
   card: Card
   remembered: CardProgress | null
   saving: boolean
-  doneCount: number
-  total: number
+  doneCount?: number
+  total?: number
+  title?: string
+  error?: string | null
   onClose: () => void
   onGrade: (choice: GradeChoice, mcqChoiceId: string | null, mcqCorrect: boolean | null) => void
 }) {
@@ -253,12 +364,15 @@ function SessionCard({
 
   return (
     <Screen
-      title="Session"
+      title={title}
       trailing={<TextButton onClick={onClose}>Fermer</TextButton>}
-      extra={<ProgressMeter done={doneCount} total={total} />}
+      extra={
+        doneCount !== undefined && total !== undefined ? <ProgressMeter done={doneCount} total={total} /> : null
+      }
       dock={dock}
     >
       <Stack gap={6}>
+        {error ? <p>{error}</p> : null}
         <Sheet>
           <PromptText text={card.prompt} />
         </Sheet>

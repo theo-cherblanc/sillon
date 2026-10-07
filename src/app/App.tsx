@@ -10,6 +10,7 @@ import type { ProgressFile } from "../features/settings/model/export.ts"
 
 export function App() {
   const [screen, setScreen] = useState<"today" | "progress" | "settings" | "session" | "library">("today")
+  const [openedCardId, setOpenedCardId] = useState<string | null>(null)
   const [incoming, setIncoming] = useState<ProgressFile | null>(null)
 
   useEffect(() => {
@@ -30,6 +31,16 @@ export function App() {
     return <RemotePrompt file={incoming} onDone={() => setIncoming(null)} onDismiss={() => setIncoming(null)} />
   }
 
+  if (openedCardId) {
+    return (
+      <SessionPage
+        cardId={openedCardId}
+        onClose={() => setOpenedCardId(null)}
+        onRecorded={(at) => void publishMemory(at)}
+      />
+    )
+  }
+
   if (screen === "session") {
     return <SessionPage onClose={() => setScreen("today")} onRecorded={(at) => void publishMemory(at)} />
   }
@@ -40,6 +51,7 @@ export function App() {
         onToday={() => setScreen("today")}
         onProgress={() => setScreen("progress")}
         onSettings={() => setScreen("settings")}
+        onOpen={setOpenedCardId}
       />
     )
   }
