@@ -1,0 +1,91 @@
+[
+  {
+    "id": "angular.compose.001",
+    "topic": "angular",
+    "order": 2,
+    "title": "Composer avec des composants",
+    "level": 1,
+    "minutes": 7,
+    "source": [
+      "https://angular.dev/essentials/components"
+    ],
+    "prerequisites": [
+      "angular.why.001"
+    ],
+    "body": "## Le problème\n\nUne page web un peu riche mélange vite le profil, la photo, le menu, le texte. Si tout vit dans un seul bloc, le projet devient difficile à lire, à maintenir, et à faire grandir.\n\n## L'idée\n\nLes composants sont les briques principales d'une application Angular. Chacun représente une partie d'une page plus grande. Les découper donne une structure : le code se sépare en morceaux précis, plus simples à faire durer.\n\nUn composant a quatre pièces :\n\n- un décorateur `@Component`, avec la configuration que Angular utilise\n- un template HTML, qui contrôle ce qui est rendu dans le DOM\n- un sélecteur CSS, qui dit comment le composant s'utilise dans le HTML\n- une classe TypeScript, avec les comportements (saisie, appel serveur, etc.)\n\nLe HTML et le CSS peuvent rester dans le décorateur (`template`, `styles`) ou partir dans des fichiers à part (`templateUrl`, `styleUrl`).\n\n## Un exemple\n\nUne page profil assemble plusieurs composants. `UserProfile` importe `ProfilePhoto`, le déclare dans `imports`, puis pose son sélecteur dans le template :\n\n```ts\nimport {ProfilePhoto} from './profile-photo';\n\n@Component({\n  selector: 'user-profile',\n  imports: [ProfilePhoto],\n  template: `\n    <h1>User profile</h1>\n    <profile-photo />\n    <p>This is the user profile page</p>\n  `,\n})\nexport class UserProfile {}\n```\n\nLa balise dans le HTML, c'est le `selector` (`user-profile`, `profile-photo`), pas le nom de la classe.\n\n## Les pièges\n\nLe `selector` n'est pas le nom du fichier, ni celui de la classe TypeScript. Dans le template parent, la balise à écrire est celle du sélecteur.\n\nImporter un composant en TypeScript ne suffit pas : il faut aussi l'ajouter au tableau `imports` du `@Component`, puis poser le sélecteur dans le template.\n\n`template` met le HTML dans le décorateur. `templateUrl` pointe vers un fichier. Ce n'est pas le même champ.\n\n## À retenir\n\n- Un composant Angular, c'est `@Component` + template + sélecteur + classe TypeScript.\n- Une application se construit en assemblant plusieurs composants.\n- Pour en utiliser un autre : import TypeScript, entrée dans `imports`, sélecteur dans le template."
+  },
+  {
+    "id": "angular.forms.001",
+    "topic": "angular",
+    "order": 6,
+    "title": "Formulaires avec des signals",
+    "level": 2,
+    "minutes": 8,
+    "source": [
+      "https://angular.dev/essentials/signal-forms"
+    ],
+    "prerequisites": [
+      "angular.tpl.001"
+    ],
+    "body": "## Le problème\n\nUn login a un e-mail, un mot de passe, un bouton. Il faut que ce que l'utilisateur tape, ce que le modèle contient, et ce que l'écran affiche restent les mêmes — sans recoller chaque champ à la main.\n\n## L'idée\n\nLes Signal Forms gèrent l'état d'un formulaire avec des signals. Le modèle et l'interface se synchronisent.\n\nCinq gestes :\n\n1. Un `signal` tient le modèle (les données du formulaire)\n2. `form(modele)` crée un `FieldTree` : la même forme que le modèle, des champs accessibles par un point\n3. `[formField]` sur un `<input>` fait une liaison dans les deux sens\n4. Appeler un nœud du `FieldTree` comme une fonction rend l'état (valeur, validité, interaction) ; `value()` lit la valeur\n5. `value.set(...)` écrit un champ, et met à jour le `FieldTree` **et** le signal du modèle\n\n`form` et `FormField` viennent de `@angular/forms/signals`. `FormField` entre dans le tableau `imports` du composant.\n\nQuand l'utilisateur tape, le formulaire se met à jour tout seul.\n\n## Un exemple\n\n```ts\nimport {Component, signal} from '@angular/core';\nimport {form, FormField} from '@angular/forms/signals';\n\ninterface LoginData {\n  email: string;\n  password: string;\n}\n\n@Component({\n  selector: 'app-root',\n  imports: [FormField],\n  templateUrl: 'app.html',\n})\nexport class App {\n  loginModel = signal<LoginData>({ email: '', password: '' });\n  loginForm = form(this.loginModel);\n}\n```\n\n```html\n<input type=\"email\" [formField]=\"loginForm.email\" />\n<input type=\"password\" [formField]=\"loginForm.password\" />\n<p>Email: {{ loginForm.email().value() }}</p>\n```\n\n## Les pièges\n\n`loginForm.email` va dans `[formField]`. Pour afficher la valeur : `loginForm.email().value()`, avec les deux appels.\n\nOublier `FormField` dans `imports` : la directive `[formField]` n'existe pas pour ce composant.\n\n`form()` enveloppe le signal du modèle. Ce n'est pas un second `signal` à part, ni un champ HTML.\n\n## À retenir\n\n- Modèle = `signal` ; arbre = `form(modele)` ; champ HTML = `[formField]`.\n- Lire : `champ().value()` ; écrire : `champ().value.set(...)`.\n- Taper dans l'input met à jour le formulaire, et `set` met à jour le modèle."
+  },
+  {
+    "id": "angular.inject.001",
+    "topic": "angular",
+    "order": 5,
+    "title": "Injecter un service",
+    "level": 2,
+    "minutes": 6,
+    "source": [
+      "https://angular.dev/essentials/dependency-injection"
+    ],
+    "prerequisites": [
+      "angular.compose.001"
+    ],
+    "body": "## Le problème\n\nDeux composants ont besoin du même calcul, du même accès aux données. Recopier la classe, ou faire `new` dans chaque écran, disperse la vérité : plus une seule source, plus le même comportement partout.\n\n## L'idée\n\nQuand il faut partager de la logique, Angular s'appuie sur l'injection de dépendances. On crée un **service** : du code injecté dans les composants, géré depuis une source unique.\n\nUn service, c'est :\n\n- un décorateur `@Service`, qui déclare la classe comme service Angular, accessible partout dans l'application\n- une classe TypeScript, avec le code que l'injection rend disponible\n\nPour s'en servir dans un composant :\n\n1. importer le service\n2. poser un champ de classe égal à `inject(LeService)`\n3. appeler ce champ\n\n`inject` est la fonction intégrée qui crée (fournit) le service.\n\n## Un exemple\n\n```ts\nimport {Service} from '@angular/core';\n\n@Service()\nexport class Calculator {\n  add(x: number, y: number) {\n    return x + y;\n  }\n}\n```\n\n```ts\nimport {Component, inject} from '@angular/core';\nimport {Calculator} from './calculator';\n\n@Component({\n  selector: 'app-receipt',\n  template: `<h1>The total is {{ totalCost }}</h1>`,\n})\nexport class Receipt {\n  private calculator = inject(Calculator);\n  totalCost = this.calculator.add(50, 25);\n}\n```\n\n## Les pièges\n\n`new Calculator()` dans le composant contourne l'injecteur : plus la source unique du service.\n\n`@Service` va sur le service, pas sur le composant. Le composant, lui, appelle `inject`.\n\nImporter le service en TypeScript ne suffit pas : sans `inject(Calculator)` sur un champ, Angular ne le fournit pas.\n\n## À retenir\n\n- Un service = `@Service` + une classe, du code réutilisable à injecter.\n- Dans le composant : import, champ `= inject(LeService)`, puis appel du champ.\n- Une source unique, partagée entre les composants."
+  },
+  {
+    "id": "angular.react.001",
+    "topic": "angular",
+    "order": 3,
+    "title": "Réagir avec des signals",
+    "level": 2,
+    "minutes": 7,
+    "source": [
+      "https://angular.dev/essentials/signals"
+    ],
+    "prerequisites": [
+      "angular.compose.001"
+    ],
+    "body": "## Le problème\n\nL'écran doit suivre l'état : un prénom qui change, un essai qui s'active. Si rien ne dit à Angular ce qui a bougé, le DOM reste en retard, ou tout se recalcule sans besoin.\n\n## L'idée\n\nDans Angular, les `signals` créent et gèrent l'état. Un signal est une enveloppe légère autour d'une valeur.\n\n- `signal` crée un signal pour un état local\n- la valeur se lit en l'appelant : un signal est une fonction\n- `set` pose une nouvelle valeur\n- `update` calcule la nouvelle valeur à partir de la précédente\n\nAngular suit où les signals sont lus et quand ils changent. Il s'en sert pour un travail en plus, comme mettre à jour le DOM. Cette capacité à répondre aux changements de valeur dans le temps, c'est la réactivité.\n\nUn `computed` est un signal dont la valeur se calcule à partir d'autres signals. Il est en lecture seule : pas de `set`, pas de `update`. Sa valeur change toute seule quand l'un des signals qu'il lit change.\n\n`signal` et `computed` s'utilisent dans les composants pour créer et gérer l'état.\n\n## Un exemple\n\n```ts\nimport {signal, computed} from '@angular/core';\n\nconst firstName = signal('Morgan');\nconsole.log(firstName()); // Morgan\n\nfirstName.set('Jaime');\nfirstName.update((name) => name.toUpperCase());\n\nconst firstNameCapitalized = computed(() => firstName().toUpperCase());\n```\n\nDans un composant, le même outil sert l'état local :\n\n```ts\nexport class UserProfile {\n  isTrial = signal(false);\n  isTrialExpired = signal(false);\n  showTrialDuration = computed(() => this.isTrial() && !this.isTrialExpired());\n\n  activateTrial() {\n    this.isTrial.set(true);\n  }\n}\n```\n\n## Les pièges\n\nLire `firstName` sans parenthèses ne donne pas la valeur : un signal est une fonction, d'où `firstName()`.\n\n`set` et `update` existent sur un signal créé avec `signal`. Un `computed` est en lecture seule : ces méthodes n'y sont pas.\n\nUn signal n'est pas un événement du DOM (`click`). C'est une valeur qui peut changer, et Angular sait où elle est lue.\n\n## À retenir\n\n- Un signal enveloppe une valeur : lecture par appel, écriture avec `set` ou `update`.\n- Un `computed` dérive d'autres signals et reste en lecture seule.\n- Angular suit lectures et mises à jour ; cette réponse dans le temps s'appelle la réactivité."
+  },
+  {
+    "id": "angular.tpl.001",
+    "topic": "angular",
+    "order": 4,
+    "title": "Rendre le template dynamique",
+    "level": 2,
+    "minutes": 8,
+    "source": [
+      "https://angular.dev/essentials/templates"
+    ],
+    "prerequisites": [
+      "angular.react.001"
+    ],
+    "body": "## Le problème\n\nUn template figé n'affiche qu'une page morte. Il faut montrer une valeur qui change, désactiver un bouton, réagir à un clic, cacher un bloc, ou répéter une liste — sans réécrire le HTML à la main.\n\n## L'idée\n\nUn template Angular n'est pas que du HTML statique : il lit les données de la classe et pose des gestionnaires d'interaction.\n\nUne **liaison** (binding) relie le template aux données. Quand les données changent, le HTML rendu suit.\n\n- `{{ }}` affiche un texte dynamique\n- `[propriété]` pose une valeur sur une propriété du DOM (ex. `disabled`)\n- `[attr.nom]` pose un attribut HTML\n- `(événement)` ajoute un écouteur ; `$event` passe l'objet événement à la méthode\n\nAngular met à jour liaisons, propriétés et attributs tout seul quand la valeur liée change.\n\n`@if` montre ou cache un morceau de template, avec un `@else` optionnel. `@for` répète un morceau. `track` associe les données aux éléments du DOM créés par `@for`.\n\n## Un exemple\n\n```ts\n@Component({\n  selector: 'user-profile',\n  template: `<h1>Profile for {{ userName() }}</h1>`,\n})\nexport class UserProfile {\n  userName = signal('pro_programmer_123');\n}\n```\n\nUn clic, une condition, une liste :\n\n```html\n<button (click)=\"cancelSubscription($event)\">Cancel subscription</button>\n<button [disabled]=\"!isValidUserId()\">Save changes</button>\n\n@if (isAdmin()) {\n  <h2>Admin settings</h2>\n} @else {\n  <h2>User settings</h2>\n}\n\n@for (badge of badges(); track badge.id) {\n  <li>{{ badge.name }}</li>\n}\n```\n\n## Les pièges\n\n`{{ userName }}` sans `()` n'affiche pas la valeur du signal : il faut `{{ userName() }}`.\n\nLes crochets `[disabled]` parlent au DOM. Les parenthèses `(click)` écoutent. Ce n'est pas interchangeable.\n\n`@for` sans `track` : Angular s'en sert pour associer chaque donnée à son nœud DOM.\n\n## À retenir\n\n- `{{ }}` le texte, `[]` la propriété, `[attr.]` l'attribut, `()` l'événement.\n- Un signal lié met à jour le rendu tout seul.\n- `@if` / `@else` pour montrer, `@for` + `track` pour répéter."
+  },
+  {
+    "id": "angular.why.001",
+    "topic": "angular",
+    "order": 1,
+    "title": "Qu'est-ce qu'Angular ?",
+    "level": 1,
+    "minutes": 6,
+    "source": [
+      "https://angular.dev/overview",
+      "https://angular.dev/essentials"
+    ],
+    "prerequisites": [],
+    "body": "## Le problème\n\nUne application web qui dure doit rester rapide et fiable quand l'équipe et le code grandissent. Recoller soi-même des outils, des API et des bibliothèques prend du temps, et le cadre de travail n'est plus le même d'un projet à l'autre.\n\n## L'idée\n\nAngular est un framework web. Une équipe dédiée chez Google le maintient. Il fournit une suite d'outils, d'API et de bibliothèques pour construire des applications rapides et fiables, qui tiennent la charge avec la taille de l'équipe et celle du code.\n\nLa documentation officielle est sur Angular.dev. Le guide Essentials est une courte introduction : il suppose HTML, CSS et TypeScript, plus les classes JavaScript, les bases de TypeScript et les décorateurs.\n\n## Un exemple\n\nLa plateforme couvre notamment :\n\n- les composants, pour découper le code en parties bien encapsulées\n- les `signals`, un modèle de réactivité fine, avec des optimisations à la compilation\n- le rendu côté serveur (`SSR`) et la génération de sites statiques (`SSG`), avec hydratation du DOM\n- l'injection de dépendances, pour partager du code entre les composants\n- le routage, les formulaires, Angular CLI, et DevTools\n\nAngular CLI vise à lancer un projet en moins d'une minute, avec les commandes pour aller jusqu'à une application en production. `ng update` applique des transformations automatiques sur les ruptures de compatibilité courantes.\n\n## Les pièges\n\nAngular n'est pas un serveur HTTP, ni une base de données, ni une feuille de styles. C'est le cadre dans lequel on écrit l'application.\n\nLes `signals` sont un modèle de réactivité. Ce n'est pas le mot pour un événement du DOM (`click`), ni pour une route.\n\n## À retenir\n\n- Angular est un framework web, maintenu chez Google, pensé pour durer avec l'équipe et le code.\n- La suite inclut composants, `signals`, `SSR` / `SSG`, injection de dépendances, routage, formulaires, CLI et DevTools.\n- Angular vise un développement sûr par défaut, avec une sanitization HTML et le support des trusted types."
+  }
+]

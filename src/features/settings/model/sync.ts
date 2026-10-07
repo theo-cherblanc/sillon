@@ -22,11 +22,13 @@ export function memoryFreshness(file: {
   profile: { createdAt: number }
   progress: readonly { updatedAt: number }[]
   reviews: readonly { at: number }[]
+  lessons?: readonly { updatedAt: number }[]
 }): number {
   const times = [
     file.profile.createdAt,
     ...file.progress.map((row) => row.updatedAt),
     ...file.reviews.map((row) => row.at),
+    ...(file.lessons ?? []).map((row) => row.updatedAt),
   ]
   if (times.length === 0 || times.some((time) => !Number.isFinite(time))) {
     throw new Error("A sync stamp needs a finite time")

@@ -55,6 +55,9 @@ export function parseCard(source: string): Card {
   if (front.related !== undefined) {
     card.related = readRelated(front.related)
   }
+  if (front.lesson_id !== undefined) {
+    card.lessonId = readString(front.lesson_id, "lesson_id")
+  }
   if (front.deprecated !== undefined) {
     card.deprecated = readDeprecated(front.deprecated)
   }
@@ -112,7 +115,7 @@ function readTopic(value: unknown): Card["topic"] {
     return value as Card["topic"]
   }
   throw new Error(
-    'Le champ topic doit être "javascript", "http", "web", "git", "docker", "shell" ou "architecture"',
+    'Le champ topic doit être "javascript", "http", "web", "git", "docker", "shell", "architecture" ou "angular"',
   )
 }
 

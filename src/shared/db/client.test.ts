@@ -11,7 +11,7 @@ Dexie.dependencies.IDBKeyRange = IDBKeyRange
 const database = new SillonDatabase("sillon-test")
 
 const profile: Profile = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   xp: 0,
   streak: 0,
   bestStreak: 0,
@@ -64,10 +64,10 @@ describe("SillonDatabase", () => {
 
   it("stores the profile, card progress, reviews, and days", async () => {
     await database.open()
-    assert.equal(database.verno, 1)
+    assert.equal(database.verno, 2)
     assert.deepEqual(
       database.tables.map((table) => table.name).sort(),
-      ["days", "profile", "progress", "reviews"],
+      ["days", "lessons", "profile", "progress", "reviews"],
     )
 
     await database.profile.put({ ...profile, id: localProfileId })

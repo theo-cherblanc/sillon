@@ -14,7 +14,7 @@ Dexie.dependencies.IDBKeyRange = IDBKeyRange
 const database = new SillonDatabase("sillon-import-test")
 
 const profile: Profile = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   xp: 7,
   streak: 1,
   bestStreak: 2,
@@ -40,12 +40,15 @@ const kept: CardProgress = {
   updatedAt: 10,
 }
 
+const lesson = { lessonId: "angular.why.001", readAt: 10, updatedAt: 10 }
+
 function file() {
   return exportProgress({
     profile,
     progress: [kept],
     reviews: [],
     days: [{ date: "2026-10-04", queueSize: 1, completed: 1, xp: 7, goalMet: true }],
+    lessons: [lesson],
     exportedAt: 1_700_000_100_000,
   })
 }
@@ -53,7 +56,8 @@ function file() {
 describe("parseProgressFile", () => {
   it("keeps an unknown card and drops nothing the export stored", () => {
     const parsed = parseProgressFile(JSON.parse(JSON.stringify(file())))
-    assert.equal(parsed.schemaVersion, 1)
+    assert.equal(parsed.schemaVersion, 2)
+    assert.deepEqual(parsed.lessons, [lesson])
     assert.equal(parsed.profile.xp, 7)
     assert.deepEqual(
       parsed.progress.map((row) => row.cardId),
@@ -61,8 +65,20 @@ describe("parseProgressFile", () => {
     )
   })
 
+  it("opens a version 1 export as version 2, without lessons", () => {
+    const raw = {
+      ...file(),
+      schemaVersion: 1,
+      profile: { ...profile, schemaVersion: 1 },
+    }
+    const { lessons: _lessons, ...legacy } = raw
+    const parsed = parseProgressFile(legacy)
+    assert.equal(parsed.schemaVersion, 2)
+    assert.deepEqual(parsed.lessons, [])
+  })
+
   it("rejects a file from another schema", () => {
-    assert.throws(() => parseProgressFile({ ...file(), schemaVersion: 2 }), /schema version 1/)
+    assert.throws(() => parseProgressFile({ ...file(), schemaVersion: 3 }), /schema version 1 or 2/)
   })
 
   it("rejects a repeated card", () => {
@@ -93,6 +109,7 @@ describe("replaceMemory", () => {
       fromQueue: true,
     })
     await database.days.put({ date: "2026-10-05", queueSize: 10, completed: 10, xp: 40, goalMet: true })
+    await database.lessons.put({ lessonId: "old.lesson", readAt: 1, updatedAt: 1 })
 
     const saved = await replaceMemory(database, file())
     assert.equal(saved.id, localProfileId)
@@ -107,10 +124,11 @@ describe("replaceMemory", () => {
       (await database.days.toArray()).map((day) => day.date),
       ["2026-10-04"],
     )
+    assert.deepEqual(await database.lessons.toArray(), [lesson])
   })
 
   it("leaves the memory in place when the file is not an export", async () => {
-    await assert.rejects(() => replaceMemory(database, { schemaVersion: 2 }), /schema version 1/)
+    await assert.rejects(() => replaceMemory(database, { schemaVersion: 3 }), /schema version 1 or 2/)
     assert.deepEqual(
       (await database.progress.toArray()).map((row) => row.cardId),
       ["missing.card"],

@@ -1,26 +1,35 @@
 import { localProfileId, type ProfileRow, type SillonDatabase } from "../../../shared/db/client.ts"
-import type { CardProgress, CardState, DayLog, Profile, ReviewLog, StoredRating } from "../../../shared/db/types.ts"
+import {
+  currentSchema,
+  type CardProgress,
+  type CardState,
+  type DayLog,
+  type LessonProgress,
+  type ReviewLog,
+  type StoredRating,
+} from "../../../shared/db/types.ts"
 import { dailyGoals } from "./goals.ts"
 import { exportProgress, type ProgressFile } from "./export.ts"
+import { migrate, type StoredProfile } from "./migrate.ts"
 
 const datePattern = /^(\d{4})-(\d{2})-(\d{2})$/
 
 export function parseProgressFile(value: unknown): ProgressFile {
   const file = record(value, "An import needs an export file")
-  if (file.schemaVersion !== 1) {
-    throw new Error("An import needs schema version 1")
+  const version = file.schemaVersion
+  if (version !== 1 && version !== currentSchema) {
+    throw new Error("An import needs schema version 1 or 2")
   }
 
-  const profile = profileFrom(file.profile)
-  if (profile.schemaVersion !== file.schemaVersion) {
-    throw new Error("An import needs schema version 1")
-  }
+  const profile = migrate(profileFrom(file.profile), currentSchema)
+  const lessons = version === 1 ? [] : lessonsFrom(file.lessons)
 
   return exportProgress({
     profile,
     progress: progressFrom(file.progress),
     reviews: reviewsFrom(file.reviews),
     days: daysFrom(file.days),
+    lessons,
     exportedAt: finite(file.exportedAt, "An import needs a finite time"),
   })
 }
@@ -29,19 +38,29 @@ export async function replaceMemory(database: SillonDatabase, file: unknown): Pr
   const parsed = parseProgressFile(file)
   const row: ProfileRow = { ...parsed.profile, id: localProfileId }
 
-  return database.transaction("rw", database.profile, database.progress, database.reviews, database.days, async () => {
-    await database.progress.clear()
-    await database.reviews.clear()
-    await database.days.clear()
-    await database.profile.put(row)
-    await database.progress.bulkPut(parsed.progress)
-    await database.reviews.bulkPut(parsed.reviews)
-    await database.days.bulkPut(parsed.days)
-    return row
-  })
+  return database.transaction(
+    "rw",
+    database.profile,
+    database.progress,
+    database.reviews,
+    database.days,
+    database.lessons,
+    async () => {
+      await database.progress.clear()
+      await database.reviews.clear()
+      await database.days.clear()
+      await database.lessons.clear()
+      await database.profile.put(row)
+      await database.progress.bulkPut(parsed.progress)
+      await database.reviews.bulkPut(parsed.reviews)
+      await database.days.bulkPut(parsed.days)
+      await database.lessons.bulkPut(parsed.lessons)
+      return row
+    },
+  )
 }
 
-function profileFrom(value: unknown): Profile {
+function profileFrom(value: unknown): StoredProfile {
   const profile = record(value, "An import needs a profile")
   const goals = dailyGoals(
     whole(profile.dailyGoal, "An import needs a daily goal"),
@@ -61,8 +80,10 @@ function profileFrom(value: unknown): Profile {
     throw new Error("An import needs an XP total of zero or more")
   }
 
+  const schemaVersion = whole(profile.schemaVersion, "An import needs a schema version")
+
   return {
-    schemaVersion: 1,
+    schemaVersion,
     xp,
     streak,
     bestStreak,
@@ -71,6 +92,20 @@ function profileFrom(value: unknown): Profile {
     newPerDay: goals.newPerDay,
     createdAt: finite(profile.createdAt, "An import needs a finite creation time"),
   }
+}
+
+function lessonsFrom(value: unknown): LessonProgress[] {
+  const rows = list(value, "An import needs its lessons").map((item) => {
+    const row = record(item, "An import needs a lesson")
+    const readAt = row.readAt === null ? null : finite(row.readAt, "An import needs a lesson time")
+    return {
+      lessonId: text(row.lessonId, "An import needs a lesson id"),
+      readAt,
+      updatedAt: finite(row.updatedAt, "An import needs a lesson update"),
+    }
+  })
+  unique(rows.map((row) => row.lessonId), "An import has a repeated lesson")
+  return rows
 }
 
 function progressFrom(value: unknown): CardProgress[] {

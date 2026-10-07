@@ -29,30 +29,57 @@ import { soonestDue } from "../model/today.ts"
 
 export function SessionPage({
   cardId,
+  cardIds,
   onClose,
   onRecorded,
   onOpen,
+  onOpenLesson,
 }: {
   cardId?: string
+  cardIds?: readonly string[]
   onClose: () => void
   onRecorded?: (at: number) => void
   onOpen?: (cardId: string) => void
+  onOpenLesson?: (lessonId: string) => void
 }) {
   if (cardId) {
-    return <OpenedCard key={cardId} cardId={cardId} onClose={onClose} onRecorded={onRecorded} onOpen={onOpen} />
+    return (
+      <OpenedCard
+        key={cardId}
+        cardId={cardId}
+        onClose={onClose}
+        onRecorded={onRecorded}
+        onOpen={onOpen}
+        onOpenLesson={onOpenLesson}
+      />
+    )
   }
 
-  return <TodaySession onClose={onClose} onRecorded={onRecorded} onOpen={onOpen} />
+  if (cardIds) {
+    return (
+      <PracticeSession
+        cardIds={cardIds}
+        onClose={onClose}
+        onRecorded={onRecorded}
+        onOpen={onOpen}
+        onOpenLesson={onOpenLesson}
+      />
+    )
+  }
+
+  return <TodaySession onClose={onClose} onRecorded={onRecorded} onOpen={onOpen} onOpenLesson={onOpenLesson} />
 }
 
 function TodaySession({
   onClose,
   onRecorded,
   onOpen,
+  onOpenLesson,
 }: {
   onClose: () => void
   onRecorded?: (at: number) => void
   onOpen?: (cardId: string) => void
+  onOpenLesson?: (lessonId: string) => void
 }) {
   const { summary, queue, progress, error } = useToday()
   const [index, setIndex] = useState(0)
@@ -183,6 +210,118 @@ function TodaySession({
       onClose={onClose}
       onGrade={grade}
       onOpen={onOpen}
+      onOpenLesson={onOpenLesson}
+    />
+  )
+}
+
+function PracticeSession({
+  cardIds,
+  onClose,
+  onRecorded,
+  onOpen,
+  onOpenLesson,
+}: {
+  cardIds: readonly string[]
+  onClose: () => void
+  onRecorded?: (at: number) => void
+  onOpen?: (cardId: string) => void
+  onOpenLesson?: (lessonId: string) => void
+}) {
+  const [index, setIndex] = useState(0)
+  const [remembered, setRemembered] = useState<CardProgress | null | undefined>(undefined)
+  const [error, setError] = useState<string | null>(null)
+  const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
+  const queue = cardIds.filter((id) => cards.some((card) => card.id === id))
+  const card = cards.find((item) => item.id === queue[index]) ?? null
+
+  useEffect(() => {
+    let cancelled = false
+    const cardId = queue[index]
+    if (!cardId) {
+      setRemembered(null)
+      return
+    }
+    const currentId = cardId
+
+    async function load() {
+      try {
+        const database = getDatabase()
+        await ensureProfile(database, Date.now())
+        const row = (await database.progress.get(currentId)) ?? null
+        if (!cancelled) {
+          setRemembered(row)
+        }
+      } catch {
+        if (!cancelled) {
+          setError("La carte n'a pas pu être lue.")
+        }
+      }
+    }
+
+    setRemembered(undefined)
+    void load()
+    return () => {
+      cancelled = true
+    }
+  }, [index, queue.join("\0")])
+
+  async function grade(choice: GradeChoice, mcqChoiceId: string | null, mcqCorrect: boolean | null) {
+    if (!card || saving || remembered === undefined) {
+      return
+    }
+    setSaving(true)
+    setSaveError(null)
+    try {
+      const now = new Date()
+      await recordGrade(getDatabase(), {
+        card,
+        progress: remembered,
+        choice,
+        mcqChoiceId,
+        mcqCorrect,
+        now,
+        fromQueue: false,
+      })
+      onRecorded?.(now.getTime())
+      if (index + 1 >= queue.length) {
+        onClose()
+        return
+      }
+      setIndex(index + 1)
+    } catch {
+      setSaveError("La note n'a pas pu être enregistrée.")
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  if (!card || remembered === undefined) {
+    return (
+      <Screen title="Cartes" trailing={<TextButton onClick={onClose}>Fermer</TextButton>}>
+        {error ? <p>{error}</p> : null}
+        {saveError ? <p>{saveError}</p> : null}
+        {!error && !card ? <p>Cette carte est introuvable.</p> : null}
+        {!error && card && remembered === undefined ? <Meta>Chargement…</Meta> : null}
+      </Screen>
+    )
+  }
+
+  return (
+    <SessionCard
+      key={card.id}
+      card={card}
+      remembered={remembered}
+      saving={saving}
+      doneCount={index + 1}
+      total={queue.length}
+      title="Cartes"
+      error={saveError}
+      onClose={onClose}
+      onGrade={grade}
+      onOpen={onOpen}
+      onOpenLesson={onOpenLesson}
     />
   )
 }
@@ -192,11 +331,13 @@ function OpenedCard({
   onClose,
   onRecorded,
   onOpen,
+  onOpenLesson,
 }: {
   cardId: string
   onClose: () => void
   onRecorded?: (at: number) => void
   onOpen?: (cardId: string) => void
+  onOpenLesson?: (lessonId: string) => void
 }) {
   const card = cards.find((item) => item.id === cardId) ?? null
   const [remembered, setRemembered] = useState<CardProgress | null | undefined>(undefined)
@@ -276,6 +417,7 @@ function OpenedCard({
       onClose={onClose}
       onGrade={grade}
       onOpen={onOpen}
+      onOpenLesson={onOpenLesson}
     />
   )
 }
@@ -301,6 +443,7 @@ function SessionCard({
   onClose,
   onGrade,
   onOpen,
+  onOpenLesson,
 }: {
   card: Card
   remembered: CardProgress | null
@@ -312,6 +455,7 @@ function SessionCard({
   onClose: () => void
   onGrade: (choice: GradeChoice, mcqChoiceId: string | null, mcqCorrect: boolean | null) => void
   onOpen?: (cardId: string) => void
+  onOpenLesson?: (lessonId: string) => void
 }) {
   const [choiceId, setChoiceId] = useState<string | null>(null)
   const [revealed, setRevealed] = useState(false)
@@ -444,6 +588,11 @@ function SessionCard({
               />
             }
           />
+        ) : null}
+        {answered && card.lessonId && onOpenLesson ? (
+          <Button variant="plain" onClick={() => onOpenLesson(card.lessonId ?? "")}>
+            Voir la leçon
+          </Button>
         ) : null}
       </Stack>
     </Screen>

@@ -11,10 +11,12 @@ import { todayStatus, type TodaySummary } from "../model/today.ts"
 
 export function TodayPage({
   onReview,
+  onLearn,
   onProgress,
   onSettings,
 }: {
   onReview: () => void
+  onLearn: () => void
   onProgress: () => void
   onSettings: () => void
 }) {
@@ -26,11 +28,16 @@ export function TodayPage({
       title="Aujourd'hui"
       largeMark
       dock={
-        ready ? (
-          <Button variant="accent" onClick={onReview}>
-            Réviser
+        <>
+          <Button variant="plain" onClick={onLearn}>
+            Apprendre
           </Button>
-        ) : null
+          {ready ? (
+            <Button variant="accent" onClick={onReview}>
+              Réviser les cartes
+            </Button>
+          ) : null}
+        </>
       }
       tabs={<TabBar current="today" onToday={() => undefined} onProgress={onProgress} onSettings={onSettings} />}
     >

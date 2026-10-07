@@ -1,5 +1,1471 @@
 [
   {
+    "id": "angular.cli.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "À quoi sert Angular CLI ?",
+    "explanation": "C'est l'outil en ligne de commande pour démarrer un projet et le faire grandir jusqu'au déploiement. L'inspecteur de composants, c'est DevTools. Les traductions, c'est l'internationalisation.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Angular CLI lance un projet en moins d'une minute, avec les commandes pour aller jusqu'à la production."
+      },
+      {
+        "id": "b",
+        "text": "Angular CLI inspecte l'arbre des composants dans les outils du navigateur."
+      },
+      {
+        "id": "c",
+        "text": "Angular CLI traduit les messages de l'application pour l'internationalisation."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/overview",
+    "insight": "Le CLI, c'est le terminal : créer, servir, construire. DevTools, c'est l'inspecteur dans le navigateur.",
+    "commonMistake": "Mélanger CLI et DevTools : l'un est en ligne de commande, l'autre s'installe à côté des tools du navigateur.",
+    "related": [
+      "angular.what.001",
+      "angular.google.001"
+    ],
+    "lessonId": "angular.why.001"
+  },
+  {
+    "id": "angular.component.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "À quoi servent les composants Angular ?",
+    "explanation": "Ils découpent l'application en morceaux bien bornés. Le HTML ne disparaît pas, et la logique n'est pas renvoyée ailleurs : le composant est le lieu où ça se tient.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Les composants Angular permettent de découper le code en parties bien encapsulées."
+      },
+      {
+        "id": "b",
+        "text": "Les composants Angular remplacent le HTML par un langage de templates propriétaire."
+      },
+      {
+        "id": "c",
+        "text": "Les composants Angular servent seulement à styliser les pages, sans y mettre de logique."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/overview",
+    "insight": "Un composant, c'est une brique de l'écran : markup, style et logique restent ensemble.",
+    "commonMistake": "Croire qu'un composant Angular, c'est juste une classe CSS avec un nom chic.",
+    "related": [
+      "angular.di.001",
+      "angular.what.001",
+      "angular.compose.parts.001"
+    ],
+    "lessonId": "angular.why.001"
+  },
+  {
+    "id": "angular.compose.class.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "Que contient la classe TypeScript d'un composant Angular ?",
+    "explanation": "C'est là que vivent les comportements : réaction à une saisie, requête HTTP, calcul. Le CSS va dans `styles` ou `styleUrl`. Le sélecteur reste dans le décorateur.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "La classe TypeScript d'un composant porte les comportements, comme gérer une saisie ou appeler un serveur."
+      },
+      {
+        "id": "b",
+        "text": "La classe TypeScript d'un composant contient seulement le CSS appliqué au template."
+      },
+      {
+        "id": "c",
+        "text": "La classe TypeScript d'un composant décrit le sélecteur HTML, à la place du décorateur."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/components",
+    "insight": "Décorateur = config. Classe = comportement. Les deux restent collés, mais ce n'est pas le même tiroir.",
+    "commonMistake": "Tout mettre dans `@Component` et laisser la classe vide, ou l'inverse.",
+    "related": [
+      "angular.compose.decorator.001",
+      "angular.compose.template.001"
+    ],
+    "lessonId": "angular.compose.001"
+  },
+  {
+    "id": "angular.compose.decorator.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "Que contient le décorateur `@Component` ?",
+    "explanation": "Angular lit cette configuration pour savoir comment créer et afficher le composant. La logique, elle, reste dans la classe TypeScript. Ce n'est ni le moteur JS du navigateur, ni un fichier de tests.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le décorateur `@Component` contient la configuration que Angular utilise pour le composant."
+      },
+      {
+        "id": "b",
+        "text": "Le décorateur `@Component` contient le JavaScript que le navigateur exécute à la place de la classe."
+      },
+      {
+        "id": "c",
+        "text": "Le décorateur `@Component` contient uniquement les tests unitaires du composant."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/components",
+    "insight": "C'est l'étiquette collée sur la classe : sélecteur, template, styles, `imports`.",
+    "commonMistake": "Prendre `@Component` pour le corps du composant, et oublier que la classe existe encore en dessous.",
+    "related": [
+      "angular.compose.parts.001",
+      "angular.compose.template.001"
+    ],
+    "lessonId": "angular.compose.001"
+  },
+  {
+    "id": "angular.compose.files.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "À quoi servent `templateUrl` et `styleUrl` dans `@Component` ?",
+    "explanation": "Ils sortent le HTML et le CSS du décorateur, vers des fichiers dédiés. Importer un enfant, c'est `imports`. Nommer la balise, c'est `selector`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`templateUrl` et `styleUrl` permettent de mettre le HTML et le CSS dans des fichiers séparés."
+      },
+      {
+        "id": "b",
+        "text": "`templateUrl` et `styleUrl` permettent d'importer un autre composant dans le template."
+      },
+      {
+        "id": "c",
+        "text": "`templateUrl` et `styleUrl` permettent de déclarer le sélecteur HTML du composant."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/components",
+    "insight": "`template` et `styles` restent possibles dans le décorateur. Les `*Url`, c'est la version fichier à part.",
+    "commonMistake": "Confondre `templateUrl` avec `imports` : l'un pointe vers un fichier, l'autre vers un composant.",
+    "related": [
+      "angular.compose.template.001",
+      "angular.compose.imports.001"
+    ],
+    "lessonId": "angular.compose.001"
+  },
+  {
+    "id": "angular.compose.imports.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "Comment utilise-t-on un autre composant dans un template Angular ?",
+    "explanation": "Angular ne découvre pas l'enfant tout seul. Il faut l'importer, le lister dans `imports` du `@Component`, puis écrire un élément qui matche son `selector`. Copier la classe, ou en faire une route, ne remplace pas ça.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Utiliser un composant demande un import TypeScript, une entrée dans `imports`, et son sélecteur dans le template."
+      },
+      {
+        "id": "b",
+        "text": "Utiliser un composant demande seulement de copier sa classe dans le fichier du parent."
+      },
+      {
+        "id": "c",
+        "text": "Utiliser un composant demande de le déclarer comme une route, sans l'importer."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/components",
+    "insight": "Trois gestes, toujours les mêmes : importer, déclarer, poser la balise.",
+    "commonMistake": "Faire l'`import` TypeScript et oublier le tableau `imports` du décorateur : la balise reste inconnue.",
+    "related": [
+      "angular.compose.selector.001",
+      "angular.compose.parts.001"
+    ],
+    "lessonId": "angular.compose.001"
+  },
+  {
+    "id": "angular.compose.parts.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "Quel rôle les composants jouent-ils dans une application Angular ?",
+    "explanation": "Ils structurent le projet : chaque composant couvre une partie de la page, ce qui sépare le code en morceaux plus simples à maintenir. Ce n'est ni une feuille de styles globale, ni une route.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Les composants sont les briques principales d'une application Angular, et chacun représente une partie de la page."
+      },
+      {
+        "id": "b",
+        "text": "Les composants sont des feuilles de styles que Angular applique d'un coup à toute la page."
+      },
+      {
+        "id": "c",
+        "text": "Les composants sont des routes qui ouvrent une URL dans le navigateur, sans HTML."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/components",
+    "insight": "Une page, c'est souvent plusieurs briques : le profil d'un côté, la photo de l'autre.",
+    "commonMistake": "Voir le composant comme du CSS, ou comme une entrée du routeur.",
+    "related": [
+      "angular.component.001",
+      "angular.compose.decorator.001"
+    ],
+    "lessonId": "angular.compose.001"
+  },
+  {
+    "id": "angular.compose.selector.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "À quoi sert le sélecteur d'un composant Angular ?",
+    "explanation": "C'est le nom de la balise (ou du motif CSS) qui insère le composant dans un template. Ça ne désigne ni un fichier, ni une base.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le sélecteur CSS d'un composant définit comment le composant s'utilise dans le HTML."
+      },
+      {
+        "id": "b",
+        "text": "Le sélecteur CSS d'un composant choisit la base de données à interroger."
+      },
+      {
+        "id": "c",
+        "text": "Le sélecteur CSS d'un composant nomme le fichier TypeScript du composant."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/components",
+    "insight": "La classe s'appelle `UserProfile`. La balise, elle, s'écrit `<user-profile />` : c'est le `selector`.",
+    "commonMistake": "Écrire `<UserProfile />` dans le template, comme si le nom de la classe était la balise.",
+    "related": [
+      "angular.compose.imports.001",
+      "angular.compose.decorator.001"
+    ],
+    "lessonId": "angular.compose.001"
+  },
+  {
+    "id": "angular.compose.template.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "Que contrôle le template d'un composant Angular ?",
+    "explanation": "C'est le HTML du composant : il décide quels nœuds arrivent dans le DOM. Compiler le TypeScript, ce n'est pas son rôle. Brancher une URL, non plus.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le template HTML d'un composant contrôle ce qui est rendu dans le DOM."
+      },
+      {
+        "id": "b",
+        "text": "Le template HTML d'un composant compile le TypeScript en JavaScript."
+      },
+      {
+        "id": "c",
+        "text": "Le template HTML d'un composant enregistre le composant auprès du routeur."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/components",
+    "insight": "Le template, c'est ce que l'utilisateur voit. La classe, c'est ce que le composant sait faire.",
+    "commonMistake": "Mettre la logique métier dans le HTML, ou croire que le template sert à compiler le TS.",
+    "related": [
+      "angular.compose.decorator.001",
+      "angular.compose.files.001",
+      "angular.tpl.interp.001"
+    ],
+    "lessonId": "angular.compose.001"
+  },
+  {
+    "id": "angular.di.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "À quoi sert l'injection de dépendances dans Angular ?",
+    "explanation": "Elle fait circuler du code partagé (services, helpers) vers les composants, sans que chacun instancie tout à la main. Ce n'est ni le routeur, ni le compilateur TypeScript.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "L'injection de dépendances d'Angular permet de partager du code entre les composants de toute l'application."
+      },
+      {
+        "id": "b",
+        "text": "L'injection de dépendances d'Angular remplace le routeur pour changer d'écran."
+      },
+      {
+        "id": "c",
+        "text": "L'injection de dépendances d'Angular compile le TypeScript en JavaScript dans le navigateur."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/overview",
+    "insight": "Au lieu de `new Service()` partout, un composant demande ce dont il a besoin, et Angular le fournit.",
+    "commonMistake": "Confondre DI et navigation : changer d'écran, c'est le routage, pas l'injecteur.",
+    "related": [
+      "angular.component.001",
+      "angular.cli.001",
+      "angular.inject.service.001"
+    ],
+    "lessonId": "angular.why.001"
+  },
+  {
+    "id": "angular.forms.field.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "À quoi sert `[formField]` dans un template Angular ?",
+    "explanation": "Liaison bidirectionnelle input ↔ formulaire. Ce n'est pas `{{ }}`, et ce n'est pas `inject`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "La directive `[formField]` crée une liaison dans les deux sens entre l'input et le formulaire."
+      },
+      {
+        "id": "b",
+        "text": "La directive `[formField]` affiche un texte interpolé, à la place des doubles accolades."
+      },
+      {
+        "id": "c",
+        "text": "La directive `[formField]` injecte un service `@Service` dans le template."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/signal-forms",
+    "insight": "Taper dans l'e-mail met à jour le champ. Inversement, `value.set` met à jour l'input.",
+    "commonMistake": "Oublier `FormField` dans `imports` : `[formField]` n'existe alors pas sur ce composant.",
+    "related": [
+      "angular.forms.tree.001",
+      "angular.compose.imports.001"
+    ],
+    "lessonId": "angular.forms.001"
+  },
+  {
+    "id": "angular.forms.import.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "D'où viennent `form` et `FormField` dans Signal Forms ?",
+    "explanation": "Le paquet `@angular/forms/signals`, et `FormField` dans `imports`. Pas `@angular/core`, pas le routeur.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`form` et `FormField` viennent de `@angular/forms/signals` ; `FormField` entre dans `imports` du composant."
+      },
+      {
+        "id": "b",
+        "text": "`form` et `FormField` viennent de `@angular/core` ; `FormField` se pose avec `@Service`."
+      },
+      {
+        "id": "c",
+        "text": "`form` et `FormField` viennent du routeur ; `FormField` se déclare comme une URL."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/signal-forms",
+    "insight": "Même réflexe que pour un composant enfant : importer, puis lister `FormField` dans `imports`.",
+    "commonMistake": "Les chercher dans `@angular/core`, à côté de `signal`.",
+    "related": [
+      "angular.forms.field.001",
+      "angular.compose.imports.001"
+    ],
+    "lessonId": "angular.forms.001"
+  },
+  {
+    "id": "angular.forms.model.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "Par quoi commence un formulaire Signal Forms ?",
+    "explanation": "Le modèle est un signal. `@Service` sert à injecter du code. `@for` répète du HTML, ça ne crée pas le modèle.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un formulaire Signal Forms commence par un `signal` qui tient le modèle de données."
+      },
+      {
+        "id": "b",
+        "text": "Un formulaire Signal Forms commence par un décorateur `@Service` sur le composant."
+      },
+      {
+        "id": "c",
+        "text": "Un formulaire Signal Forms commence par un bloc `@for` autour de chaque champ."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/signal-forms",
+    "insight": "`loginModel = signal({ email: '', password: '' })` : d'abord les données, ensuite l'arbre.",
+    "commonMistake": "Poser les `<input>` avant d'avoir un modèle, et se demander où vivent les valeurs.",
+    "related": [
+      "angular.react.create.001",
+      "angular.forms.tree.001"
+    ],
+    "lessonId": "angular.forms.001"
+  },
+  {
+    "id": "angular.forms.read.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "Comment lit-on la valeur d'un champ Signal Forms ?",
+    "explanation": "Le nœud s'appelle comme une fonction, puis `value()`. Ça ne fabrique pas un signal neuf, et ça n'est pas le routeur.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Appeler un nœud du `FieldTree` rend l'état du champ ; `value()` en lit la valeur courante."
+      },
+      {
+        "id": "b",
+        "text": "Appeler un nœud du `FieldTree` crée un nouveau `signal` vide, sans lire le modèle."
+      },
+      {
+        "id": "c",
+        "text": "Appeler un nœud du `FieldTree` ouvre une route et change le composant affiché."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/signal-forms",
+    "insight": "`loginForm.email()` c'est l'état. `loginForm.email().value()` c'est la chaîne tapée.",
+    "commonMistake": "Afficher `loginForm.email` tout cru dans `{{ }}` : il manque les deux appels jusqu'à `value()`.",
+    "related": [
+      "angular.forms.field.001",
+      "angular.react.read.001"
+    ],
+    "lessonId": "angular.forms.001"
+  },
+  {
+    "id": "angular.forms.set.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "Que met à jour `value.set` dans Signal Forms ?",
+    "explanation": "Le champ **et** le modèle. Pas seulement le DOM, et ça ne change pas de page.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`value.set` met à jour le nœud du `FieldTree` et le signal du modèle en même temps."
+      },
+      {
+        "id": "b",
+        "text": "`value.set` met à jour seulement l'input HTML, sans toucher au modèle."
+      },
+      {
+        "id": "c",
+        "text": "`value.set` remplace le composant par une nouvelle page, sans changer le champ."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/signal-forms",
+    "insight": "`loginForm.email().value.set('a@b.c')` : l'arbre et `loginModel().email` suivent.",
+    "commonMistake": "Écrire dans `loginModel` à la main et croire que l'input n'a pas besoin du `FieldTree`.",
+    "related": [
+      "angular.forms.read.001",
+      "angular.react.set.001"
+    ],
+    "lessonId": "angular.forms.001"
+  },
+  {
+    "id": "angular.forms.tree.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "Que produit la fonction `form` dans Signal Forms ?",
+    "explanation": "Un `FieldTree` miroir du modèle. Ce n'est ni un `@Component`, ni un `@Service` par champ.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "La fonction `form` crée un `FieldTree` qui reprend la forme du modèle, avec des champs accessibles par un point."
+      },
+      {
+        "id": "b",
+        "text": "La fonction `form` crée un composant Angular à partir d'un sélecteur HTML."
+      },
+      {
+        "id": "c",
+        "text": "La fonction `form` crée un service `@Service` pour chaque champ du formulaire."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/signal-forms",
+    "insight": "`loginForm.email` est un nœud, comme `loginForm` : même API, à chaque niveau.",
+    "commonMistake": "Chercher `loginForm.controls.email` : ici, c'est un point sur l'arbre, pas `controls`.",
+    "related": [
+      "angular.forms.model.001",
+      "angular.forms.field.001"
+    ],
+    "lessonId": "angular.forms.001"
+  },
+  {
+    "id": "angular.google.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "Qui maintient Angular ?",
+    "explanation": "Une équipe dédiée chez Google en a la charge. Angular.dev est le site officiel de la documentation. Le framework n'est pas un outil interne Chrome, et ce n'est pas un fork de React.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Angular est maintenu par une équipe dédiée chez Google, avec une documentation sur Angular.dev."
+      },
+      {
+        "id": "b",
+        "text": "Angular est un framework interne à Chrome, réservé aux produits Google."
+      },
+      {
+        "id": "c",
+        "text": "Angular est un fork de React, maintenu uniquement par Meta."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/overview",
+    "insight": "Google maintient Angular, et le code reste ouvert : les pages parlent aussi de GitHub et de la communauté.",
+    "commonMistake": "Lire « Google » et conclure que seul Google a le droit de s'en servir.",
+    "related": [
+      "angular.what.001",
+      "angular.cli.001"
+    ],
+    "lessonId": "angular.why.001"
+  },
+  {
+    "id": "angular.inject.call.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "Que fait la fonction `inject` dans un composant Angular ?",
+    "explanation": "Elle fournit le service et le pose sur le champ. Ce n'est ni le compilateur, ni le routeur.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`inject` reçoit le service et assigne le résultat à un champ de la classe du composant."
+      },
+      {
+        "id": "b",
+        "text": "`inject` compile le TypeScript du service en JavaScript dans le navigateur."
+      },
+      {
+        "id": "c",
+        "text": "`inject` ouvre une route et remplace le composant affiché à l'écran."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/dependency-injection",
+    "insight": "`private calculator = inject(Calculator)` : le champ tient l'instance, Angular la fournit.",
+    "commonMistake": "Écrire `new Calculator()` sur le champ, et passer à côté de `inject`.",
+    "related": [
+      "angular.inject.use.001",
+      "angular.inject.decorator.001"
+    ],
+    "lessonId": "angular.inject.001"
+  },
+  {
+    "id": "angular.inject.decorator.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "Que déclare le décorateur `@Service` ?",
+    "explanation": "Il marque une classe comme service, disponible dans l'application. Le sélecteur et le template, c'est `@Component`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le décorateur `@Service` déclare une classe comme service Angular, accessible partout dans l'application."
+      },
+      {
+        "id": "b",
+        "text": "Le décorateur `@Service` déclare le sélecteur HTML d'un composant, comme `@Component`."
+      },
+      {
+        "id": "c",
+        "text": "Le décorateur `@Service` compile le template du composant en JavaScript."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/dependency-injection",
+    "insight": "`@Service()` au-dessus de `Calculator` : Angular sait que cette classe s'injecte.",
+    "commonMistake": "Mettre `@Component` sur un service, ou `@Service` sur un écran.",
+    "related": [
+      "angular.inject.service.001",
+      "angular.compose.decorator.001"
+    ],
+    "lessonId": "angular.inject.001"
+  },
+  {
+    "id": "angular.inject.parts.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "De quoi un service Angular est-il fait ?",
+    "explanation": "Décorateur + classe, comme un composant a `@Component` + classe. Pas de template ni de sélecteur sur le service.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un service Angular combine un décorateur `@Service` et une classe TypeScript."
+      },
+      {
+        "id": "b",
+        "text": "Un service Angular combine un template HTML et un sélecteur CSS, sans classe."
+      },
+      {
+        "id": "c",
+        "text": "Un service Angular combine uniquement un fichier JSON et une route du routeur."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/dependency-injection",
+    "insight": "Même idée que le composant : un décorateur qui décrit, une classe qui fait.",
+    "commonMistake": "Écrire la classe toute seule et s'étonner qu'`inject` ne trouve rien.",
+    "related": [
+      "angular.inject.decorator.001",
+      "angular.compose.parts.001"
+    ],
+    "lessonId": "angular.inject.001"
+  },
+  {
+    "id": "angular.inject.service.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "Que sont les services dans Angular ?",
+    "explanation": "C'est du code à injecter, pas une balise, pas une feuille de styles. Le sélecteur, c'est le composant.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un service Angular est un morceau de code réutilisable, qui peut être injecté."
+      },
+      {
+        "id": "b",
+        "text": "Un service Angular est un sélecteur HTML qui insère un composant dans la page."
+      },
+      {
+        "id": "c",
+        "text": "Un service Angular est un fichier CSS appliqué à tous les templates de l'application."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/dependency-injection",
+    "insight": "Le composant affiche. Le service calcule, range, partage — et Angular le fournit.",
+    "commonMistake": "Appeler « service » n'importe quelle classe, sans `@Service` ni `inject`.",
+    "related": [
+      "angular.di.001",
+      "angular.inject.decorator.001"
+    ],
+    "lessonId": "angular.inject.001"
+  },
+  {
+    "id": "angular.inject.source.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "Comment l'injection de dépendances gère-t-elle un service Angular ?",
+    "explanation": "Une source de vérité, injectée. Pas une copie collée dans chaque écran, et le service ne prend pas la place du template.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "L'injection de dépendances gère le service depuis une source unique, partagée entre les composants."
+      },
+      {
+        "id": "b",
+        "text": "L'injection de dépendances recopie le service dans chaque composant, avec une instance séparée écrite à la main."
+      },
+      {
+        "id": "c",
+        "text": "L'injection de dépendances remplace le template du composant par le code du service."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/dependency-injection",
+    "insight": "Un `Calculator`, plusieurs écrans : Angular le fournit, personne ne le `new` dans son coin.",
+    "commonMistake": "Faire `new` partout « pour être sûr d'avoir le sien » : ce n'est plus la source unique.",
+    "related": [
+      "angular.di.001",
+      "angular.inject.service.001"
+    ],
+    "lessonId": "angular.inject.001"
+  },
+  {
+    "id": "angular.inject.use.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "Comment utilise-t-on un service dans un composant Angular ?",
+    "explanation": "Import TypeScript, puis `inject` sur un champ. Copier la classe ne crée pas la source unique. `imports` du décorateur sert aux composants du template, pas à ce service.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Utiliser un service demande de l'importer, puis d'assigner `inject(LeService)` à un champ de classe."
+      },
+      {
+        "id": "b",
+        "text": "Utiliser un service demande de copier sa classe dans le fichier du composant, sans l'importer."
+      },
+      {
+        "id": "c",
+        "text": "Utiliser un service demande de le poser dans le tableau `imports` du `@Component`, comme un enfant."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/dependency-injection",
+    "insight": "Import + `inject` sur un champ. Le tableau `imports`, lui, c'est pour les composants du template.",
+    "commonMistake": "Mettre `Calculator` dans `imports` du décorateur, comme `ProfilePhoto`.",
+    "related": [
+      "angular.inject.call.001",
+      "angular.compose.imports.001"
+    ],
+    "lessonId": "angular.inject.001"
+  },
+  {
+    "id": "angular.react.computed.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "Que produit un `computed` Angular ?",
+    "explanation": "C'est encore un signal, mais sa valeur vient d'autres signals. Ce n'est ni un `click`, ni un composant.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un `computed` est un signal dont la valeur se calcule à partir d'autres signals."
+      },
+      {
+        "id": "b",
+        "text": "Un `computed` est un événement du DOM qui se déclenche après un `click`."
+      },
+      {
+        "id": "c",
+        "text": "Un `computed` est un composant Angular sans template ni sélecteur."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/signals",
+    "insight": "`computed(() => firstName().toUpperCase())` : dès que `firstName` change, le dérivé suit.",
+    "commonMistake": "Recopier la valeur à la main dans un second `signal`, au lieu d'un `computed`.",
+    "related": [
+      "angular.react.readonly.001",
+      "angular.react.create.001"
+    ],
+    "lessonId": "angular.react.001"
+  },
+  {
+    "id": "angular.react.create.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "À quoi sert la fonction `signal` ?",
+    "explanation": "Elle fabrique un signal d'état local, avec une valeur initiale. Ce n'est pas `@Component`. Un `computed` se crée avec `computed`, pas avec `signal`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "La fonction `signal` crée un signal pour garder un état local."
+      },
+      {
+        "id": "b",
+        "text": "La fonction `signal` crée un composant Angular à partir d'un sélecteur."
+      },
+      {
+        "id": "c",
+        "text": "La fonction `signal` crée un `computed` en lecture seule, sans valeur de départ."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/signals",
+    "insight": "`signal('Morgan')` : une valeur de départ, puis `set` ou `update` pour la faire bouger.",
+    "commonMistake": "Appeler `signal` en croyant obtenir un `computed`, ou un composant.",
+    "related": [
+      "angular.react.wrap.001",
+      "angular.react.set.001"
+    ],
+    "lessonId": "angular.react.001"
+  },
+  {
+    "id": "angular.react.read.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "Comment se lit la valeur d'un signal Angular ?",
+    "explanation": "Les signals sont des fonctions : `firstName()` rend la valeur. Il n'y a pas de `.value` ici, et la lecture n'est pas réservée au décorateur.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "La valeur d'un signal se lit en l'appelant : un signal est une fonction."
+      },
+      {
+        "id": "b",
+        "text": "La valeur d'un signal se lit avec `.value`, comme un objet ordinaire."
+      },
+      {
+        "id": "c",
+        "text": "La valeur d'un signal se lit seulement dans le décorateur `@Component`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/signals",
+    "insight": "`firstName()` avec les parenthèses. Sans, ce n'est pas la valeur, c'est encore le signal.",
+    "commonMistake": "Écrire `firstName.value` par habitude d'autres librairies.",
+    "related": [
+      "angular.react.wrap.001",
+      "angular.react.set.001"
+    ],
+    "lessonId": "angular.react.001"
+  },
+  {
+    "id": "angular.react.readonly.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "Comment un `computed` Angular met-il à jour sa valeur ?",
+    "explanation": "Pas d'écriture directe : pas de `set`, pas de `update`. Quand un signal lu bouge, le `computed` se recalcule. Il ne reste pas coincé sur la première valeur.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un `computed` est en lecture seule, sans `set` ni `update` : sa valeur change quand les signals qu'il lit changent."
+      },
+      {
+        "id": "b",
+        "text": "Un `computed` s'écrit avec `set` et `update`, comme un signal créé par `signal`."
+      },
+      {
+        "id": "c",
+        "text": "Un `computed` garde toujours sa première valeur, même si les signals lus changent."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/signals",
+    "insight": "On ne pousse pas un `computed`. On pousse les sources ; le dérivé suit.",
+    "commonMistake": "Appeler `.set` sur un `computed` parce que « c'est un signal, donc ça s'écrit ».",
+    "related": [
+      "angular.react.computed.001",
+      "angular.react.update.001"
+    ],
+    "lessonId": "angular.react.001"
+  },
+  {
+    "id": "angular.react.set.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "Que fait `set` sur un signal Angular ?",
+    "explanation": "`set` écrit une valeur neuve. Ce n'est pas `computed`, et ça ne fabrique pas un second signal.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "La méthode `set` remplace la valeur du signal par une nouvelle valeur."
+      },
+      {
+        "id": "b",
+        "text": "La méthode `set` crée un nouveau signal à partir d'un autre signal."
+      },
+      {
+        "id": "c",
+        "text": "La méthode `set` rend le signal en lecture seule, comme un `computed`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/signals",
+    "insight": "`firstName.set('Jaime')` : on pose la valeur, on ne la calcule pas à partir de l'ancienne.",
+    "commonMistake": "Utiliser `set` là où `update` irait mieux, ou l'inverse, sans regarder si l'ancienne valeur compte.",
+    "related": [
+      "angular.react.update.001",
+      "angular.react.read.001"
+    ],
+    "lessonId": "angular.react.001"
+  },
+  {
+    "id": "angular.react.track.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "Que suit Angular à propos des signals ?",
+    "explanation": "Il mémorise les lectures et les mises à jour, puis s'en sert : par exemple rafraîchir le DOM. Ce n'est pas un snapshot unique au boot, et ce n'est pas le routeur.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Angular suit où les signals sont lus et mis à jour, pour faire un travail en plus, comme actualiser le DOM."
+      },
+      {
+        "id": "b",
+        "text": "Angular suit les signals seulement au démarrage, puis ignore les lectures suivantes."
+      },
+      {
+        "id": "c",
+        "text": "Angular suit les signals pour les enregistrer comme routes dans le routeur."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/signals",
+    "insight": "Lire un signal, c'est aussi se déclarer intéressé. Quand la valeur bouge, Angular sait qui prévenir — le DOM, par exemple.",
+    "commonMistake": "Croire qu'il faut recoller le DOM à la main après chaque `set`.",
+    "related": [
+      "angular.react.read.001",
+      "angular.react.wrap.001"
+    ],
+    "lessonId": "angular.react.001"
+  },
+  {
+    "id": "angular.react.update.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "Que fait `update` sur un signal Angular ?",
+    "explanation": "La nouvelle valeur dépend de l'ancienne, via une fonction. Ce n'est ni un redémarrage du composant, ni une écriture directe dans le DOM.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "La méthode `update` change la valeur du signal à partir de la valeur précédente."
+      },
+      {
+        "id": "b",
+        "text": "La méthode `update` relance le composant depuis zéro, en perdant l'état."
+      },
+      {
+        "id": "c",
+        "text": "La méthode `update` copie le signal dans le DOM, sans changer la valeur."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/signals",
+    "insight": "`firstName.update((name) => name.toUpperCase())` : l'ancienne valeur entre, la nouvelle sort.",
+    "commonMistake": "Passer à `update` une valeur brute, comme à `set`, au lieu d'une fonction.",
+    "related": [
+      "angular.react.set.001",
+      "angular.react.computed.001"
+    ],
+    "lessonId": "angular.react.001"
+  },
+  {
+    "id": "angular.react.wrap.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "Qu'encapsule un signal Angular ?",
+    "explanation": "C'est l'outil pour l'état : une valeur, rangée dans une enveloppe que Angular peut suivre. Un `click` reste un événement. Une URL, c'est le routeur.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un signal Angular est une enveloppe légère autour d'une valeur, utilisée pour créer et gérer l'état."
+      },
+      {
+        "id": "b",
+        "text": "Un signal Angular est un événement du navigateur, comme click ou submit."
+      },
+      {
+        "id": "c",
+        "text": "Un signal Angular est une route qui charge un composant quand l'URL change."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/signals",
+    "insight": "Penser « petite boîte autour d'une valeur », pas « câble d'événement ».",
+    "commonMistake": "Coller le mot signal sur `addEventListener`, comme en DOM.",
+    "related": [
+      "angular.signal.001",
+      "angular.react.read.001"
+    ],
+    "lessonId": "angular.react.001"
+  },
+  {
+    "id": "angular.secure.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "Comment Angular vise-t-il à protéger les utilisateurs ?",
+    "explanation": "En collaboration avec les équipes sécurité de Google, Angular mise sur des garde-fous intégrés, dont la sanitization HTML et les trusted types, contre des attaques comme le XSS. Les templates exécutent encore de la logique ; rien n'est chiffré composant par composant.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Angular vise un développement sûr par défaut, avec une sanitization HTML et le support des trusted types."
+      },
+      {
+        "id": "b",
+        "text": "Angular vise la sécurité en interdisant tout JavaScript dans les templates."
+      },
+      {
+        "id": "c",
+        "text": "Angular vise la sécurité en chiffrant chaque composant avant de l'afficher."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/overview",
+    "insight": "Sûr par défaut : le framework filtre le HTML dangereux, plutôt que de compter sur chaque écran pour y penser.",
+    "commonMistake": "Entendre « sécurité » et imaginer du chiffrement, ou une interdiction totale du JS.",
+    "related": [
+      "angular.what.001",
+      "angular.component.001"
+    ],
+    "lessonId": "angular.why.001"
+  },
+  {
+    "id": "angular.signal.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "Que sont les signals dans Angular ?",
+    "explanation": "La documentation les présente comme le modèle de réactivité d'Angular, avec des optimisations à la compilation. Un `click` reste un événement DOM. Une route, c'est le routeur.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Les signals Angular sont un modèle de réactivité fine, combiné à des optimisations à la compilation."
+      },
+      {
+        "id": "b",
+        "text": "Les signals Angular sont des événements du navigateur, comme click ou submit."
+      },
+      {
+        "id": "c",
+        "text": "Les signals Angular sont des routes qui chargent un composant à la demande."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/overview",
+    "insight": "Réactivité fine : on met à jour ce qui dépend de la valeur, pas tout l'écran par réflexe.",
+    "commonMistake": "Entendre « signal » et penser à `addEventListener`, ou au routeur.",
+    "related": [
+      "angular.component.001",
+      "angular.ssr.001",
+      "angular.react.wrap.001"
+    ],
+    "lessonId": "angular.why.001"
+  },
+  {
+    "id": "angular.ssr.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "Que prend en charge Angular pour afficher une page hors du navigateur ?",
+    "explanation": "La documentation cite le rendu côté serveur et la génération de sites statiques, avec hydratation du DOM. Ce n'est pas « navigateur seulement », et ce n'est pas une base de données qui dessine la page.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Angular prend en charge le rendu côté serveur (SSR) et la génération de sites statiques (SSG)."
+      },
+      {
+        "id": "b",
+        "text": "Angular prend en charge uniquement le rendu dans le navigateur, sans HTML initial."
+      },
+      {
+        "id": "c",
+        "text": "Angular prend en charge le rendu dans une base de données, puis l'envoie au client."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/overview",
+    "insight": "SSR = HTML produit au moment de la requête. SSG = HTML produit à l'avance. Les deux existent dans Angular.",
+    "commonMistake": "Croire qu'un framework de composants ne peut vivre que dans le navigateur.",
+    "related": [
+      "angular.what.001",
+      "angular.signal.001"
+    ],
+    "lessonId": "angular.why.001"
+  },
+  {
+    "id": "angular.tpl.attr.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "À quoi sert le préfixe `attr.` dans un template Angular ?",
+    "explanation": "Il cible un attribut HTML (`role`, etc.). Un événement, ce sont les parenthèses. Une liste, c'est `@for`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le préfixe `attr.` permet de lier une valeur dynamique à un attribut HTML."
+      },
+      {
+        "id": "b",
+        "text": "Le préfixe `attr.` permet d'écouter un événement, comme un clic."
+      },
+      {
+        "id": "c",
+        "text": "Le préfixe `attr.` permet de répéter une balise pour chaque élément d'une liste."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/templates",
+    "insight": "`[attr.role]=\"listRole()\"` : un attribut HTML, pas `disabled` ni un `click`.",
+    "commonMistake": "Écrire `[role]` en pensant à l'attribut, alors que le préfixe `attr.` est là pour ça.",
+    "related": [
+      "angular.tpl.prop.001",
+      "angular.tpl.interp.001"
+    ],
+    "lessonId": "angular.tpl.001"
+  },
+  {
+    "id": "angular.tpl.dollar.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "À quoi sert `$event` dans un template Angular ?",
+    "explanation": "C'est l'objet événement du DOM, fourni par Angular à l'écouteur. Ce n'est ni un signal, ni `@for`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "La variable `$event` passe l'objet événement à la méthode appelée par l'écouteur."
+      },
+      {
+        "id": "b",
+        "text": "La variable `$event` lit la valeur d'un signal, à la place des parenthèses d'appel."
+      },
+      {
+        "id": "c",
+        "text": "La variable `$event` répète un bloc `@for` sur chaque élément d'une liste."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/templates",
+    "insight": "`(click)=\"cancelSubscription($event)\"` : la méthode reçoit un `Event`, pas le signal du composant.",
+    "commonMistake": "Croire que `$event` est la valeur du champ, comme `userName()`.",
+    "related": [
+      "angular.tpl.event.001",
+      "angular.tpl.for.001"
+    ],
+    "lessonId": "angular.tpl.001"
+  },
+  {
+    "id": "angular.tpl.event.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "À quoi servent les parenthèses dans un template Angular ?",
+    "explanation": "`(click)` branche un écouteur. Le texte, c'est `{{ }}`. Une propriété DOM, ce sont les crochets.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Les parenthèses ajoutent un écouteur d'événement sur un élément du template."
+      },
+      {
+        "id": "b",
+        "text": "Les parenthèses affichent la valeur d'un signal dans le texte de la page."
+      },
+      {
+        "id": "c",
+        "text": "Les parenthèses lient une propriété du DOM, comme `disabled` sur un bouton."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/templates",
+    "insight": "`(click)=\"cancelSubscription()\"` : le template appelle la méthode, la classe gère le geste.",
+    "commonMistake": "Mettre `(disabled)` : `disabled` n'est pas un événement, c'est une propriété.",
+    "related": [
+      "angular.tpl.dollar.001",
+      "angular.tpl.prop.001"
+    ],
+    "lessonId": "angular.tpl.001"
+  },
+  {
+    "id": "angular.tpl.for.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "Que font `@for` et `track` dans un template Angular ?",
+    "explanation": "`@for` répète. `track` relie chaque donnée à son élément DOM. Cacher, c'est `@if`. Un clic, ce sont les parenthèses.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le bloc `@for` répète une partie du template ; `track` associe les données aux éléments du DOM."
+      },
+      {
+        "id": "b",
+        "text": "Le bloc `@for` cache un bloc si un signal est faux, comme `@if`."
+      },
+      {
+        "id": "c",
+        "text": "Le bloc `@for` ajoute un écouteur `click` sur chaque bouton du template."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/templates",
+    "insight": "`@for (badge of badges(); track badge.id)` : `track` dit à Angular quel nœud va avec quelle donnée.",
+    "commonMistake": "Oublier `track` : la doc le montre systématiquement sur `@for`.",
+    "related": [
+      "angular.tpl.if.001",
+      "angular.tpl.interp.001"
+    ],
+    "lessonId": "angular.tpl.001"
+  },
+  {
+    "id": "angular.tpl.if.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "Que font `@if` et `@else` dans un template Angular ?",
+    "explanation": "Ils montrent ou cachent. Répéter, c'est `@for`. Un attribut HTML, c'est `[attr.]`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le bloc `@if` affiche ou cache une partie du template ; `@else` couvre le cas contraire."
+      },
+      {
+        "id": "b",
+        "text": "Le bloc `@if` répète une balise pour chaque élément d'une liste."
+      },
+      {
+        "id": "c",
+        "text": "Le bloc `@if` lie un attribut HTML avec le préfixe `attr.`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/templates",
+    "insight": "`@if (isAdmin()) { ... } @else { ... }` : un seul des deux blocs arrive dans le DOM.",
+    "commonMistake": "Utiliser `@if` pour une liste : la répétition, c'est `@for`.",
+    "related": [
+      "angular.tpl.for.001",
+      "angular.tpl.interp.001"
+    ],
+    "lessonId": "angular.tpl.001"
+  },
+  {
+    "id": "angular.tpl.interp.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "À quoi servent les doubles accolades dans un template Angular ?",
+    "explanation": "C'est la liaison pour du texte. Un clic, c'est `(click)`. Un enfant, c'est `imports` et le sélecteur.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Les doubles accolades créent une liaison qui affiche un texte dynamique dans le template."
+      },
+      {
+        "id": "b",
+        "text": "Les doubles accolades déclarent un écouteur d'événement sur un bouton du template."
+      },
+      {
+        "id": "c",
+        "text": "Les doubles accolades importent un composant enfant dans le décorateur `@Component`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/templates",
+    "insight": "`{{ userName() }}` : Angular pose le texte, et le tient à jour si le signal bouge.",
+    "commonMistake": "Oublier `()` : `{{ userName }}` n'affiche pas la valeur du signal.",
+    "related": [
+      "angular.react.read.001",
+      "angular.tpl.prop.001"
+    ],
+    "lessonId": "angular.tpl.001"
+  },
+  {
+    "id": "angular.tpl.prop.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 2,
+    "prompt": "À quoi servent les crochets dans un template Angular ?",
+    "explanation": "`[disabled]` pousse une valeur dans le DOM. Le texte interpolé, c'est `{{ }}`. Le clic, c'est `(click)`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Les crochets lient une valeur dynamique à une propriété du DOM, comme `disabled` sur un bouton."
+      },
+      {
+        "id": "b",
+        "text": "Les crochets affichent un texte entre les balises, à la place des doubles accolades."
+      },
+      {
+        "id": "c",
+        "text": "Les crochets écoutent un clic et appellent une méthode du composant."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/templates",
+    "insight": "`[disabled]=\"!isValidUserId()\"` : on parle à la propriété du bouton, pas au texte visible.",
+    "commonMistake": "Mettre des crochets sur un clic : l'événement, c'est les parenthèses.",
+    "related": [
+      "angular.tpl.attr.001",
+      "angular.tpl.event.001"
+    ],
+    "lessonId": "angular.tpl.001"
+  },
+  {
+    "id": "angular.tpl.update.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "Que fait Angular quand un signal lié dans le template change ?",
+    "explanation": "La liaison est vivante : le rendu suit la nouvelle valeur. Ce n'est ni un snapshot figé, ni un document statique.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Angular met à jour la liaison tout seul quand la valeur du signal change."
+      },
+      {
+        "id": "b",
+        "text": "Angular ignore le signal jusqu'au prochain rechargement complet de la page."
+      },
+      {
+        "id": "c",
+        "text": "Angular remplace le template par une page HTML statique après le premier rendu."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/essentials/templates",
+    "insight": "`userName.set('cool_coder_789')` : le `<h1>` suit, sans recoller le HTML.",
+    "commonMistake": "Recharger la page pour voir la nouvelle valeur d'un signal déjà lié.",
+    "related": [
+      "angular.tpl.interp.001",
+      "angular.react.track.001"
+    ],
+    "lessonId": "angular.tpl.001"
+  },
+  {
+    "id": "angular.what.001",
+    "type": "mcq",
+    "topic": "angular",
+    "tags": [
+      "angular"
+    ],
+    "difficulty": 1,
+    "prompt": "Que décrit Angular comme produit ?",
+    "explanation": "La page officielle le présente comme un framework web, maintenu chez Google, avec une suite d'outils pour des applications qui tiennent la charge. Ce n'est pas le serveur, ni le CSS.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Angular est un framework web qui permet de construire des applications rapides et fiables."
+      },
+      {
+        "id": "b",
+        "text": "Angular est un serveur HTTP qui envoie des pages HTML déjà rendues."
+      },
+      {
+        "id": "c",
+        "text": "Angular est une feuille de styles pour poser la mise en page des formulaires."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://angular.dev/overview",
+    "insight": "Framework, pas serveur : Angular s'occupe du code de l'application, pas d'écouter le port 80.",
+    "commonMistake": "Coller Angular dans la case « serveur » parce qu'il parle aussi de SSR.",
+    "related": [
+      "angular.ssr.001",
+      "angular.cli.001"
+    ],
+    "lessonId": "angular.why.001"
+  },
+  {
     "id": "arch.api.001",
     "type": "mcq",
     "topic": "architecture",

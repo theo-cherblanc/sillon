@@ -4,7 +4,7 @@ import type { CardProgress, Profile } from "../../../shared/db/types.ts"
 import { exportProgress } from "./export.ts"
 
 const profile: Profile = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   xp: 20,
   streak: 2,
   bestStreak: 4,
@@ -42,10 +42,18 @@ describe("exportProgress", () => {
         { date: "2026-10-05", queueSize: 2, completed: 2, xp: 20, goalMet: true },
         { date: "2026-10-04", queueSize: 0, completed: 0, xp: 0, goalMet: false },
       ],
+      lessons: [
+        { lessonId: "di", readAt: null, updatedAt: 4 },
+        { lessonId: "why", readAt: 2, updatedAt: 3 },
+      ],
       exportedAt: 1_700_000_100_000,
     })
 
-    assert.equal(file.schemaVersion, 1)
+    assert.equal(file.schemaVersion, 2)
+    assert.deepEqual(
+      file.lessons.map((row) => row.lessonId),
+      ["di", "why"],
+    )
     assert.equal(file.exportedAt, 1_700_000_100_000)
     assert.deepEqual(file.profile, profile)
     assert.deepEqual(

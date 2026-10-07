@@ -30,8 +30,16 @@ export type ReviewLog = {
   fromQueue: boolean
 }
 
+export const currentSchema = 2
+
+export type LessonProgress = {
+  lessonId: string
+  readAt: number | null
+  updatedAt: number
+}
+
 export type Profile = {
-  schemaVersion: 1
+  schemaVersion: typeof currentSchema
   xp: number
   streak: number
   bestStreak: number

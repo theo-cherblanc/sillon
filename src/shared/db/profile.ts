@@ -20,7 +20,7 @@ export async function ensureProfile(
 
       const profile: ProfileRow = {
         id: localProfileId,
-        schemaVersion: 1,
+        schemaVersion: 2,
         xp: 0,
         streak: 0,
         bestStreak: 0,

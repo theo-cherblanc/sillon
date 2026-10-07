@@ -37,6 +37,7 @@ describe("readExport", () => {
     const file = await readExport(database, 1_700_000_100_000)
     assert.equal("id" in file.profile, false)
     assert.equal(file.profile.dailyGoal, 10)
+    assert.deepEqual(file.lessons, [])
     assert.deepEqual(
       file.progress.map((row) => row.cardId),
       ["js.async.001"],

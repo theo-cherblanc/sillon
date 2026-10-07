@@ -1,13 +1,14 @@
 import { localProfileId, type SillonDatabase } from "../../../shared/db/client.ts"
-import type { CardProgress, DayLog, Profile, ReviewLog } from "../../../shared/db/types.ts"
+import type { CardProgress, DayLog, LessonProgress, Profile, ReviewLog } from "../../../shared/db/types.ts"
 
 export type ProgressFile = {
-  schemaVersion: 1
+  schemaVersion: Profile["schemaVersion"]
   exportedAt: number
   profile: Profile
   progress: CardProgress[]
   reviews: ReviewLog[]
   days: DayLog[]
+  lessons: LessonProgress[]
 }
 
 export function exportProgress({
@@ -15,12 +16,14 @@ export function exportProgress({
   progress,
   reviews,
   days,
+  lessons = [],
   exportedAt,
 }: {
   profile: Profile
   progress: readonly CardProgress[]
   reviews: readonly ReviewLog[]
   days: readonly DayLog[]
+  lessons?: readonly LessonProgress[]
   exportedAt: number
 }): ProgressFile {
   if (!Number.isFinite(exportedAt)) {
@@ -34,6 +37,7 @@ export function exportProgress({
     progress: [...progress].sort((left, right) => left.cardId.localeCompare(right.cardId)),
     reviews: [...reviews].sort((left, right) => left.at - right.at || left.id.localeCompare(right.id)),
     days: [...days].sort((left, right) => left.date.localeCompare(right.date)),
+    lessons: [...lessons].sort((left, right) => left.lessonId.localeCompare(right.lessonId)),
   }
 }
 
@@ -58,6 +62,7 @@ export async function readExport(database: SillonDatabase, exportedAt: number): 
     progress: await database.progress.toArray(),
     reviews: await database.reviews.toArray(),
     days: await database.days.toArray(),
+    lessons: await database.lessons.toArray(),
     exportedAt,
   })
 }

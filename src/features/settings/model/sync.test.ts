@@ -35,6 +35,15 @@ describe("memoryFreshness", () => {
       12,
     )
     assert.equal(memoryFreshness({ profile: { createdAt: 5 }, progress: [], reviews: [] }), 5)
+    assert.equal(
+      memoryFreshness({
+        profile: { createdAt: 5 },
+        progress: [],
+        reviews: [],
+        lessons: [{ updatedAt: 9 }],
+      }),
+      9,
+    )
   })
 })
 

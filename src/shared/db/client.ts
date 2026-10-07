@@ -1,5 +1,5 @@
 import Dexie, { type EntityTable } from "dexie"
-import type { CardProgress, DayLog, Profile, ReviewLog } from "./types.ts"
+import type { CardProgress, DayLog, LessonProgress, Profile, ReviewLog } from "./types.ts"
 
 export const localProfileId = "local"
 
@@ -12,6 +12,7 @@ export class SillonDatabase extends Dexie {
   progress!: EntityTable<CardProgress, "cardId">
   reviews!: EntityTable<ReviewLog, "id">
   days!: EntityTable<DayLog, "date">
+  lessons!: EntityTable<LessonProgress, "lessonId">
 
   constructor(name = "sillon") {
     super(name)
@@ -20,6 +21,9 @@ export class SillonDatabase extends Dexie {
       progress: "cardId",
       reviews: "id",
       days: "date",
+    })
+    this.version(2).stores({
+      lessons: "lessonId",
     })
   }
 }

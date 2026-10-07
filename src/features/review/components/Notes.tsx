@@ -90,6 +90,9 @@ function sourceLabel(value: string): string {
     if (host === "docs.docker.com") {
       return "Docker"
     }
+    if (host === "angular.dev") {
+      return "Angular"
+    }
     if (host.endsWith("ietf.org") || host === "httpwg.org") {
       return "HTTP"
     }

@@ -1,5 +1,6 @@
 import assert from "node:assert/strict"
 import { describe, it } from "node:test"
+import { eligibleCardIds } from "../../../shared/content/pack.ts"
 import { buildTodayQueue, type SeenCard } from "./queue.ts"
 
 const midnight = 100
@@ -66,5 +67,42 @@ describe("buildTodayQueue", () => {
 
   it("returns nothing when the goal is zero", () => {
     assert.deepEqual(queue([], 0, 5), [])
+  })
+
+  it("keeps cards without a lesson, and waits for a lesson to be read", () => {
+    const eligible = eligibleCardIds(
+      [
+        { id: "git.commit.001" },
+        { id: "angular.what.001", lessonId: "angular.why.001" },
+        { id: "js.async.001" },
+      ],
+      new Set(),
+    )
+    assert.deepEqual(
+      buildTodayQueue({
+        cardIds: eligible,
+        seen: [],
+        dueBefore: midnight,
+        dailyGoal: 10,
+        newPerDay: 5,
+      }),
+      ["git.commit.001", "js.async.001"],
+    )
+    assert.deepEqual(
+      buildTodayQueue({
+        cardIds: eligibleCardIds(
+          [
+            { id: "git.commit.001" },
+            { id: "angular.what.001", lessonId: "angular.why.001" },
+          ],
+          new Set(["angular.why.001"]),
+        ),
+        seen: [],
+        dueBefore: midnight,
+        dailyGoal: 10,
+        newPerDay: 5,
+      }),
+      ["angular.what.001", "git.commit.001"],
+    )
   })
 })

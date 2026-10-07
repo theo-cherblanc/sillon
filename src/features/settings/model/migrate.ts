@@ -1,18 +1,24 @@
 import { localProfileId, type ProfileRow, type SillonDatabase } from "../../../shared/db/client.ts"
 import { ensureProfile } from "../../../shared/db/profile.ts"
-import type { Profile } from "../../../shared/db/types.ts"
+import { currentSchema, type Profile } from "../../../shared/db/types.ts"
 
-export const currentSchema = 1
+export { currentSchema }
 
-type StoredProfile = Omit<Profile, "schemaVersion"> & {
+export type StoredProfile = Omit<Profile, "schemaVersion"> & {
   schemaVersion: number
 }
 
 export function migrate(from: StoredProfile, to: number): Profile {
-  if (from.schemaVersion !== currentSchema || to !== currentSchema) {
-    throw new Error("A migration can only stay on schema version 1")
+  if (to !== currentSchema) {
+    throw new Error("A migration can only target schema version 2")
   }
-  return from as Profile
+  if (from.schemaVersion === currentSchema) {
+    return from as Profile
+  }
+  if (from.schemaVersion === 1) {
+    return { ...from, schemaVersion: currentSchema }
+  }
+  throw new Error("An unknown schema cannot be opened")
 }
 
 export async function openMemory(database: SillonDatabase, createdAt: number): Promise<ProfileRow> {
@@ -28,7 +34,7 @@ export async function openMemory(database: SillonDatabase, createdAt: number): P
     createdAt: row.createdAt,
   }
   const next = migrate(stored, currentSchema)
-  if (next === stored) {
+  if (next.schemaVersion === row.schemaVersion) {
     return row
   }
 

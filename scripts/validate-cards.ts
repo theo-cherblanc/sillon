@@ -1,13 +1,32 @@
-import type { Card } from "../src/shared/content/types.ts"
+import type { Card, Lesson } from "../src/shared/content/types.ts"
 
-export function validateCards(cards: Card[]): void {
-  const seen = new Set<string>()
+export function validateCards(cards: Card[], lessons: Lesson[] = []): void {
+  const cardIds = new Set<string>()
+  const lessonIds = new Set<string>()
+
+  for (const lesson of lessons) {
+    if (lessonIds.has(lesson.id)) {
+      throw new Error(`Identifiant de leçon en double : ${lesson.id}`)
+    }
+    lessonIds.add(lesson.id)
+  }
+
+  for (const lesson of lessons) {
+    for (const id of lesson.prerequisites) {
+      if (id === lesson.id) {
+        throw new Error(`${lesson.id} : prerequisites ne peut pas se citer elle-même`)
+      }
+      if (!lessonIds.has(id)) {
+        throw new Error(`${lesson.id} : prerequisites cite une leçon inconnue (${id})`)
+      }
+    }
+  }
 
   for (const card of cards) {
-    if (seen.has(card.id)) {
+    if (cardIds.has(card.id)) {
       throw new Error(`Identifiant en double : ${card.id}`)
     }
-    seen.add(card.id)
+    cardIds.add(card.id)
 
     if (card.type === "mcq") {
       validateMcq(card)
@@ -23,7 +42,10 @@ export function validateCards(cards: Card[]): void {
   }
 
   for (const card of cards) {
-    validateNotes(card, seen)
+    validateNotes(card, cardIds)
+    if (card.lessonId && !lessonIds.has(card.lessonId)) {
+      throw new Error(`${card.id} : lesson_id cite une leçon inconnue (${card.lessonId})`)
+    }
   }
 }
 

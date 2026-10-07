@@ -19,7 +19,7 @@ describe("ensureProfile", () => {
   it("writes the default profile once and keeps later changes", async () => {
     assert.deepEqual(await ensureProfile(database, createdAt), {
       id: localProfileId,
-      schemaVersion: 1,
+      schemaVersion: 2,
       xp: 0,
       streak: 0,
       bestStreak: 0,

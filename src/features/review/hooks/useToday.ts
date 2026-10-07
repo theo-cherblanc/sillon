@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { cards } from "../../../shared/content/cards.ts"
+import { eligibleCardIds, readLessonIds } from "../../../shared/content/pack.ts"
 import { getDatabase } from "../../../shared/db/client.ts"
 import { ensureProfile } from "../../../shared/db/profile.ts"
 import type { CardProgress } from "../../../shared/db/types.ts"
@@ -31,8 +32,9 @@ export function useToday(): {
         const saved = await database.progress.toArray()
         const seen = saved.map((row) => ({ cardId: row.cardId, due: row.due }))
         const dueBefore = nextLocalMidnight(now)
+        const eligible = eligibleCardIds(cards, readLessonIds(await database.lessons.toArray()))
         const cardIds = buildTodayQueue({
-          cardIds: cards.map((card) => card.id),
+          cardIds: eligible,
           seen,
           dueBefore,
           dailyGoal: profile.dailyGoal,

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { cards } from "../../../shared/content/cards.ts"
+import { eligibleCardIds, readLessonIds } from "../../../shared/content/pack.ts"
 import { getDatabase } from "../../../shared/db/client.ts"
 import { ensureProfile } from "../../../shared/db/profile.ts"
 import { countCards, type CardCounts } from "../model/counts.ts"
@@ -24,8 +25,9 @@ export function useProgress(): { summary: ProgressSummary | null; error: string 
         const profile = await ensureProfile(database, Date.now())
         const saved = await database.progress.toArray()
         const days = await database.days.toArray()
+        const eligible = eligibleCardIds(cards, readLessonIds(await database.lessons.toArray()))
         const counts = countCards(
-          cards.map((card) => card.id),
+          eligible,
           saved.map((row) => ({ cardId: row.cardId, state: row.state })),
         )
         if (cancelled) {
