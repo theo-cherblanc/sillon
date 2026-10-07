@@ -4,6 +4,8 @@ type: cloze
 topic: web
 tags: [web, http]
 difficulty: 2
+related: [arch.idempotent.001, web.method.001]
+insight: "`PUT` décrit l'état voulu à cette URL. Le répéter ne crée pas une deuxième ressource."
 ---
 
 Quelle méthode HTTP, en majuscules, remplace une ressource et peut être répétée sans changer le résultat ?

@@ -6,8 +6,8 @@ tags: [shell]
 difficulty: 1
 choices:
   - { id: a, text: "Il affiche les lignes qui correspondent à un motif." }
-  - { id: b, text: "Il compte les fichiers d'un dossier." }
-  - { id: c, text: "Il change les droits d'un fichier." }
+  - { id: b, text: "Il remplace le motif dans le fichier." }
+  - { id: c, text: "Il affiche seulement la fin du fichier." }
 correctChoiceId: a
 ---
 

@@ -5,13 +5,15 @@ topic: architecture
 tags: [architecture, http]
 difficulty: 2
 choices:
-  - { id: a, text: "Elle ne peut réussir qu'une seule fois, puis elle est refusée." }
-  - { id: b, text: "La refaire une fois de plus laisse le même résultat que l'avoir faite une seule fois." }
-  - { id: c, text: "Elle s'exécute plus vite à chaque appel." }
+  - { id: a, text: "Elle ne peut réussir qu'une fois ; le second appel est refusé." }
+  - { id: b, text: "Un second appel identique laisse le même résultat que le premier." }
+  - { id: c, text: "Chaque nouvel appel s'exécute plus vite que le précédent." }
 correctChoiceId: b
+insight: "Un réseau peut renvoyer le même appel deux fois. Si l'opération est idempotente, le second n'ajoute pas une deuxième ressource."
+related: [web.cloze.001, web.method.001]
 ---
 
-Qu'est-ce qu'une opération idempotente ?
+Que veut dire qu'une opération est idempotente ?
 
 ## Explication
 

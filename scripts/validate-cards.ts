@@ -21,6 +21,23 @@ export function validateCards(cards: Card[]): void {
       validateReveal(card)
     }
   }
+
+  for (const card of cards) {
+    validateNotes(card, seen)
+  }
+}
+
+function validateNotes(card: Card, ids: Set<string>): void {
+  if (card.related) {
+    for (const id of card.related) {
+      if (id === card.id) {
+        throw new Error(`${card.id} : related ne peut pas se citer elle-même`)
+      }
+      if (!ids.has(id)) {
+        throw new Error(`${card.id} : related cite une carte inconnue (${id})`)
+      }
+    }
+  }
 }
 
 function validateMcq(card: Card): void {

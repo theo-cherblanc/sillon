@@ -11,7 +11,7 @@ choices:
 correctChoiceId: b
 ---
 
-Qu'est-ce qu'un Dockerfile ?
+Que décrit un Dockerfile ?
 
 ## Explication
 

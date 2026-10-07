@@ -7,23 +7,28 @@
       "architecture"
     ],
     "difficulty": 1,
-    "prompt": "Qu'est-ce qu'une API ?",
-    "explanation": "Deux programmes se parlent à travers ce contrat, sans partager leur intérieur. Une API HTTP en est une forme. Une bibliothèque a aussi une API : les fonctions publiques qu'on a le droit d'appeler.",
+    "prompt": "À quoi sert une API entre deux programmes ?",
+    "explanation": "Les deux côtés se parlent à travers ce contrat, sans ouvrir l'intérieur de l'autre. Une API HTTP en est une forme. Une bibliothèque en a une aussi : ses fonctions publiques.",
     "choices": [
       {
         "id": "a",
-        "text": "Une base de données partagée entre deux programmes."
+        "text": "Elle les fait partager la même base de données."
       },
       {
         "id": "b",
-        "text": "Le style visuel commun à toutes les pages."
+        "text": "Elle chiffre le trajet jusqu'au serveur."
       },
       {
         "id": "c",
-        "text": "Un contrat : quels appels existent, ce qu'ils acceptent, ce qu'ils renvoient."
+        "text": "Elle décrit les appels possibles, ce qu'ils acceptent et ce qu'ils renvoient."
       }
     ],
-    "correctChoiceId": "c"
+    "correctChoiceId": "c",
+    "insight": "Partager une base n'est pas une API : les deux programmes dépendent alors du même intérieur.",
+    "related": [
+      "arch.rest.001",
+      "arch.client.001"
+    ]
   },
   {
     "id": "arch.cache.001",
@@ -34,22 +39,59 @@
     ],
     "difficulty": 1,
     "prompt": "À quoi sert un cache ?",
-    "explanation": "Le navigateur, un serveur ou une base peuvent cacher une réponse. Le gain est la vitesse. Le risque est une copie périmée : il faut savoir quand elle n'est plus valable.",
+    "explanation": "Un navigateur, un serveur ou une base peuvent garder cette copie. Il faut savoir quand elle n'est plus valable.",
     "choices": [
       {
         "id": "a",
-        "text": "À chiffrer les données avant de les envoyer."
+        "text": "Il chiffre les données avant de les envoyer."
       },
       {
         "id": "b",
-        "text": "À supprimer les fichiers temporaires à chaque requête."
+        "text": "Il recalcule le résultat à chaque requête, pour qu'il soit toujours à jour."
       },
       {
         "id": "c",
-        "text": "À garder une copie d'un résultat pour ne pas refaire le travail."
+        "text": "Il garde une copie d'un résultat, pour ne pas refaire le travail."
       }
     ],
-    "correctChoiceId": "c"
+    "correctChoiceId": "c",
+    "insight": "Sans règle d'expiration, on sert une copie trop vieille. Le gain est la vitesse ; le risque, c'est une donnée périmée.",
+    "related": [
+      "arch.cdn.001",
+      "http.status.304"
+    ]
+  },
+  {
+    "id": "arch.cdn.001",
+    "type": "mcq",
+    "topic": "architecture",
+    "tags": [
+      "architecture"
+    ],
+    "difficulty": 2,
+    "prompt": "À quoi sert un CDN ?",
+    "explanation": "Un CDN recopie JS, CSS, images, parfois du HTML, sur des points de présence. Le navigateur les prend près de lui, au lieu d'aller jusqu'à l'origine. Ce n'est pas un remplaçant de l'application : c'est un cache géographique.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Il génère chaque page à la demande, sur un unique serveur près de la base."
+      },
+      {
+        "id": "b",
+        "text": "Il place des copies de fichiers près des visiteurs, pour les servir plus vite."
+      },
+      {
+        "id": "c",
+        "text": "Il raccourcit les noms de domaine pour accélérer le DNS."
+      }
+    ],
+    "correctChoiceId": "b",
+    "insight": "Les fichiers statiques (JS, CSS, images) se prêtent bien au CDN. Les réponses d'API propres à un utilisateur, beaucoup moins.",
+    "commonMistake": "Mettre une API authentifiée sur le CDN comme un fichier statique. Une réponse personnelle ne se cache pas comme un logo.",
+    "related": [
+      "arch.cache.001",
+      "web.https.001"
+    ]
   },
   {
     "id": "arch.client.001",
@@ -60,11 +102,11 @@
     ],
     "difficulty": 1,
     "prompt": "Dans un échange client-serveur, qui fait quoi ?",
-    "explanation": "Le navigateur est un client. L'API qu'il appelle est le serveur de cet échange. Le même programme peut être client d'un autre service une seconde plus tard. Les rôles décrivent l'échange, pas une machine pour toujours.",
+    "explanation": "Le navigateur est un client. L'API qu'il appelle est le serveur de cet échange. Une seconde plus tard, le même programme peut être client d'un autre service.",
     "choices": [
       {
         "id": "a",
-        "text": "Le client envoie une requête. Le serveur renvoie une réponse."
+        "text": "Le client envoie une requête, le serveur renvoie une réponse."
       },
       {
         "id": "b",
@@ -75,7 +117,12 @@
         "text": "Les deux écrivent dans la même base, chacun à son tour."
       }
     ],
-    "correctChoiceId": "a"
+    "correctChoiceId": "a",
+    "insight": "Le même programme peut être serveur pour le navigateur, et client d'une base. Le rôle décrit l'échange, pas la machine.",
+    "related": [
+      "arch.api.001",
+      "web.method.001"
+    ]
   },
   {
     "id": "arch.idempotent.001",
@@ -86,23 +133,28 @@
       "http"
     ],
     "difficulty": 2,
-    "prompt": "Qu'est-ce qu'une opération idempotente ?",
+    "prompt": "Que veut dire qu'une opération est idempotente ?",
     "explanation": "`PUT` avec le même corps deux fois laisse la ressource dans le même état. `POST` qui crée à chaque appel ne l'est pas : deux appels peuvent créer deux ressources. Réessayer une opération idempotente est sans surprise.",
     "choices": [
       {
         "id": "a",
-        "text": "Elle ne peut réussir qu'une seule fois, puis elle est refusée."
+        "text": "Elle ne peut réussir qu'une fois ; le second appel est refusé."
       },
       {
         "id": "b",
-        "text": "La refaire une fois de plus laisse le même résultat que l'avoir faite une seule fois."
+        "text": "Un second appel identique laisse le même résultat que le premier."
       },
       {
         "id": "c",
-        "text": "Elle s'exécute plus vite à chaque appel."
+        "text": "Chaque nouvel appel s'exécute plus vite que le précédent."
       }
     ],
-    "correctChoiceId": "b"
+    "correctChoiceId": "b",
+    "insight": "Un réseau peut renvoyer le même appel deux fois. Si l'opération est idempotente, le second n'ajoute pas une deuxième ressource.",
+    "related": [
+      "web.cloze.001",
+      "web.method.001"
+    ]
   },
   {
     "id": "arch.monolith.001",
@@ -112,23 +164,28 @@
       "architecture"
     ],
     "difficulty": 2,
-    "prompt": "Qu'est-ce qu'un monolithe ?",
-    "explanation": "L'interface, l'API et l'accès aux données peuvent vivre dans ce même livrable. Plusieurs services, à l'inverse, sont plusieurs programmes déployés séparément, qui se parlent. Le mot décrit le découpage, pas la qualité.",
+    "prompt": "Que veut dire qu'une application est un monolithe ?",
+    "explanation": "Le mot parle du livrable, pas du soin du code. À l'inverse, plusieurs services sont plusieurs programmes, déployés séparément, qui se parlent.",
     "choices": [
       {
         "id": "a",
-        "text": "Plusieurs services, chacun déployé de son côté."
+        "text": "Chaque partie (interface, API, données) est un programme déployé à part."
       },
       {
         "id": "b",
-        "text": "Un seul programme, déployé ensemble, qui porte plusieurs responsabilités."
+        "text": "Interface, API et accès aux données sont livrés dans un seul programme."
       },
       {
         "id": "c",
-        "text": "Une base qui stocke tout l'historique du projet."
+        "text": "Toutes les données du projet tiennent dans une seule base, quel que soit le nombre de programmes."
       }
     ],
-    "correctChoiceId": "b"
+    "correctChoiceId": "b",
+    "insight": "Monolithe décrit le découpage, pas la qualité. Plusieurs services, ce sont plusieurs programmes déployés séparément.",
+    "related": [
+      "arch.api.001",
+      "arch.proxy.001"
+    ]
   },
   {
     "id": "arch.persist.001",
@@ -138,23 +195,59 @@
       "architecture"
     ],
     "difficulty": 1,
-    "prompt": "Pourquoi une base de données, plutôt qu'une variable ?",
+    "prompt": "Pourquoi stocker une donnée dans une base plutôt que dans une variable ?",
     "explanation": "La mémoire du processus est perdue quand il s'arrête. Une base écrit la donnée pour la relire après. Plusieurs processus peuvent aussi la partager. La variable reste utile pour ce qui ne doit vivre que le temps du calcul.",
     "choices": [
       {
         "id": "a",
-        "text": "la variable disparaît avec le processus. La base garde la donnée"
+        "text": "La variable disparaît avec le processus ; la base survit à l'arrêt."
       },
       {
         "id": "b",
-        "text": "une variable globale est déjà une base de données"
+        "text": "Une variable globale est déjà une base de données."
       },
       {
         "id": "c",
-        "text": "une base ne survit pas au redémarrage de la machine"
+        "text": "Une base disparaît au redémarrage de la machine."
       }
     ],
-    "correctChoiceId": "a"
+    "correctChoiceId": "a",
+    "insight": "La mémoire vive disparaît avec le processus. Une base survit au redémarrage et se partage entre plusieurs processus.",
+    "related": [
+      "arch.stateless.001",
+      "docker.volume.001"
+    ]
+  },
+  {
+    "id": "arch.proxy.001",
+    "type": "mcq",
+    "topic": "architecture",
+    "tags": [
+      "architecture"
+    ],
+    "difficulty": 2,
+    "prompt": "Quel est le rôle d'un reverse proxy ?",
+    "explanation": "Le client ne voit qu'une adresse. Le proxy route vers l'application, peut terminer TLS, cacher une réponse, limiter le débit. Nginx ou Caddy jouent souvent ce rôle.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Il exécute le JavaScript à la place du navigateur."
+      },
+      {
+        "id": "b",
+        "text": "Il enregistre chaque requête pour la rejouer plus tard."
+      },
+      {
+        "id": "c",
+        "text": "Il reçoit les requêtes du client, puis les transmet aux services derrière."
+      }
+    ],
+    "correctChoiceId": "c",
+    "insight": "Le client ne voit qu'une adresse. On peut changer l'application derrière sans changer celle que le navigateur appelle.",
+    "related": [
+      "arch.cdn.001",
+      "http.status.502"
+    ]
   },
   {
     "id": "arch.rest.001",
@@ -165,12 +258,12 @@
       "http"
     ],
     "difficulty": 2,
-    "prompt": "Qu'est-ce qu'une API REST, dans l'usage courant ?",
-    "explanation": "`GET /cartes/1` lit, `POST /cartes` crée, `DELETE /cartes/1` supprime. REST n'est pas un format de fichier imposé. C'est une façon de caler l'API sur HTTP. Le corps est souvent du JSON.",
+    "prompt": "Dans l'usage courant, qu'est-ce qu'une API REST ?",
+    "explanation": "`GET /cartes/1` lit, `POST /cartes` crée, `DELETE /cartes/1` supprime. REST n'impose pas un format de fichier. Le corps est souvent du JSON.",
     "choices": [
       {
         "id": "a",
-        "text": "Une API qui n'accepte que du JSON et interdit les erreurs."
+        "text": "Une API qui n'accepte que du JSON et n'a jamais d'erreur."
       },
       {
         "id": "b",
@@ -178,10 +271,15 @@
       },
       {
         "id": "c",
-        "text": "Une API qui nomme des ressources par des URL et utilise les méthodes HTTP pour les actions."
+        "text": "Une API qui identifie des ressources par des URL et agit avec les méthodes HTTP."
       }
     ],
-    "correctChoiceId": "c"
+    "correctChoiceId": "c",
+    "insight": "REST, dans l'usage courant, ce n'est pas « on parle JSON ». Ce sont des ressources identifiées par des URL, et des méthodes HTTP pour les actions.",
+    "related": [
+      "arch.api.001",
+      "web.method.001"
+    ]
   },
   {
     "id": "arch.spa.001",
@@ -192,23 +290,28 @@
       "web"
     ],
     "difficulty": 2,
-    "prompt": "Qu'est-ce qu'une SPA ?",
-    "explanation": "SPA veut dire single-page application. Changer de vue ne recharge pas forcément un nouveau document HTML. Le serveur fournit souvent une API, et le navigateur compose l'interface.",
+    "prompt": "Que veut dire qu'une application est une SPA ?",
+    "explanation": "SPA veut dire single-page application. Le serveur fournit souvent une API, et le navigateur compose l'interface.",
     "choices": [
       {
         "id": "a",
-        "text": "Une application d'une seule page : le navigateur charge un document, puis le JavaScript change l'écran."
+        "text": "Le navigateur charge un document, puis le JavaScript change l'écran sans tout recharger."
       },
       {
         "id": "b",
-        "text": "Une page qui ne contient ni CSS ni JavaScript."
+        "text": "La page n'utilise ni CSS ni JavaScript."
       },
       {
         "id": "c",
-        "text": "Un site où chaque lien recharge un document complet depuis le serveur."
+        "text": "Chaque lien recharge un document HTML complet depuis le serveur."
       }
     ],
-    "correctChoiceId": "a"
+    "correctChoiceId": "a",
+    "insight": "Changer d'écran peut se faire sans recharger un nouveau document HTML. L'URL, elle, peut quand même changer.",
+    "related": [
+      "arch.client.001",
+      "web.roles.001"
+    ]
   },
   {
     "id": "arch.stateless.001",
@@ -219,11 +322,11 @@
     ],
     "difficulty": 2,
     "prompt": "Que veut dire qu'un serveur est sans état ?",
-    "explanation": "Deux requêtes identiques peuvent être reçues par deux machines différentes. Ce dont le serveur a besoin voyage avec la requête, ou se trouve dans un stockage partagé. Ce n'est pas « l'application n'a aucune donnée ».",
+    "explanation": "Deux requêtes identiques peuvent arriver sur deux machines différentes. Ce dont le serveur a besoin voyage avec la requête, ou se trouve dans un stockage partagé. Ce n'est pas « l'application n'a aucune donnée ».",
     "choices": [
       {
         "id": "a",
-        "text": "Chaque requête contient ce qu'il faut pour la traiter. Le serveur ne dépend pas du souvenir de la précédente."
+        "text": "Chaque requête contient ce qu'il faut ; le serveur n'a pas besoin de la précédente."
       },
       {
         "id": "b",
@@ -234,7 +337,13 @@
         "text": "Le serveur garde l'utilisateur en mémoire entre deux requêtes."
       }
     ],
-    "correctChoiceId": "a"
+    "correctChoiceId": "a",
+    "insight": "Plusieurs instances peuvent alors se répartir les requêtes : aucune n'a besoin du souvenir de la précédente en mémoire.",
+    "commonMistake": "Croire que sans état veut dire sans base de données. La session vit ailleurs (jeton, stockage partagé), pas dans la mémoire du processus.",
+    "related": [
+      "arch.proxy.001",
+      "arch.persist.001"
+    ]
   },
   {
     "id": "docker.cloze.001",
@@ -244,9 +353,13 @@
       "docker"
     ],
     "difficulty": 2,
-    "prompt": "Quelle option courte de `docker run` publie le port 80 du conteneur sur le port 8080 de la machine ?\n\n```\ndocker run ____ 8080:80 nginx\n```",
-    "explanation": "L'ordre est le port de la machine, puis celui du conteneur. La forme longue de `-p` est `--publish`. Sans cette option, le port ouvert dans le conteneur ne s'atteint pas depuis l'extérieur.",
-    "answer": "-p"
+    "prompt": "Quelle option courte de `docker run` publie un port ? Le `8080:80` est déjà écrit : port 8080 de la machine, puis port 80 du conteneur.\n\n```\ndocker run ____ 8080:80 nginx\n```",
+    "explanation": "L'ordre est le port de la machine, puis celui du conteneur. La forme longue de `-p` est `--publish`. Sans cette option, le port ouvert dans le conteneur n'est pas joignable depuis l'extérieur.",
+    "answer": "-p",
+    "insight": "La forme longue est `--publish`. L'ordre des nombres reste le même : machine, puis conteneur.",
+    "related": [
+      "docker.port.001"
+    ]
   },
   {
     "id": "docker.compose.001",
@@ -257,22 +370,55 @@
     ],
     "difficulty": 2,
     "prompt": "À quoi sert Docker Compose ?",
-    "explanation": "Le fichier nomme les services, leurs images, leurs ports et leurs volumes. Une commande lance l'ensemble au lieu d'enchaîner les `docker run` à la main. Compose ne remplace pas l'idée d'image et de conteneur.",
+    "explanation": "Le fichier nomme les services, leurs images, leurs ports et leurs volumes. Une commande lance tout ça, au lieu d'enchaîner les `docker run` à la main. Compose ne remplace pas l'idée d'image et de conteneur.",
     "choices": [
       {
         "id": "a",
-        "text": "À compiler le Dockerfile plus vite grâce au cache."
+        "text": "Il compile le Dockerfile plus vite grâce au cache."
       },
       {
         "id": "b",
-        "text": "À décrire et lancer plusieurs services ensemble, depuis un fichier."
+        "text": "Il décrit et lance plusieurs services depuis un fichier."
       },
       {
         "id": "c",
-        "text": "À publier une image sur un registre public."
+        "text": "Il publie une image sur un registre public."
       }
     ],
     "correctChoiceId": "b"
+  },
+  {
+    "id": "docker.copy.001",
+    "type": "mcq",
+    "topic": "docker",
+    "tags": [
+      "docker"
+    ],
+    "difficulty": 2,
+    "prompt": "Que distinguent `COPY` et `ADD` dans un Dockerfile ?",
+    "explanation": "`COPY` prend un chemin du contexte, et l'écrit dans l'image. Rien d'autre. `ADD` peut extraire un tar, ou suivre une URL. Pour un fichier ordinaire, ces extra sont des pièges. Les docs Docker recommandent `COPY` par défaut.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`COPY` et `ADD` font la même chose. On peut les échanger."
+      },
+      {
+        "id": "b",
+        "text": "`COPY` copie un fichier local. `ADD` peut aussi extraire une archive, ou télécharger une URL."
+      },
+      {
+        "id": "c",
+        "text": "`ADD` est plus sûr, parce qu'il refuse les archives et les URL."
+      }
+    ],
+    "correctChoiceId": "b",
+    "source": "https://docs.docker.com/reference/dockerfile/#copy",
+    "insight": "Pour un fichier du projet, `COPY` suffit. `ADD` a des effets de bord : une archive `.tar` peut s'extraire toute seule.",
+    "commonMistake": "Utiliser `ADD` par habitude, puis chercher pourquoi l'archive a disparu au profit de son contenu.",
+    "related": [
+      "docker.file.001",
+      "docker.secret.001"
+    ]
   },
   {
     "id": "docker.file.001",
@@ -282,7 +428,7 @@
       "docker"
     ],
     "difficulty": 1,
-    "prompt": "Qu'est-ce qu'un Dockerfile ?",
+    "prompt": "Que décrit un Dockerfile ?",
     "explanation": "Chaque instruction (`FROM`, `COPY`, `RUN`…) est une étape du build. `docker build` lit ce fichier et produit une image. Le Dockerfile n'est pas le conteneur qui tourne.",
     "choices": [
       {
@@ -313,15 +459,15 @@
     "choices": [
       {
         "id": "a",
-        "text": "l'image est le modèle. Le conteneur en est une instance lancée"
+        "text": "L'image est le modèle. Le conteneur en est une instance lancée."
       },
       {
         "id": "b",
-        "text": "l'image est le processus en cours. Le conteneur est le fichier texte"
+        "text": "L'image est le processus en cours. Le conteneur est le fichier texte."
       },
       {
         "id": "c",
-        "text": "les deux noms désignent la même chose"
+        "text": "Les deux noms désignent exactement la même chose."
       }
     ],
     "correctChoiceId": "a"
@@ -339,18 +485,24 @@
     "choices": [
       {
         "id": "a",
-        "text": "Chaque instruction est une couche. Docker réutilise le cache tant que la couche n'a pas changé."
+        "text": "Chaque instruction est une couche ; Docker réutilise le cache tant qu'elle n'a pas changé."
       },
       {
         "id": "b",
-        "text": "Docker reconstruit toujours tout, l'ordre ne change que la lisibilité."
+        "text": "Docker reconstruit toujours tout ; l'ordre ne change que la lisibilité."
       },
       {
         "id": "c",
         "text": "La dernière instruction efface les couches précédentes."
       }
     ],
-    "correctChoiceId": "a"
+    "correctChoiceId": "a",
+    "insight": "On place d'abord ce qui change peu, comme l'installation des dépendances, puis le code qui change souvent.",
+    "commonMistake": "Copier tout le projet avant d'installer les dépendances. Un changement de fichier invalide alors le cache de l'installation.",
+    "related": [
+      "docker.file.001",
+      "docker.copy.001"
+    ]
   },
   {
     "id": "docker.order.001",
@@ -381,18 +533,54 @@
     "choices": [
       {
         "id": "a",
-        "text": "Il limite le conteneur à 8080 Mo de mémoire et 80 processus."
+        "text": "Il publie le port `8080` du conteneur sur le port `80` de la machine."
       },
       {
         "id": "b",
-        "text": "Il copie le dossier `8080` de la machine vers le dossier `80` du conteneur."
+        "text": "Il copie le dossier de la machine vers le dossier du conteneur, comme un volume."
       },
       {
         "id": "c",
         "text": "Il publie le port `80` du conteneur sur le port `8080` de la machine."
       }
     ],
-    "correctChoiceId": "c"
+    "correctChoiceId": "c",
+    "insight": "Sans `-p`, le service écoute dans le conteneur. Le navigateur, lui, s'adresse à la machine.",
+    "commonMistake": "Inverser l'ordre : croire que `8080:80` commence par le port du conteneur. C'est d'abord la machine, puis le conteneur.",
+    "related": [
+      "docker.cloze.001",
+      "docker.run.001"
+    ]
+  },
+  {
+    "id": "docker.rm.001",
+    "type": "mcq",
+    "topic": "docker",
+    "tags": [
+      "docker"
+    ],
+    "difficulty": 2,
+    "prompt": "Que change l'option `--rm` de `docker run` ?",
+    "explanation": "Sans `--rm`, un conteneur arrêté reste sur la machine, listable avec `docker ps -a`. Avec `--rm`, Docker le retire dès qu'il quitte. Ce n'est pas `-d` : `-d` détache le terminal, le conteneur peut continuer.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le conteneur tourne en arrière-plan, sans occuper le terminal."
+      },
+      {
+        "id": "b",
+        "text": "Le conteneur est supprimé dès qu'il s'arrête."
+      },
+      {
+        "id": "c",
+        "text": "L'image est reconstruite avant de lancer le conteneur."
+      }
+    ],
+    "correctChoiceId": "b",
+    "insight": "Utile pour un conteneur ponctuel. Gênant si on voulait inspecter le conteneur après l'arrêt : il n'est déjà plus là.",
+    "related": [
+      "docker.run.001"
+    ]
   },
   {
     "id": "docker.run.001",
@@ -415,10 +603,16 @@
       },
       {
         "id": "c",
-        "text": "Le conteneur est supprimé avant même de démarrer."
+        "text": "Le conteneur est lancé, puis effacé dès qu'il s'arrête."
       }
     ],
-    "correctChoiceId": "b"
+    "correctChoiceId": "b",
+    "insight": "On récupère le terminal. Le conteneur continue. `docker logs` permet de relire sa sortie.",
+    "commonMistake": "Confondre `-d` et `--rm`. L'une détache le terminal. L'autre supprime le conteneur à l'arrêt.",
+    "related": [
+      "docker.rm.001",
+      "docker.image.001"
+    ]
   },
   {
     "id": "docker.secret.001",
@@ -433,7 +627,7 @@
     "choices": [
       {
         "id": "a",
-        "text": "L'image se partage et se conserve. Le secret resterait dans ses couches."
+        "text": "L'image se partage : le secret resterait dans ses couches."
       },
       {
         "id": "b",
@@ -459,15 +653,15 @@
     "choices": [
       {
         "id": "a",
-        "text": "À garder des données après la suppression du conteneur."
+        "text": "Il garde des données après la suppression du conteneur."
       },
       {
         "id": "b",
-        "text": "À publier les ports du conteneur sur la machine."
+        "text": "Il publie les ports du conteneur sur la machine."
       },
       {
         "id": "c",
-        "text": "À partager le réseau avec les autres conteneurs."
+        "text": "Il partage le réseau avec les autres conteneurs."
       }
     ],
     "correctChoiceId": "a"
@@ -480,7 +674,7 @@
       "git"
     ],
     "difficulty": 2,
-    "prompt": "Qu'est-ce qu'une branche ?",
+    "prompt": "Que représente une branche Git ?",
     "explanation": "La branche n'est pas une copie des fichiers. C'est une étiquette mobile. Deux branches peuvent partager tout l'historique jusqu'au point où elles divergent.",
     "choices": [
       {
@@ -534,7 +728,11 @@
     "difficulty": 1,
     "prompt": "Quelle commande crée un commit local à partir de l'index ?\n\n```\ngit ____ -m \"message\"\n```",
     "explanation": "`git commit` enregistre l'index dans l'historique de ce dépôt. Il ne publie rien sur le dépôt distant : ça, c'est `git push`.",
-    "answer": "commit"
+    "answer": "commit",
+    "related": [
+      "git.commit.001",
+      "git.push.001"
+    ]
   },
   {
     "id": "git.commit.001",
@@ -575,18 +773,51 @@
     "choices": [
       {
         "id": "a",
-        "text": "`status` liste l'état, `diff` montre les lignes changées"
+        "text": "`git status` liste l'état des fichiers ; `git diff` montre les lignes changées."
       },
       {
         "id": "b",
-        "text": "`diff` envoie les commits, `status` les crée"
+        "text": "`git diff` envoie les commits ; `git status` les crée."
       },
       {
         "id": "c",
-        "text": "les deux affichent la même chose"
+        "text": "Les deux commandes affichent exactement la même chose."
       }
     ],
     "correctChoiceId": "a"
+  },
+  {
+    "id": "git.fetch.001",
+    "type": "mcq",
+    "topic": "git",
+    "tags": [
+      "git"
+    ],
+    "difficulty": 2,
+    "prompt": "Que fait `git fetch`, comparé à `git pull` ?",
+    "explanation": "`git fetch` met à jour les références distantes sur la machine. Les fichiers de la branche en cours ne bougent pas. `git pull` fait ce fetch, puis intègre : par défaut, un merge.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Il fusionne déjà les commits distants dans la branche en cours."
+      },
+      {
+        "id": "b",
+        "text": "Il récupère les commits distants, sans modifier la branche en cours."
+      },
+      {
+        "id": "c",
+        "text": "Il envoie les commits locaux, comme `git push`."
+      }
+    ],
+    "correctChoiceId": "b",
+    "source": "https://git-scm.com/docs/git-fetch",
+    "insight": "Après un fetch, `git log origin/main` a changé. Les fichiers de la branche en cours, non. On peut regarder avant de fusionner.",
+    "commonMistake": "Lancer `fetch` en croyant mettre à jour les fichiers. Rien n'est fusionné. Il faut un `pull`, ou ensuite un `merge` / `rebase`.",
+    "related": [
+      "git.pull.001",
+      "git.order.002"
+    ]
   },
   {
     "id": "git.head.001",
@@ -596,12 +827,12 @@
       "git"
     ],
     "difficulty": 2,
-    "prompt": "Qu'est-ce que `HEAD` ?",
+    "prompt": "Que désigne `HEAD` ?",
     "explanation": "Les commandes qui regardent « où l'on est » partent de `HEAD`. Si l'on extrait un commit précis au lieu d'une branche, `HEAD` ne porte plus de nom de branche : on dit qu'il est détaché.",
     "choices": [
       {
         "id": "a",
-        "text": "Le commit actuellement extrait. En général, le bout de la branche en cours."
+        "text": "Le commit actuellement extrait, en général le bout de la branche en cours."
       },
       {
         "id": "b",
@@ -627,15 +858,15 @@
     "choices": [
       {
         "id": "a",
-        "text": "À choisir le message du prochain commit."
+        "text": "Il choisit le message du prochain commit."
       },
       {
         "id": "b",
-        "text": "À fusionner deux branches sans conflit."
+        "text": "Il fusionne deux branches sans conflit."
       },
       {
         "id": "c",
-        "text": "À dire à Git quels fichiers ne pas suivre."
+        "text": "Il dit à Git quels fichiers ne pas suivre."
       }
     ],
     "correctChoiceId": "c"
@@ -649,15 +880,15 @@
     ],
     "difficulty": 2,
     "prompt": "Que fait un merge ?",
-    "explanation": "Si une seule branche a avancé, la fusion se contente de faire avancer l'autre jusqu'à elle. Si les deux ont des commits propres, Git crée un commit de fusion qui a deux parents, après avoir combiné les fichiers. Un même endroit modifié des deux côtés devient un conflit à trancher.",
+    "explanation": "Si une seule branche a avancé, la fusion fait avancer l'autre jusqu'à elle. Si les deux ont des commits propres, Git crée un commit de fusion à deux parents, après avoir combiné les fichiers. Un même endroit modifié des deux côtés devient un conflit à trancher.",
     "choices": [
       {
         "id": "a",
-        "text": "Il réunit deux historiques."
+        "text": "Il réunit deux historiques dans la branche en cours."
       },
       {
         "id": "b",
-        "text": "Il efface une branche et ses commits."
+        "text": "Il efface une branche et tous ses commits."
       },
       {
         "id": "c",
@@ -680,6 +911,11 @@
       "git add",
       "git commit",
       "git push"
+    ],
+    "related": [
+      "git.stage.001",
+      "git.commit.001",
+      "git.push.001"
     ]
   },
   {
@@ -695,6 +931,11 @@
     "steps": [
       "Récupérer les commits du dépôt distant",
       "Les fusionner dans la branche actuelle"
+    ],
+    "insight": "D'abord récupérer les commits distants, ensuite les intégrer à la branche en cours.",
+    "related": [
+      "git.fetch.001",
+      "git.pull.001"
     ]
   },
   {
@@ -706,7 +947,7 @@
     ],
     "difficulty": 2,
     "prompt": "Que fait `git pull` ?",
-    "explanation": "Récupérer sans intégrer, c'est `git fetch`. `git pull` enchaîne les deux. Si les deux côtés ont bougé, Git peut demander de résoudre un conflit avant de finir.",
+    "explanation": "Récupérer sans intégrer, c'est `git fetch`. Si les deux côtés ont bougé, Git peut demander de résoudre un conflit avant de finir.",
     "choices": [
       {
         "id": "a",
@@ -714,14 +955,22 @@
       },
       {
         "id": "b",
-        "text": "Il récupère les commits distants, puis les intègre. Par défaut, cette intégration est un merge."
+        "text": "Il récupère les commits distants, puis les intègre (merge par défaut)."
       },
       {
         "id": "c",
         "text": "Il jette les commits locaux et remet le dossier comme le distant."
       }
     ],
-    "correctChoiceId": "b"
+    "correctChoiceId": "b",
+    "source": "https://git-scm.com/docs/git-pull",
+    "insight": "`pull` enchaîne un `fetch` et une intégration. Par défaut, cette intégration est un merge. On peut la configurer en rebase.",
+    "commonMistake": "Croire que `pull` écrase les commits locaux. S'il y a divergence, Git fusionne, ou s'arrête sur un conflit.",
+    "related": [
+      "git.fetch.001",
+      "git.order.002",
+      "git.merge.001"
+    ]
   },
   {
     "id": "git.push.001",
@@ -732,22 +981,28 @@
     ],
     "difficulty": 1,
     "prompt": "Quelle différence y a-t-il entre commit et push ?",
-    "explanation": "`git commit` enregistre dans le dépôt de la machine. `git push` envoie ces commits vers un remote, par exemple un dépôt sur un serveur. Sans push, les autres ne voient pas le commit.",
+    "explanation": "`git commit` enregistre dans le dépôt de la machine. `git push` envoie ces commits vers un remote, par exemple un dépôt sur un serveur.",
     "choices": [
       {
         "id": "a",
-        "text": "le commit est local. `git push` l'envoie au dépôt distant"
+        "text": "Le commit reste local ; `git push` l'envoie au dépôt distant."
       },
       {
         "id": "b",
-        "text": "`git commit` publie déjà le travail"
+        "text": "`git commit` publie déjà le travail sur le distant."
       },
       {
         "id": "c",
-        "text": "`git push` crée le message du commit"
+        "text": "`git push` écrit le message du commit."
       }
     ],
-    "correctChoiceId": "a"
+    "correctChoiceId": "a",
+    "insight": "Sans `push`, le commit reste sur la machine. Les autres ne le voient pas.",
+    "related": [
+      "git.commit.001",
+      "git.cloze.001",
+      "git.order.001"
+    ]
   },
   {
     "id": "git.stage.001",
@@ -757,23 +1012,62 @@
       "git"
     ],
     "difficulty": 1,
-    "prompt": "À quoi sert la zone d'index, celle que `git add` remplit ?",
+    "prompt": "À quoi sert l'index, celui que `git add` remplit ?",
     "explanation": "Le dossier de travail peut contenir d'autres modifications. `git add` en copie dans l'index. Le commit enregistre l'index, pas forcément tout ce qui est modifié sur le disque.",
     "choices": [
       {
         "id": "a",
-        "text": "À publier le commit sur le dépôt distant."
+        "text": "Il publie le commit sur le dépôt distant."
       },
       {
         "id": "b",
-        "text": "À choisir ce que le prochain commit contiendra."
+        "text": "Il choisit ce que le prochain commit enregistrera."
       },
       {
         "id": "c",
-        "text": "À nommer la branche en cours."
+        "text": "Il nomme la branche en cours."
       }
     ],
-    "correctChoiceId": "b"
+    "correctChoiceId": "b",
+    "insight": "On peut ajouter un fichier à l'index et en laisser un autre de côté. Le commit enregistre l'index, pas tout le dossier.",
+    "commonMistake": "Croire que `git commit -a` enregistre aussi les fichiers jamais suivis. Les nouveaux doivent encore passer par `git add`.",
+    "related": [
+      "git.commit.001",
+      "git.order.001"
+    ]
+  },
+  {
+    "id": "git.stash.001",
+    "type": "mcq",
+    "topic": "git",
+    "tags": [
+      "git"
+    ],
+    "difficulty": 2,
+    "prompt": "Que fait `git stash` ?",
+    "explanation": "`git stash` range les modifications non commitées, index compris par défaut. Ce n'est pas un commit : rien n'est publié, rien n'est nommé dans l'historique. `git stash pop` les ressort.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Il crée un commit sur la branche en cours, avec un message automatique."
+      },
+      {
+        "id": "b",
+        "text": "Il met le travail de côté ; le dossier redevient propre, sans commit."
+      },
+      {
+        "id": "c",
+        "text": "Il jette les modifications non commitées, pour de bon."
+      }
+    ],
+    "correctChoiceId": "b",
+    "source": "https://git-scm.com/docs/git-stash",
+    "insight": "`stash` n'est pas un historique : un `drop` ou un `clear` l'efface. Un commit sur une branche, même temporaire, se retrouve plus facilement.",
+    "commonMistake": "Faire un stash, changer de branche, puis l'oublier. Un `git stash pop` plus tard, sur la mauvaise branche, peut créer des conflits.",
+    "related": [
+      "git.stage.001",
+      "git.commit.001"
+    ]
   },
   {
     "id": "http.cloze.001",
@@ -785,8 +1079,65 @@
     ],
     "difficulty": 1,
     "prompt": "Quel code numérique répond qu'aucune ressource ne correspond à l'URL ?\n\nLe serveur répond ____.",
-    "explanation": "`404` veut dire que le serveur a compris la requête et qu'il n'a rien à cette adresse. Ce n'est ni un refus (`403`) ni une identité manquante (`401`).",
-    "answer": "404"
+    "explanation": "Cette carte est retirée : le `404` est déjà posé par `http.status.404`.",
+    "answer": "404",
+    "related": [
+      "http.status.404"
+    ],
+    "deprecated": true
+  },
+  {
+    "id": "http.cloze.002",
+    "type": "cloze",
+    "topic": "http",
+    "tags": [
+      "http",
+      "status"
+    ],
+    "difficulty": 2,
+    "prompt": "Quel code HTTP indique un succès sans corps de réponse ?\n\nLe serveur répond ____.",
+    "explanation": "`204 No Content` : la requête a abouti, et il n'y a rien à lire ensuite. Ce n'est pas un `200` avec un JSON vide. Ce n'est pas un `404`.",
+    "answer": "204",
+    "source": "https://developer.mozilla.org/fr/docs/Web/HTTP/Reference/Status/204",
+    "insight": "Après un DELETE, un `204` dit souvent que l'action a réussi et qu'il n'y a rien d'autre à renvoyer.",
+    "commonMistake": "Le confondre avec `404`. Le `404` dit que la ressource n'existe pas. Le `204` dit que la requête a réussi, sans corps.",
+    "related": [
+      "http.status.204",
+      "http.status.200"
+    ]
+  },
+  {
+    "id": "http.head.001",
+    "type": "mcq",
+    "topic": "http",
+    "tags": [
+      "http"
+    ],
+    "difficulty": 2,
+    "prompt": "Que fait la méthode HTTP `HEAD` ?",
+    "explanation": "Statut et en-têtes doivent correspondre à ceux du `GET`. Ce n'est pas un delete. Ce n'est pas un `POST`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Comme `GET`, mais la réponse n'a pas de corps. Les en-têtes sont les mêmes."
+      },
+      {
+        "id": "b",
+        "text": "Elle supprime la ressource, sans confirmation."
+      },
+      {
+        "id": "c",
+        "text": "Elle exige un corps JSON, sinon le serveur répond `400`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://developer.mozilla.org/fr/docs/Web/HTTP/Reference/Methods/HEAD",
+    "insight": "Utile pour tester un cache ou un téléchargement : tu lis `Content-Length` ou `ETag` sans tout tirer.",
+    "commonMistake": "Croire que `HEAD` est un `GET` plus léger côté serveur. Le serveur peut quand même faire tout le travail, et jeter le corps ensuite.",
+    "related": [
+      "web.method.001",
+      "http.status.204"
+    ]
   },
   {
     "id": "http.status.200",
@@ -813,7 +1164,11 @@
         "text": "`Not Found`. Cette adresse ne correspond à aucune ressource."
       }
     ],
-    "correctChoiceId": "a"
+    "correctChoiceId": "a",
+    "related": [
+      "http.status.201",
+      "http.status.204"
+    ]
   },
   {
     "id": "http.status.201",
@@ -867,7 +1222,11 @@
         "text": "`Internal Server Error`. Le serveur a échoué en traitant la requête."
       }
     ],
-    "correctChoiceId": "b"
+    "correctChoiceId": "b",
+    "related": [
+      "http.cloze.002",
+      "http.status.200"
+    ]
   },
   {
     "id": "http.status.301",
@@ -905,23 +1264,55 @@
       "status"
     ],
     "difficulty": 2,
-    "prompt": "Que fait un statut `302`, comparé à un `301` ?",
-    "explanation": "`302 Found` envoie vers une autre adresse pour cette fois. L'adresse d'origine reste la bonne pour plus tard. `301` dit au contraire que le déménagement est définitif.",
+    "prompt": "Que signifie le statut HTTP `302` ?",
+    "explanation": "Le client va ailleurs pour cette requête. L'adresse d'origine reste la bonne pour plus tard. `301` dit au contraire que le déménagement est définitif.",
     "choices": [
       {
         "id": "a",
-        "text": "une redirection temporaire : on garde l'ancienne adresse"
+        "text": "`Found`. La ressource a changé d'adresse, mais seulement pour cette fois."
       },
       {
         "id": "b",
-        "text": "une redirection permanente"
+        "text": "`Moved Permanently`. La ressource a changé d'adresse pour de bon."
       },
       {
         "id": "c",
-        "text": "une erreur du client"
+        "text": "`Bad Request`. Le serveur n'a pas compris la requête."
       }
     ],
     "correctChoiceId": "a"
+  },
+  {
+    "id": "http.status.304",
+    "type": "mcq",
+    "topic": "http",
+    "tags": [
+      "http",
+      "status"
+    ],
+    "difficulty": 2,
+    "prompt": "Que signifie le statut HTTP `304` ?",
+    "explanation": "Le client a déjà une copie, et il le dit (souvent avec `If-None-Match` ou `If-Modified-Since`). `304` répond que rien n'a changé : on réutilise le cache. Ce n'est pas une erreur, et ce n'est pas un `204` : là, il n'y avait rien à renvoyer dès le départ.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`Not Modified`. La copie en cache est encore valable."
+      },
+      {
+        "id": "b",
+        "text": "`No Content`. La requête a réussi, et la réponse n'a pas de corps."
+      },
+      {
+        "id": "c",
+        "text": "`Moved Permanently`. La ressource a changé d'adresse pour de bon."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://developer.mozilla.org/fr/docs/Web/HTTP/Reference/Status/304",
+    "related": [
+      "arch.cache.001",
+      "http.status.204"
+    ]
   },
   {
     "id": "http.status.400",
@@ -959,23 +1350,30 @@
       "status"
     ],
     "difficulty": 2,
-    "prompt": "Que demande surtout un statut `401` ?",
+    "prompt": "Que signifie le statut HTTP `401` ?",
     "explanation": "`401 Unauthorized` veut dire que l'authentification manque ou n'est pas valable. Le nom est trompeur : ce n'est pas « tu n'as pas le droit », c'est « on ne sait pas qui tu es ». Le refus malgré une identité reconnue, c'est `403`.",
     "choices": [
       {
         "id": "a",
-        "text": "prouver qui tu es"
+        "text": "`Unauthorized`. L'authentification manque, ou elle n'est pas valable."
       },
       {
         "id": "b",
-        "text": "tu es reconnu, mais cette action est refusée"
+        "text": "`Forbidden`. Le serveur sait qui appelle, et refuse l'action."
       },
       {
         "id": "c",
-        "text": "cette adresse n'existe pas"
+        "text": "`Not Found`. Cette adresse ne correspond à aucune ressource."
       }
     ],
-    "correctChoiceId": "a"
+    "correctChoiceId": "a",
+    "source": "https://developer.mozilla.org/fr/docs/Web/HTTP/Reference/Status/401",
+    "insight": "Le nom anglais est un piège : Unauthorized, mais ça veut dire « on ne sait pas qui tu es ».",
+    "commonMistake": "Renvoyer `401` alors que l'utilisateur est identifié, mais n'a pas le droit d'agir. Ça, c'est `403`.",
+    "related": [
+      "http.status.403",
+      "http.status.404"
+    ]
   },
   {
     "id": "http.status.403",
@@ -1002,7 +1400,12 @@
         "text": "`Forbidden`. Le serveur refuse l'action."
       }
     ],
-    "correctChoiceId": "c"
+    "correctChoiceId": "c",
+    "insight": "Le serveur connaît l'identité et refuse quand même. Ce n'est pas un `401`.",
+    "related": [
+      "http.status.401",
+      "http.status.404"
+    ]
   },
   {
     "id": "http.status.404",
@@ -1029,7 +1432,14 @@
         "text": "`Too Many Requests`. Le client a envoyé trop de requêtes."
       }
     ],
-    "correctChoiceId": "a"
+    "correctChoiceId": "a",
+    "source": "https://developer.mozilla.org/fr/docs/Web/HTTP/Reference/Status/404",
+    "insight": "Un `404` est plus clair pour le client, et pour le cache, qu'un `200` avec un JSON d'erreur.",
+    "commonMistake": "Renvoyer `404` pour masquer une ressource interdite. Le refus d'accès, c'est `403`.",
+    "related": [
+      "http.status.403",
+      "web.fetch.001"
+    ]
   },
   {
     "id": "http.status.429",
@@ -1056,7 +1466,11 @@
         "text": "`Internal Server Error`. Le serveur a échoué en traitant la requête."
       }
     ],
-    "correctChoiceId": "b"
+    "correctChoiceId": "b",
+    "related": [
+      "http.status.503",
+      "http.status.400"
+    ]
   },
   {
     "id": "http.status.500",
@@ -1083,7 +1497,12 @@
         "text": "`Not Found`. Cette adresse ne correspond à aucune ressource."
       }
     ],
-    "correctChoiceId": "a"
+    "correctChoiceId": "a",
+    "insight": "La requête du client pouvait être valide. La panne est du côté du serveur.",
+    "related": [
+      "http.status.502",
+      "http.status.503"
+    ]
   },
   {
     "id": "http.status.502",
@@ -1099,18 +1518,54 @@
     "choices": [
       {
         "id": "a",
-        "text": "`502` : la passerelle a reçu une mauvaise réponse. `504` : elle a attendu trop longtemps"
+        "text": "`502` : la passerelle a reçu une mauvaise réponse. `504` : elle a attendu trop longtemps."
       },
       {
         "id": "b",
-        "text": "`502` : la page n'existe pas. `504` : le client est trop lent"
+        "text": "`502` : la page n'existe pas. `504` : le client est trop lent."
       },
       {
         "id": "c",
-        "text": "les deux veulent dire que le JSON est invalide"
+        "text": "Les deux veulent dire que le JSON est invalide."
       }
     ],
-    "correctChoiceId": "a"
+    "correctChoiceId": "a",
+    "related": [
+      "http.status.500",
+      "http.status.503",
+      "arch.proxy.001"
+    ]
+  },
+  {
+    "id": "http.status.503",
+    "type": "mcq",
+    "topic": "http",
+    "tags": [
+      "http",
+      "status"
+    ],
+    "difficulty": 2,
+    "prompt": "Que signifie le statut HTTP `503` ?",
+    "explanation": "`503` dit que le service est indisponible : surcharge, maintenance, dépendance coupée. Ce n'est pas forcément un bug dans le traitement d'une requête (`500`), ni un quota sur ce client (`429`). Un `Retry-After` peut dire quand réessayer.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`Internal Server Error`. Le serveur a échoué en traitant cette requête."
+      },
+      {
+        "id": "b",
+        "text": "`Too Many Requests`. Ce client a envoyé trop de requêtes."
+      },
+      {
+        "id": "c",
+        "text": "`Service Unavailable`. Le serveur n'est pas en mesure de répondre, pour le moment."
+      }
+    ],
+    "correctChoiceId": "c",
+    "related": [
+      "http.status.500",
+      "http.status.429"
+    ]
   },
   {
     "id": "js.async.001",
@@ -1136,7 +1591,13 @@
         "text": "B, puis A, puis C"
       }
     ],
-    "correctChoiceId": "b"
+    "correctChoiceId": "b",
+    "insight": "`then` n'exécute pas la fonction tout de suite. Il attend que le code synchrone en cours soit terminé.",
+    "commonMistake": "Lire le code de haut en bas et placer B entre A et C, comme si `then` s'exécutait immédiatement.",
+    "related": [
+      "js.async.order.001",
+      "js.async.004"
+    ]
   },
   {
     "id": "js.async.002",
@@ -1151,15 +1612,15 @@
     "choices": [
       {
         "id": "a",
-        "text": "le nombre 1"
+        "text": "Le nombre 1"
       },
       {
         "id": "b",
-        "text": "undefined"
+        "text": "`undefined`"
       },
       {
         "id": "c",
-        "text": "une promesse résolue avec 1"
+        "text": "Une promesse résolue avec 1"
       }
     ],
     "correctChoiceId": "c"
@@ -1185,7 +1646,7 @@
       },
       {
         "id": "c",
-        "text": "les deux en même temps"
+        "text": "Les deux en même temps"
       }
     ],
     "correctChoiceId": "b"
@@ -1214,7 +1675,12 @@
         "text": "C, puis A, puis B"
       }
     ],
-    "correctChoiceId": "b"
+    "correctChoiceId": "b",
+    "insight": "`await` rend la main à l'appelant. Ce n'est pas une pause de tout le programme : `C` s'affiche pendant que `run` attend.",
+    "related": [
+      "js.async.001",
+      "js.async.cloze.001"
+    ]
   },
   {
     "id": "js.async.005",
@@ -1229,15 +1695,15 @@
     "choices": [
       {
         "id": "a",
-        "text": "une exception tout de suite"
+        "text": "Une exception tout de suite"
       },
       {
         "id": "b",
-        "text": "une promesse rejetée"
+        "text": "Une promesse rejetée"
       },
       {
         "id": "c",
-        "text": "undefined"
+        "text": "`undefined`"
       }
     ],
     "correctChoiceId": "b"
@@ -1259,11 +1725,11 @@
       },
       {
         "id": "b",
-        "text": "une promesse dans une promesse"
+        "text": "Une promesse dans une promesse"
       },
       {
         "id": "c",
-        "text": "undefined"
+        "text": "`undefined`"
       }
     ],
     "correctChoiceId": "a"
@@ -1281,15 +1747,15 @@
     "choices": [
       {
         "id": "a",
-        "text": "une promesse résolue avec [1]"
+        "text": "Une promesse résolue avec [1]"
       },
       {
         "id": "b",
-        "text": "une promesse rejetée"
+        "text": "Une promesse rejetée"
       },
       {
         "id": "c",
-        "text": "une promesse qui reste en attente"
+        "text": "Une promesse qui reste en attente"
       }
     ],
     "correctChoiceId": "b"
@@ -1307,7 +1773,7 @@
     "choices": [
       {
         "id": "a",
-        "text": "l'erreur \"rate\""
+        "text": "L'erreur \"rate\""
       },
       {
         "id": "b",
@@ -1315,7 +1781,7 @@
       },
       {
         "id": "c",
-        "text": "undefined"
+        "text": "`undefined`"
       }
     ],
     "correctChoiceId": "b"
@@ -1347,6 +1813,12 @@
       "D",
       "C",
       "B"
+    ],
+    "insight": "Zéro milliseconde, ce n'est pas « maintenant ». C'est « dès que la file des timers aura son tour », après les microtâches.",
+    "commonMistake": "Mettre B avant C parce que `setTimeout(..., 0)` a l'air plus urgent qu'une promesse déjà résolue.",
+    "related": [
+      "js.async.001",
+      "js.async.004"
     ]
   },
   {
@@ -1373,7 +1845,7 @@
       "types"
     ],
     "difficulty": 2,
-    "prompt": "Quelle ligne fait échouer l'intention de ce test ?",
+    "prompt": "Quelle ligne affecte au lieu de comparer ?",
     "explanation": "`=` range `true` dans `ready` et le test est toujours vrai. Pour comparer, il faut `===`.",
     "lines": [
       "if (ready = true) {",
@@ -1407,7 +1879,7 @@
       "async"
     ],
     "difficulty": 2,
-    "prompt": "Quelle ligne empêche ce programme de démarrer ?",
+    "prompt": "Quelle ligne utilise `await` hors d'une fonction `async` ?",
     "explanation": "`await` ne s'écrit que dans une fonction `async`. `load` est une fonction ordinaire, donc la seconde ligne est refusée avant même l'appel.",
     "lines": [
       "function load() {",
@@ -1440,7 +1912,12 @@
         "text": "2"
       }
     ],
-    "correctChoiceId": "c"
+    "correctChoiceId": "c",
+    "insight": "`make()` a renvoyé une fonction, pas le nombre. Le compteur `n` reste tant que `next` existe.",
+    "related": [
+      "js.closures.003",
+      "js.closures.005"
+    ]
   },
   {
     "id": "js.closures.002",
@@ -1451,7 +1928,7 @@
       "scope"
     ],
     "difficulty": 3,
-    "prompt": "Que renvoie `fns[0]()` ?\n\n```js\nconst fns = []\nfor (var i = 0; i < 3; i++) {\n  fns.push(() => i)\n}\n```",
+    "prompt": "La boucle est finie. Que renvoie `fns[0]()` ?\n\n```js\nconst fns = []\nfor (var i = 0; i < 3; i++) {\n  fns.push(() => i)\n}\n```",
     "explanation": "`var i` est une seule variable pour toute la boucle. Les trois fonctions lisent ce même `i`, qui vaut `3` une fois la boucle terminée. Avec `let`, chaque tour aurait eu son propre `i`.",
     "choices": [
       {
@@ -1467,30 +1944,46 @@
         "text": "`undefined`"
       }
     ],
-    "correctChoiceId": "b"
+    "correctChoiceId": "b",
+    "insight": "`var` a une portée de fonction. La boucle n'a pas trois `i`. Elle en a un, qui finit à `3`.",
+    "commonMistake": "Répondre `0`, en imaginant que chaque `push` a photographié le `i` du tour. Avec `var`, non.",
+    "related": [
+      "js.closures.004",
+      "js.scope.005"
+    ]
   },
   {
     "id": "js.closures.003",
     "type": "mcq",
     "topic": "javascript",
     "tags": [
-      "fonctions",
+      "closures",
       "scope"
     ],
     "difficulty": 2,
-    "prompt": "Que vaut `x` à la fin de cet extrait ?\n\n```js\nfunction outer() {\n  const x = 42\n  return () => x\n}\nconst read = outer()\n```",
-    "explanation": "La fonction interne capture `x`. `read()` renvoie `42`.",
+    "prompt": "Que renvoie `read()` ?\n\n```js\nfunction outer() {\n  const x = 42\n  return () => x\n}\nconst read = outer()\nread()\n```",
+    "explanation": "`read` est la fonction renvoyée. Elle a gardé `x` avec elle. Appeler `read()`, ce n'est pas relire un `x` global : ce `x` n'est plus en portée dans le script. C'est la fermeture qui le tient.",
     "choices": [
       {
         "id": "a",
-        "text": "undefined"
+        "text": "`undefined`"
       },
       {
         "id": "b",
-        "text": "42"
+        "text": "`42`"
+      },
+      {
+        "id": "c",
+        "text": "Une `ReferenceError` : `x` n'existe plus."
       }
     ],
-    "correctChoiceId": "b"
+    "correctChoiceId": "b",
+    "insight": "La fermeture garde la variable, pas une photocopie figée prise au `return`. Si `x` pouvait encore changer, `read()` verrait la nouvelle valeur.",
+    "commonMistake": "Lire `x` après `outer()`, comme si la variable était devenue globale. `x` n'est plus en portée. `read()` l'est.",
+    "related": [
+      "js.closures.001",
+      "js.scope.006"
+    ]
   },
   {
     "id": "js.closures.004",
@@ -1517,7 +2010,12 @@
         "text": "`undefined`"
       }
     ],
-    "correctChoiceId": "a"
+    "correctChoiceId": "a",
+    "insight": "`let` dans un `for` crée un `i` par tour. Chaque fonction a le sien, figé à 0, 1, puis 2.",
+    "related": [
+      "js.closures.002",
+      "js.scope.006"
+    ]
   },
   {
     "id": "js.closures.005",
@@ -1570,6 +2068,72 @@
       }
     ],
     "correctChoiceId": "a"
+  },
+  {
+    "id": "js.nullish.001",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "types"
+    ],
+    "difficulty": 2,
+    "prompt": "Que renvoie `count ?? 5` lorsque `count` vaut `0` ?\n\n```js\nconst count = 0\ncount ?? 5\n```",
+    "explanation": "`??` ne recule que si la gauche est `null` ou `undefined`. `0` n'en est pas. Le `5` n'est pas utilisé. Avec `||`, `0` aurait perdu : tu aurais eu `5`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`0`"
+      },
+      {
+        "id": "b",
+        "text": "`5`"
+      },
+      {
+        "id": "c",
+        "text": "`null`"
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing",
+    "insight": "`??` ne réagit qu'à `null` et `undefined`. Un `0` ou une chaîne vide, ça compte comme une vraie valeur.",
+    "commonMistake": "Écrire `count || 5` pour un compteur. `0` est faux pour `||`, donc le résultat devient `5` alors que le compte vaut zéro.",
+    "related": [
+      "js.types.008",
+      "js.optional.001"
+    ]
+  },
+  {
+    "id": "js.optional.001",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "types"
+    ],
+    "difficulty": 2,
+    "prompt": "Que renvoie `user?.name` lorsque `user` vaut `null` ?\n\n```js\nconst user = null\nuser?.name\n```",
+    "explanation": "`?.` regarde à gauche. C'est `null` (ou `undefined`) : on n'essaie pas `.name`, on rend `undefined`. Sans le point d'interrogation, `user.name` lance une `TypeError`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`\"Ada\"`"
+      },
+      {
+        "id": "b",
+        "text": "`undefined`"
+      },
+      {
+        "id": "c",
+        "text": "Une `TypeError` : on lit `name` sur `null`."
+      }
+    ],
+    "correctChoiceId": "b",
+    "source": "https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/Optional_chaining",
+    "insight": "`?.` arrête la chaîne et rend `undefined`. Ça n'empêche pas une erreur plus loin, si tu enchaînes sans le `?`.",
+    "commonMistake": "Écrire `user.name` en comptant sur un `user` éventuellement `null`. Sans `?.`, cela lance une `TypeError`.",
+    "related": [
+      "js.nullish.001",
+      "js.types.001"
+    ]
   },
   {
     "id": "js.prototypes.001",
@@ -2023,7 +2587,14 @@
         "text": "une TypeError est lancée"
       }
     ],
-    "correctChoiceId": "c"
+    "correctChoiceId": "c",
+    "insight": "En module, on est déjà en strict. Pas besoin d'écrire `\"use strict\"` pour voir cette erreur.",
+    "commonMistake": "Copier `user.hello` dans une variable, puis l'appeler. Ce n'est plus une méthode de `user`.",
+    "related": [
+      "js.this.003",
+      "js.this.004",
+      "js.this.007"
+    ]
   },
   {
     "id": "js.this.002",
@@ -2049,7 +2620,12 @@
         "text": "une TypeError est lancée"
       }
     ],
-    "correctChoiceId": "a"
+    "correctChoiceId": "a",
+    "insight": "La flèche n'a pas de `this` à elle. Elle emprunte celui du `delayed` qui l'entoure.",
+    "related": [
+      "js.this.001",
+      "js.this.007"
+    ]
   },
   {
     "id": "js.this.003",
@@ -2075,7 +2651,11 @@
         "text": "une TypeError est lancée"
       }
     ],
-    "correctChoiceId": "a"
+    "correctChoiceId": "a",
+    "insight": "Appelée comme `user.hello()`, la méthode reçoit `user` comme `this`.",
+    "related": [
+      "js.this.001"
+    ]
   },
   {
     "id": "js.this.004",
@@ -2101,7 +2681,12 @@
         "text": "une TypeError est lancée"
       }
     ],
-    "correctChoiceId": "a"
+    "correctChoiceId": "a",
+    "insight": "`bind` fixe `this` une fois pour toutes. Extraire la fonction ensuite ne le décroche plus.",
+    "related": [
+      "js.this.001",
+      "js.this.006"
+    ]
   },
   {
     "id": "js.this.005",
@@ -2112,7 +2697,7 @@
     ],
     "difficulty": 3,
     "prompt": "En mode strict, que se passe-t-il ?\n\n```js\nconst user = {\n  name: \"Ada\",\n  later() {\n    setTimeout(function () {\n      console.log(this.name)\n    }, 0)\n  },\n}\nuser.later()\n```",
-    "explanation": "La fonction passée à `setTimeout` n'est pas appelée comme méthode de `user`. En mode strict, son `this` vaut `undefined`, et lire `this.name` lance une `TypeError`. Une fonction flèche aurait repris le `this` de `later`.",
+    "explanation": "Cette carte est retirée : la réponse annoncée (TypeError) est fausse. `setTimeout` n'appelle pas le callback avec `this === undefined`. Voir `js.this.007`.",
     "choices": [
       {
         "id": "a",
@@ -2127,7 +2712,11 @@
         "text": "une TypeError est lancée"
       }
     ],
-    "correctChoiceId": "c"
+    "correctChoiceId": "c",
+    "related": [
+      "js.this.007"
+    ],
+    "deprecated": true
   },
   {
     "id": "js.this.006",
@@ -2153,7 +2742,45 @@
         "text": "une TypeError est lancée"
       }
     ],
-    "correctChoiceId": "a"
+    "correctChoiceId": "a",
+    "insight": "`call` (et `apply`) disent : « exécute-toi avec cet objet-là comme `this` ».",
+    "related": [
+      "js.this.001",
+      "js.this.004"
+    ]
+  },
+  {
+    "id": "js.this.007",
+    "type": "mcq",
+    "topic": "javascript",
+    "tags": [
+      "this"
+    ],
+    "difficulty": 3,
+    "prompt": "Pourquoi `console.log(this.name)` n'affiche-t-il pas `\"Ada\"` ?\n\n```js\nconst user = {\n  name: \"Ada\",\n  later() {\n    setTimeout(function () {\n      console.log(this.name)\n    }, 0)\n  },\n}\nuser.later()\n```",
+    "explanation": "`setTimeout` range la fonction et l'appelle plus tard, sans `user`. Ce n'est plus `user.later()`. Une fonction flèche, écrite dans `later`, garderait le `this` de `later`, donc `user`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`setTimeout` attend trop longtemps, `name` a disparu."
+      },
+      {
+        "id": "b",
+        "text": "La fonction donnée à `setTimeout` n'est pas appelée comme méthode de `user`."
+      },
+      {
+        "id": "c",
+        "text": "`later` n'est pas une flèche, donc `this` est déjà perdu avant le timer."
+      }
+    ],
+    "correctChoiceId": "b",
+    "source": "https://developer.mozilla.org/fr/docs/Web/API/Window/setTimeout",
+    "insight": "Dans le navigateur, `this` est souvent `window` : tu logues `window.name`, pas une TypeError. En Node, `this` est l'objet Timeout.",
+    "commonMistake": "Croire qu'en mode strict, `this` vaut forcément `undefined` dans le callback de `setTimeout`. C'est l'hôte qui décide.",
+    "related": [
+      "js.this.001",
+      "js.this.002"
+    ]
   },
   {
     "id": "js.types.001",
@@ -2179,7 +2806,13 @@
         "text": "\"undefined\""
       }
     ],
-    "correctChoiceId": "b"
+    "correctChoiceId": "b",
+    "source": "https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/typeof",
+    "insight": "Ce n'est pas un objet. C'est un ancien défaut du langage, conservé pour ne pas casser le code existant. Pour tester `null`, on écrit `value === null`.",
+    "related": [
+      "js.types.004",
+      "js.types.007"
+    ]
   },
   {
     "id": "js.types.002",
@@ -2227,7 +2860,14 @@
         "text": "`===` compare les deux valeurs sans les convertir. `==` les convertit d'abord vers un type commun."
       }
     ],
-    "correctChoiceId": "c"
+    "correctChoiceId": "c",
+    "source": "https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/Strict_equality",
+    "insight": "`===` compare sans convertir. `==` convertit d'abord vers un type commun. `0 == false` est vrai. `0 === false` est faux.",
+    "commonMistake": "Écrire `==` pour aller plus vite. Les conversions de `==` sont souvent la surprise.",
+    "related": [
+      "js.types.cloze.001",
+      "js.types.007"
+    ]
   },
   {
     "id": "js.types.004",
@@ -2383,7 +3023,38 @@
     "difficulty": 2,
     "prompt": "Quel opérateur manque pour dire que ces deux valeurs sont différentes, sans conversion ?\n\n```js\nnull ____ undefined\n```",
     "explanation": "`!=` convertit `null` et `undefined` vers la même valeur, donc il les trouve égaux. `!==` ne convertit pas : ce sont deux valeurs différentes.",
-    "answer": "!=="
+    "answer": "!==",
+    "insight": "`null == undefined` est vrai. `null !== undefined` aussi. Les deux cohabitent, selon l'opérateur.",
+    "related": [
+      "js.types.003",
+      "js.types.007"
+    ]
+  },
+  {
+    "id": "shell.and.001",
+    "type": "mcq",
+    "topic": "shell",
+    "tags": [
+      "shell"
+    ],
+    "difficulty": 2,
+    "prompt": "Quelle différence y a-t-il entre `&&` et `||` ?",
+    "explanation": "Le shell lit le code de sortie. `build && deploy` n'envoie en production que si la construction a réussi (`0`). `cmd || echo échec` n'affiche le message que si `cmd` a échoué. `|` est autre chose : il relie la sortie à l'entrée, pas le succès.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`&&` lance la suite seulement si la première a réussi. `||` la lance seulement si elle a échoué."
+      },
+      {
+        "id": "b",
+        "text": "`&&` lance les deux en même temps. `||` envoie la sortie de l'une vers l'autre."
+      },
+      {
+        "id": "c",
+        "text": "Les deux lancent toujours la seconde commande, quel que soit le code de sortie."
+      }
+    ],
+    "correctChoiceId": "a"
   },
   {
     "id": "shell.cloze.001",
@@ -2418,7 +3089,7 @@
       },
       {
         "id": "c",
-        "text": "Le code de sortie est le nombre de lignes affichées."
+        "text": "Un nombre autre que `0` veut dire un avertissement, pas un échec."
       }
     ],
     "correctChoiceId": "a"
@@ -2440,11 +3111,11 @@
       },
       {
         "id": "b",
-        "text": "Il compte les fichiers d'un dossier."
+        "text": "Il remplace le motif dans le fichier."
       },
       {
         "id": "c",
-        "text": "Il change les droits d'un fichier."
+        "text": "Il affiche seulement la fin du fichier."
       }
     ],
     "correctChoiceId": "a"
@@ -2470,7 +3141,7 @@
       },
       {
         "id": "c",
-        "text": "`cat /help/commande`."
+        "text": "`info commande` seulement. Ni `man` ni `--help` n'existent."
       }
     ],
     "correctChoiceId": "b"
@@ -2596,6 +3267,38 @@
     "correctChoiceId": "a"
   },
   {
+    "id": "shell.quotes.001",
+    "type": "mcq",
+    "topic": "shell",
+    "tags": [
+      "shell"
+    ],
+    "difficulty": 2,
+    "prompt": "Quelle différence y a-t-il entre `'...'` et `\"...\"` dans le shell ?",
+    "explanation": "Entre simples quotes, rien n'est spécial : `$HOME` reste le texte `$HOME`. Entre doubles, les variables et certaines substitutions passent. Dans les deux cas, les espaces restent dans le même argument — c'est déjà ça.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Les doubles gardent le texte tel quel. Les simples laissent `$HOME` s'étendre."
+      },
+      {
+        "id": "b",
+        "text": "Les simples gardent le texte tel quel. Les doubles laissent `$HOME` s'étendre."
+      },
+      {
+        "id": "c",
+        "text": "Les deux empêchent toute substitution. `|` non plus ne s'exécute pas."
+      }
+    ],
+    "correctChoiceId": "b",
+    "insight": "Un espace dans un nom de fichier : `\"$file\"`. Sans guillemets, `rapport 2.txt` devient deux arguments.",
+    "commonMistake": "Mettre un mot de passe entre doubles guillemets s'il contient un `$`. Le shell substitue la variable avant la commande.",
+    "related": [
+      "shell.home.001",
+      "shell.path.001"
+    ]
+  },
+  {
     "id": "shell.redirect.001",
     "type": "mcq",
     "topic": "shell",
@@ -2608,15 +3311,15 @@
     "choices": [
       {
         "id": "a",
-        "text": "`>` écrit le fichier en remplaçant son contenu. `>>` ajoute à la fin"
+        "text": "`>` remplace le contenu du fichier. `>>` ajoute à la fin."
       },
       {
         "id": "b",
-        "text": "`>` ajoute à la fin. `>>` envoie vers une autre commande"
+        "text": "`>` ajoute à la fin. `>>` envoie la sortie vers une autre commande."
       },
       {
         "id": "c",
-        "text": "les deux effacent le fichier"
+        "text": "Les deux vident le fichier avant d'écrire."
       }
     ],
     "correctChoiceId": "a"
@@ -2632,7 +3335,12 @@
     "difficulty": 2,
     "prompt": "Quelle méthode HTTP, en majuscules, remplace une ressource et peut être répétée sans changer le résultat ?\n\nLa méthode ____ remplace la ressource à cette URL.",
     "explanation": "Deux `PUT` identiques laissent la ressource dans le même état. Un `POST` qui crée quelque chose à chaque appel ne le fait pas : le second appel peut créer une seconde ressource.",
-    "answer": "PUT"
+    "answer": "PUT",
+    "insight": "`PUT` décrit l'état voulu à cette URL. Le répéter ne crée pas une deuxième ressource.",
+    "related": [
+      "arch.idempotent.001",
+      "web.method.001"
+    ]
   },
   {
     "id": "web.cors.001",
@@ -2643,12 +3351,12 @@
       "cors"
     ],
     "difficulty": 2,
-    "prompt": "Qu'est-ce que CORS ?",
+    "prompt": "Que restreint CORS dans le navigateur ?",
     "explanation": "Une origine, c'est le schéma, l'hôte et le port. `https://a.dev` et `https://b.dev` sont deux origines. Le serveur autorise la lecture avec des en-têtes, dont `Access-Control-Allow-Origin`. CORS ne remplace pas l'authentification.",
     "choices": [
       {
         "id": "a",
-        "text": "Un cache partagé entre tous les sites ouverts."
+        "text": "Une règle du serveur : il refuse toute requête qui ne vient pas de son propre domaine."
       },
       {
         "id": "b",
@@ -2659,7 +3367,14 @@
         "text": "Le certificat qui chiffre la page."
       }
     ],
-    "correctChoiceId": "b"
+    "correctChoiceId": "b",
+    "source": "https://developer.mozilla.org/fr/docs/Web/HTTP/Guides/CORS",
+    "insight": "`curl` n'applique pas CORS. CORS protège le navigateur, pas le serveur contre un autre programme.",
+    "commonMistake": "Ajouter `Access-Control-Allow-Origin: *` et croire que l'API est authentifiée. CORS n'est pas une authentification.",
+    "related": [
+      "web.fetch.001",
+      "web.https.001"
+    ]
   },
   {
     "id": "web.dns.001",
@@ -2675,15 +3390,15 @@
     "choices": [
       {
         "id": "a",
-        "text": "À chiffrer l'échange entre le navigateur et le serveur."
+        "text": "Il chiffre l'échange entre le navigateur et le serveur."
       },
       {
         "id": "b",
-        "text": "À trouver l'adresse d'une machine à partir d'un nom."
+        "text": "Il trouve l'adresse d'une machine à partir d'un nom."
       },
       {
         "id": "c",
-        "text": "À décider quel CSS s'applique à un élément."
+        "text": "Il décide quel CSS s'applique à un élément."
       }
     ],
     "correctChoiceId": "b"
@@ -2697,7 +3412,7 @@
       "dom"
     ],
     "difficulty": 1,
-    "prompt": "Qu'est-ce que le DOM ?",
+    "prompt": "Que représente le DOM ?",
     "explanation": "DOM veut dire Document Object Model. Le HTML est le texte source. Le DOM est la structure vivante : éléments, textes, attributs. Changer le DOM change ce qui est affiché.",
     "choices": [
       {
@@ -2716,6 +3431,40 @@
     "correctChoiceId": "c"
   },
   {
+    "id": "web.fetch.001",
+    "type": "mcq",
+    "topic": "web",
+    "tags": [
+      "web",
+      "http"
+    ],
+    "difficulty": 2,
+    "prompt": "Que fait la promesse de `fetch` si la réponse est un `404` ?",
+    "explanation": "`fetch` échoue si le réseau casse, ou si CORS bloque la lecture. Un `404`, un `500`, c'est une réponse HTTP : la promesse se résout. `response.ok` est faux. Ensuite seulement, tu décides.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un statut `404` fait échouer la promesse."
+      },
+      {
+        "id": "b",
+        "text": "La promesse réussit dès qu'une réponse HTTP arrive, même avec un `404`."
+      },
+      {
+        "id": "c",
+        "text": "`fetch` n'envoie jamais le corps. Il faut `XMLHttpRequest`."
+      }
+    ],
+    "correctChoiceId": "b",
+    "source": "https://developer.mozilla.org/fr/docs/Web/API/Window/fetch",
+    "insight": "Dès qu'une réponse HTTP arrive, `fetch` résout sa promesse. Il reste à lire `response.ok` ou `status`.",
+    "commonMistake": "Enchaîner `await fetch(url)` et `response.json()` sans regarder le statut. On parse alors une page d'erreur comme des données.",
+    "related": [
+      "http.status.404",
+      "web.cors.001"
+    ]
+  },
+  {
     "id": "web.https.001",
     "type": "mcq",
     "topic": "web",
@@ -2725,7 +3474,7 @@
     ],
     "difficulty": 1,
     "prompt": "Que protège HTTPS ?",
-    "explanation": "HTTPS, c'est HTTP au-dessus de TLS. Quelqu'un sur le réseau ne lit pas la requête ni la réponse en clair, et ne les modifie pas sans qu'on s'en aperçoive. Ça ne dit pas que le site est honnête, ni que le serveur stocke bien les données.",
+    "explanation": "HTTPS, c'est HTTP au-dessus de TLS. Quelqu'un sur le réseau ne lit pas l'échange en clair, et ne le modifie pas sans qu'on s'en aperçoive. Ça ne dit pas que le site est honnête, ni que le serveur stocke bien les données.",
     "choices": [
       {
         "id": "a",
@@ -2737,7 +3486,7 @@
       },
       {
         "id": "c",
-        "text": "Le trajet entre le navigateur et le serveur. Le contenu est chiffré."
+        "text": "Le trajet entre le navigateur et le serveur : requête et réponse sont chiffrées."
       }
     ],
     "correctChoiceId": "c"
@@ -2756,15 +3505,15 @@
     "choices": [
       {
         "id": "a",
-        "text": "`GET` lit, `POST` envoie des données à traiter"
+        "text": "`GET` lit. `POST` envoie des données à traiter."
       },
       {
         "id": "b",
-        "text": "`GET` supprime, `POST` ne fait que lire"
+        "text": "`GET` supprime. `POST` ne fait que lire."
       },
       {
         "id": "c",
-        "text": "les deux font exactement la même chose"
+        "text": "Les deux font exactement la même chose."
       }
     ],
     "correctChoiceId": "a"
@@ -2823,20 +3572,20 @@
       "storage"
     ],
     "difficulty": 2,
-    "prompt": "Quelle différence utile y a-t-il entre un cookie et `localStorage` ?",
+    "prompt": "Quelle différence y a-t-il entre un cookie et `localStorage` ?",
     "explanation": "Le navigateur renvoie le cookie au serveur quand le domaine et le chemin correspondent. `localStorage` n'est pas joint aux requêtes : seul le JavaScript de l'origine le lit. Ni l'un ni l'autre n'est un coffre secret contre la personne qui utilise la machine.",
     "choices": [
       {
         "id": "a",
-        "text": "le cookie peut être renvoyé au serveur, `localStorage` reste dans le navigateur"
+        "text": "Le cookie peut être renvoyé au serveur. `localStorage` reste dans le navigateur."
       },
       {
         "id": "b",
-        "text": "les deux sont envoyés à chaque requête"
+        "text": "Les deux sont envoyés à chaque requête."
       },
       {
         "id": "c",
-        "text": "`localStorage` est chiffré par HTTPS, le cookie ne l'est pas"
+        "text": "`localStorage` est chiffré par HTTPS, le cookie ne l'est pas."
       }
     ],
     "correctChoiceId": "a"

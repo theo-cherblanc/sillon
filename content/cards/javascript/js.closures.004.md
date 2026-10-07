@@ -9,6 +9,8 @@ choices:
   - { id: b, text: "`3`" }
   - { id: c, text: "`undefined`" }
 correctChoiceId: a
+insight: "`let` dans un `for` crée un `i` par tour. Chaque fonction a le sien, figé à 0, 1, puis 2."
+related: [js.closures.002, js.scope.006]
 ---
 
 Que renvoie `fns[0]()` ?

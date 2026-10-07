@@ -43,6 +43,21 @@ export function parseCard(source: string): Card {
   if (front.bugLine !== undefined) {
     card.bugLine = readBugLine(front.bugLine)
   }
+  if (front.source !== undefined) {
+    card.source = readSource(front.source)
+  }
+  if (front.insight !== undefined) {
+    card.insight = readString(front.insight, "insight")
+  }
+  if (front.common_mistake !== undefined) {
+    card.commonMistake = readString(front.common_mistake, "common_mistake")
+  }
+  if (front.related !== undefined) {
+    card.related = readRelated(front.related)
+  }
+  if (front.deprecated !== undefined) {
+    card.deprecated = readDeprecated(front.deprecated)
+  }
 
   return card
 }
@@ -147,6 +162,37 @@ function readSteps(value: unknown): string[] {
 
 function readLines(value: unknown): string[] {
   return readTextList(value, "lines")
+}
+
+function readSource(value: unknown): string {
+  const source = readString(value, "source")
+  if (source.startsWith("http://") || source.startsWith("https://")) {
+    let parsed: URL
+    try {
+      parsed = new URL(source)
+    } catch {
+      throw new Error("Le champ source doit être une URL utilisable")
+    }
+    if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+      throw new Error("Le champ source doit être une URL utilisable")
+    }
+  }
+  return source
+}
+
+function readRelated(value: unknown): string[] {
+  const related = readTextList(value, "related")
+  if (new Set(related).size !== related.length) {
+    throw new Error("Le champ related ne doit pas répéter un identifiant")
+  }
+  return related
+}
+
+function readDeprecated(value: unknown): boolean {
+  if (value !== true && value !== false) {
+    throw new Error("Le champ deprecated doit être true ou false")
+  }
+  return value
 }
 
 function readChoices(value: unknown): NonNullable<Card["choices"]> {

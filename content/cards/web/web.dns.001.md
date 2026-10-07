@@ -5,9 +5,9 @@ topic: web
 tags: [web, dns]
 difficulty: 1
 choices:
-  - { id: a, text: "À chiffrer l'échange entre le navigateur et le serveur." }
-  - { id: b, text: "À trouver l'adresse d'une machine à partir d'un nom." }
-  - { id: c, text: "À décider quel CSS s'applique à un élément." }
+  - { id: a, text: "Il chiffre l'échange entre le navigateur et le serveur." }
+  - { id: b, text: "Il trouve l'adresse d'une machine à partir d'un nom." }
+  - { id: c, text: "Il décide quel CSS s'applique à un élément." }
 correctChoiceId: b
 ---
 

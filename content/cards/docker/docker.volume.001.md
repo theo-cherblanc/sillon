@@ -5,9 +5,9 @@ topic: docker
 tags: [docker]
 difficulty: 2
 choices:
-  - { id: a, text: "À garder des données après la suppression du conteneur." }
-  - { id: b, text: "À publier les ports du conteneur sur la machine." }
-  - { id: c, text: "À partager le réseau avec les autres conteneurs." }
+  - { id: a, text: "Il garde des données après la suppression du conteneur." }
+  - { id: b, text: "Il publie les ports du conteneur sur la machine." }
+  - { id: c, text: "Il partage le réseau avec les autres conteneurs." }
 correctChoiceId: a
 ---
 

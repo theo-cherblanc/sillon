@@ -5,9 +5,9 @@ topic: javascript
 tags: [async]
 difficulty: 2
 choices:
-  - { id: a, text: "une exception tout de suite" }
-  - { id: b, text: "une promesse rejetée" }
-  - { id: c, text: "undefined" }
+  - { id: a, text: "Une exception tout de suite" }
+  - { id: b, text: "Une promesse rejetée" }
+  - { id: c, text: "`undefined`" }
 correctChoiceId: b
 ---
 

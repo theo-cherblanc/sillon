@@ -2,15 +2,19 @@
 id: js.closures.003
 type: mcq
 topic: javascript
-tags: [fonctions, scope]
+tags: [closures, scope]
 difficulty: 2
 choices:
-  - { id: a, text: "undefined" }
-  - { id: b, text: "42" }
+  - { id: a, text: "`undefined`" }
+  - { id: b, text: "`42`" }
+  - { id: c, text: "Une `ReferenceError` : `x` n'existe plus." }
 correctChoiceId: b
+insight: "La fermeture garde la variable, pas une photocopie figée prise au `return`. Si `x` pouvait encore changer, `read()` verrait la nouvelle valeur."
+common_mistake: "Lire `x` après `outer()`, comme si la variable était devenue globale. `x` n'est plus en portée. `read()` l'est."
+related: [js.closures.001, js.scope.006]
 ---
 
-Que vaut `x` à la fin de cet extrait ?
+Que renvoie `read()` ?
 
 ```js
 function outer() {
@@ -18,8 +22,9 @@ function outer() {
   return () => x
 }
 const read = outer()
+read()
 ```
 
 ## Explication
 
-La fonction interne capture `x`. `read()` renvoie `42`.
+`read` est la fonction renvoyée. Elle a gardé `x` avec elle. Appeler `read()`, ce n'est pas relire un `x` global : ce `x` n'est plus en portée dans le script. C'est la fermeture qui le tient.

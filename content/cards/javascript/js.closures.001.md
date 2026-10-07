@@ -9,6 +9,8 @@ choices:
   - { id: b, text: "1" }
   - { id: c, text: "2" }
 correctChoiceId: c
+insight: "`make()` a renvoyé une fonction, pas le nombre. Le compteur `n` reste tant que `next` existe."
+related: [js.closures.003, js.closures.005]
 ---
 
 Que renvoie le second appel à `next` ?

@@ -5,9 +5,9 @@ topic: javascript
 tags: [async]
 difficulty: 2
 choices:
-  - { id: a, text: "le nombre 1" }
-  - { id: b, text: "undefined" }
-  - { id: c, text: "une promesse résolue avec 1" }
+  - { id: a, text: "Le nombre 1" }
+  - { id: b, text: "`undefined`" }
+  - { id: c, text: "Une promesse résolue avec 1" }
 correctChoiceId: c
 ---
 

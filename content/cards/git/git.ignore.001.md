@@ -5,9 +5,9 @@ topic: git
 tags: [git]
 difficulty: 1
 choices:
-  - { id: a, text: "À choisir le message du prochain commit." }
-  - { id: b, text: "À fusionner deux branches sans conflit." }
-  - { id: c, text: "À dire à Git quels fichiers ne pas suivre." }
+  - { id: a, text: "Il choisit le message du prochain commit." }
+  - { id: b, text: "Il fusionne deux branches sans conflit." }
+  - { id: c, text: "Il dit à Git quels fichiers ne pas suivre." }
 correctChoiceId: c
 ---
 

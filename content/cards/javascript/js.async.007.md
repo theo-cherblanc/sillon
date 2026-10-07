@@ -5,9 +5,9 @@ topic: javascript
 tags: [async]
 difficulty: 2
 choices:
-  - { id: a, text: "une promesse résolue avec [1]" }
-  - { id: b, text: "une promesse rejetée" }
-  - { id: c, text: "une promesse qui reste en attente" }
+  - { id: a, text: "Une promesse résolue avec [1]" }
+  - { id: b, text: "Une promesse rejetée" }
+  - { id: c, text: "Une promesse qui reste en attente" }
 correctChoiceId: b
 ---
 

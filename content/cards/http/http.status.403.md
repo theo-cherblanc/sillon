@@ -9,6 +9,8 @@ choices:
   - { id: b, text: "`Unauthorized`. Le client n'a pas prouvé qui il est." }
   - { id: c, text: "`Forbidden`. Le serveur refuse l'action." }
 correctChoiceId: c
+related: [http.status.401, http.status.404]
+insight: "Le serveur connaît l'identité et refuse quand même. Ce n'est pas un `401`."
 ---
 
 Que signifie le statut HTTP `403` ?

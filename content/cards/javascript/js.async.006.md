@@ -6,8 +6,8 @@ tags: [async]
 difficulty: 2
 choices:
   - { id: a, text: "1" }
-  - { id: b, text: "une promesse dans une promesse" }
-  - { id: c, text: "undefined" }
+  - { id: b, text: "Une promesse dans une promesse" }
+  - { id: c, text: "`undefined`" }
 correctChoiceId: a
 ---
 

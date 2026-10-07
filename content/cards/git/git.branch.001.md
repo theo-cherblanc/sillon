@@ -11,7 +11,7 @@ choices:
 correctChoiceId: b
 ---
 
-Qu'est-ce qu'une branche ?
+Que représente une branche Git ?
 
 ## Explication
 

@@ -4,6 +4,7 @@ type: cloze
 topic: git
 tags: [git]
 difficulty: 1
+related: [git.commit.001, git.push.001]
 ---
 
 Quelle commande crée un commit local à partir de l'index ?

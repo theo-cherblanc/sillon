@@ -7,7 +7,7 @@ difficulty: 2
 choices:
   - { id: a, text: "`0` veut dire succès. Un autre nombre veut dire échec." }
   - { id: b, text: "`0` veut dire échec. `1` veut dire succès." }
-  - { id: c, text: "Le code de sortie est le nombre de lignes affichées." }
+  - { id: c, text: "Un nombre autre que `0` veut dire un avertissement, pas un échec." }
 correctChoiceId: a
 ---
 

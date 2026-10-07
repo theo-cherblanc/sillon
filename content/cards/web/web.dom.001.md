@@ -11,7 +11,7 @@ choices:
 correctChoiceId: c
 ---
 
-Qu'est-ce que le DOM ?
+Que représente le DOM ?
 
 ## Explication
 

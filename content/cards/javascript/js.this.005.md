@@ -4,11 +4,13 @@ type: mcq
 topic: javascript
 tags: [this]
 difficulty: 3
+deprecated: true
 choices:
   - { id: a, text: "\"Ada\" s'affiche" }
   - { id: b, text: "undefined s'affiche" }
   - { id: c, text: "une TypeError est lancée" }
 correctChoiceId: c
+related: [js.this.007]
 ---
 
 En mode strict, que se passe-t-il ?
@@ -27,4 +29,4 @@ user.later()
 
 ## Explication
 
-La fonction passée à `setTimeout` n'est pas appelée comme méthode de `user`. En mode strict, son `this` vaut `undefined`, et lire `this.name` lance une `TypeError`. Une fonction flèche aurait repris le `this` de `later`.
+Cette carte est retirée : la réponse annoncée (TypeError) est fausse. `setTimeout` n'appelle pas le callback avec `this === undefined`. Voir `js.this.007`.

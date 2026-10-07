@@ -5,9 +5,9 @@ topic: docker
 tags: [docker]
 difficulty: 1
 choices:
-  - { id: a, text: "l'image est le modèle. Le conteneur en est une instance lancée" }
-  - { id: b, text: "l'image est le processus en cours. Le conteneur est le fichier texte" }
-  - { id: c, text: "les deux noms désignent la même chose" }
+  - { id: a, text: "L'image est le modèle. Le conteneur en est une instance lancée." }
+  - { id: b, text: "L'image est le processus en cours. Le conteneur est le fichier texte." }
+  - { id: c, text: "Les deux noms désignent exactement la même chose." }
 correctChoiceId: a
 ---
 

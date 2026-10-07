@@ -1,0 +1,39 @@
+---
+description: How to write Sillon definition cards (question + choices)
+globs: content/cards/**/*.md
+alwaysApply: false
+---
+
+# Cartes de définition
+
+Les identifiants existants ne changent jamais.
+
+## Ordre d'écriture
+
+1. Écrire d'abord **une phrase-réponse** française, complète, comme on la dirait à quelqu'un.
+2. En tirer la **question** (un verbe clair : veut dire, fait, change, distingue, sert).
+3. Coller cette phrase comme **choix correct**, un peu raccourcie, sans la casser.
+4. Les deux autres choix = de **vraies confusions**, même forme et à peu près la même longueur.
+5. L'**explication** ne recopie pas le bon choix. Elle dit le pourquoi, et ce que ce n'est pas.
+
+## Question
+
+- Un verbe. Éviter « Qu'est-ce qu'un X ? » sauf si X est un nom d'outil évident (`commit`, `grep`).
+- On doit comprendre ce qu'on demande sans lire les choix.
+- Pas de mini-scénario, pas de « tu… », pas de blague.
+
+## Choix
+
+- Phrase avec sujet et verbe, environ 12 à 22 mots.
+- Les trois du même moule (tous « Il… », ou tous « Une API qui… »).
+- Le bon choix se lit seul, sans la question.
+- Interdit : « ensemble » sans complément, « responsabilités », deux idées collées par une virgule bancale, un distracteur hors sujet.
+
+## Où va le ton
+
+Question et choix : neutres, précis.
+Insight / piège courant : éventuellement plus parlé, jamais à la place de la définition.
+
+## Cartes « que renvoie ce code ? »
+
+La question nomme l'expression. Les choix sont des valeurs. Ne pas y coller cette recette de définition.

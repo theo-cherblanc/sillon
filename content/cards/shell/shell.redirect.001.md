@@ -5,9 +5,9 @@ topic: shell
 tags: [shell]
 difficulty: 2
 choices:
-  - { id: a, text: "`>` écrit le fichier en remplaçant son contenu. `>>` ajoute à la fin" }
-  - { id: b, text: "`>` ajoute à la fin. `>>` envoie vers une autre commande" }
-  - { id: c, text: "les deux effacent le fichier" }
+  - { id: a, text: "`>` remplace le contenu du fichier. `>>` ajoute à la fin." }
+  - { id: b, text: "`>` ajoute à la fin. `>>` envoie la sortie vers une autre commande." }
+  - { id: c, text: "Les deux vident le fichier avant d'écrire." }
 correctChoiceId: a
 ---
 

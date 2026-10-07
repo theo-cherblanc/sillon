@@ -5,13 +5,17 @@ topic: http
 tags: [http, status]
 difficulty: 2
 choices:
-  - { id: a, text: "prouver qui tu es" }
-  - { id: b, text: "tu es reconnu, mais cette action est refusée" }
-  - { id: c, text: "cette adresse n'existe pas" }
+  - { id: a, text: "`Unauthorized`. L'authentification manque, ou elle n'est pas valable." }
+  - { id: b, text: "`Forbidden`. Le serveur sait qui appelle, et refuse l'action." }
+  - { id: c, text: "`Not Found`. Cette adresse ne correspond à aucune ressource." }
 correctChoiceId: a
+source: "https://developer.mozilla.org/fr/docs/Web/HTTP/Reference/Status/401"
+insight: "Le nom anglais est un piège : Unauthorized, mais ça veut dire « on ne sait pas qui tu es »."
+common_mistake: "Renvoyer `401` alors que l'utilisateur est identifié, mais n'a pas le droit d'agir. Ça, c'est `403`."
+related: [http.status.403, http.status.404]
 ---
 
-Que demande surtout un statut `401` ?
+Que signifie le statut HTTP `401` ?
 
 ## Explication
 

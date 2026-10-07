@@ -4,6 +4,8 @@ type: cloze
 topic: javascript
 tags: [types]
 difficulty: 2
+related: [js.types.003, js.types.007]
+insight: "`null == undefined` est vrai. `null !== undefined` aussi. Les deux cohabitent, selon l'opérateur."
 ---
 
 Quel opérateur manque pour dire que ces deux valeurs sont différentes, sans conversion ?

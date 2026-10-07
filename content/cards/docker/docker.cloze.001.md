@@ -4,9 +4,11 @@ type: cloze
 topic: docker
 tags: [docker]
 difficulty: 2
+insight: "La forme longue est `--publish`. L'ordre des nombres reste le même : machine, puis conteneur."
+related: [docker.port.001]
 ---
 
-Quelle option courte de `docker run` publie le port 80 du conteneur sur le port 8080 de la machine ?
+Quelle option courte de `docker run` publie un port ? Le `8080:80` est déjà écrit : port 8080 de la machine, puis port 80 du conteneur.
 
 ```
 docker run ____ 8080:80 nginx
@@ -18,4 +20,4 @@ docker run ____ 8080:80 nginx
 
 ## Explication
 
-L'ordre est le port de la machine, puis celui du conteneur. La forme longue de `-p` est `--publish`. Sans cette option, le port ouvert dans le conteneur ne s'atteint pas depuis l'extérieur.
+L'ordre est le port de la machine, puis celui du conteneur. La forme longue de `-p` est `--publish`. Sans cette option, le port ouvert dans le conteneur n'est pas joignable depuis l'extérieur.

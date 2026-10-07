@@ -16,4 +16,9 @@ export type Card = {
   steps?: string[]
   lines?: string[]
   bugLine?: number
+  source?: string
+  insight?: string
+  commonMistake?: string
+  related?: string[]
+  deprecated?: boolean
 }

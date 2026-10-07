@@ -9,6 +9,8 @@ choices:
   - { id: b, text: "undefined" }
   - { id: c, text: "une TypeError est lancée" }
 correctChoiceId: a
+related: [js.this.001, js.this.006]
+insight: "`bind` fixe `this` une fois pour toutes. Extraire la fonction ensuite ne le décroche plus."
 ---
 
 En mode strict, que renvoie `greet()` ?

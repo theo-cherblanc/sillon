@@ -9,6 +9,8 @@ choices:
   - { id: b, text: "undefined" }
   - { id: c, text: "une TypeError est lancée" }
 correctChoiceId: a
+related: [js.this.001]
+insight: "Appelée comme `user.hello()`, la méthode reçoit `user` comme `this`."
 ---
 
 Que renvoie `user.hello()` ?

@@ -9,6 +9,7 @@ choices:
   - { id: b, text: "`No Content`. La requête a réussi, et la réponse n'a pas de corps." }
   - { id: c, text: "`Internal Server Error`. Le serveur a échoué en traitant la requête." }
 correctChoiceId: b
+related: [http.cloze.002, http.status.200]
 ---
 
 Que signifie le statut HTTP `204` ?

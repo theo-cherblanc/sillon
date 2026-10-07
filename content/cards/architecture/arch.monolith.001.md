@@ -5,14 +5,16 @@ topic: architecture
 tags: [architecture]
 difficulty: 2
 choices:
-  - { id: a, text: "Plusieurs services, chacun déployé de son côté." }
-  - { id: b, text: "Un seul programme, déployé ensemble, qui porte plusieurs responsabilités." }
-  - { id: c, text: "Une base qui stocke tout l'historique du projet." }
+  - { id: a, text: "Chaque partie (interface, API, données) est un programme déployé à part." }
+  - { id: b, text: "Interface, API et accès aux données sont livrés dans un seul programme." }
+  - { id: c, text: "Toutes les données du projet tiennent dans une seule base, quel que soit le nombre de programmes." }
 correctChoiceId: b
+insight: "Monolithe décrit le découpage, pas la qualité. Plusieurs services, ce sont plusieurs programmes déployés séparément."
+related: [arch.api.001, arch.proxy.001]
 ---
 
-Qu'est-ce qu'un monolithe ?
+Que veut dire qu'une application est un monolithe ?
 
 ## Explication
 
-L'interface, l'API et l'accès aux données peuvent vivre dans ce même livrable. Plusieurs services, à l'inverse, sont plusieurs programmes déployés séparément, qui se parlent. Le mot décrit le découpage, pas la qualité.
+Le mot parle du livrable, pas du soin du code. À l'inverse, plusieurs services sont plusieurs programmes, déployés séparément, qui se parlent.

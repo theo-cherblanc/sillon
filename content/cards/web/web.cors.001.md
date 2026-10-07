@@ -5,13 +5,17 @@ topic: web
 tags: [web, cors]
 difficulty: 2
 choices:
-  - { id: a, text: "Un cache partagé entre tous les sites ouverts." }
+  - { id: a, text: "Une règle du serveur : il refuse toute requête qui ne vient pas de son propre domaine." }
   - { id: b, text: "Une règle du navigateur : un script ne lit la réponse d'une autre origine que si le serveur l'y autorise." }
   - { id: c, text: "Le certificat qui chiffre la page." }
 correctChoiceId: b
+source: "https://developer.mozilla.org/fr/docs/Web/HTTP/Guides/CORS"
+insight: "`curl` n'applique pas CORS. CORS protège le navigateur, pas le serveur contre un autre programme."
+common_mistake: "Ajouter `Access-Control-Allow-Origin: *` et croire que l'API est authentifiée. CORS n'est pas une authentification."
+related: [web.fetch.001, web.https.001]
 ---
 
-Qu'est-ce que CORS ?
+Que restreint CORS dans le navigateur ?
 
 ## Explication
 

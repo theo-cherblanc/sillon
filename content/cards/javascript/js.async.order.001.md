@@ -9,6 +9,9 @@ steps:
   - D
   - C
   - B
+insight: "Zéro milliseconde, ce n'est pas « maintenant ». C'est « dès que la file des timers aura son tour », après les microtâches."
+common_mistake: "Mettre B avant C parce que `setTimeout(..., 0)` a l'air plus urgent qu'une promesse déjà résolue."
+related: [js.async.001, js.async.004]
 ---
 
 Dans quel ordre ces lettres s'affichent-elles ?

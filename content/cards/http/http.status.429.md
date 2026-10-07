@@ -9,6 +9,7 @@ choices:
   - { id: b, text: "`Too Many Requests`. Le client a envoyé trop de requêtes." }
   - { id: c, text: "`Internal Server Error`. Le serveur a échoué en traitant la requête." }
 correctChoiceId: b
+related: [http.status.503, http.status.400]
 ---
 
 Que signifie le statut HTTP `429` ?

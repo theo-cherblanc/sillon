@@ -9,6 +9,8 @@ choices:
   - { id: b, text: "undefined" }
   - { id: c, text: "une TypeError est lancée" }
 correctChoiceId: a
+insight: "La flèche n'a pas de `this` à elle. Elle emprunte celui du `delayed` qui l'entoure."
+related: [js.this.001, js.this.007]
 ---
 
 Que renvoie `user.delayed()` ?

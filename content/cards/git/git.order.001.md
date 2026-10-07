@@ -8,6 +8,7 @@ steps:
   - git add
   - git commit
   - git push
+related: [git.stage.001, git.commit.001, git.push.001]
 ---
 
 Dans quel ordre ces commandes publient-elles une modification déjà écrite dans un fichier que Git suit déjà ?

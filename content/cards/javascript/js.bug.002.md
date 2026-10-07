@@ -11,7 +11,7 @@ lines:
 bugLine: 1
 ---
 
-Quelle ligne fait échouer l'intention de ce test ?
+Quelle ligne affecte au lieu de comparer ?
 
 ## Explication
 

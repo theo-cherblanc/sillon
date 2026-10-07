@@ -5,14 +5,16 @@ topic: architecture
 tags: [architecture]
 difficulty: 1
 choices:
-  - { id: a, text: "Une base de données partagée entre deux programmes." }
-  - { id: b, text: "Le style visuel commun à toutes les pages." }
-  - { id: c, text: "Un contrat : quels appels existent, ce qu'ils acceptent, ce qu'ils renvoient." }
+  - { id: a, text: "Elle les fait partager la même base de données." }
+  - { id: b, text: "Elle chiffre le trajet jusqu'au serveur." }
+  - { id: c, text: "Elle décrit les appels possibles, ce qu'ils acceptent et ce qu'ils renvoient." }
 correctChoiceId: c
+insight: "Partager une base n'est pas une API : les deux programmes dépendent alors du même intérieur."
+related: [arch.rest.001, arch.client.001]
 ---
 
-Qu'est-ce qu'une API ?
+À quoi sert une API entre deux programmes ?
 
 ## Explication
 
-Deux programmes se parlent à travers ce contrat, sans partager leur intérieur. Une API HTTP en est une forme. Une bibliothèque a aussi une API : les fonctions publiques qu'on a le droit d'appeler.
+Les deux côtés se parlent à travers ce contrat, sans ouvrir l'intérieur de l'autre. Une API HTTP en est une forme. Une bibliothèque en a une aussi : ses fonctions publiques.

@@ -5,9 +5,9 @@ topic: javascript
 tags: [async]
 difficulty: 2
 choices:
-  - { id: a, text: "l'erreur \"rate\"" }
+  - { id: a, text: "L'erreur \"rate\"" }
   - { id: b, text: "1" }
-  - { id: c, text: "undefined" }
+  - { id: c, text: "`undefined`" }
 correctChoiceId: b
 ---
 

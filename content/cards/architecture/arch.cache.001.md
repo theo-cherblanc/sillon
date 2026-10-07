@@ -5,14 +5,16 @@ topic: architecture
 tags: [architecture]
 difficulty: 1
 choices:
-  - { id: a, text: "À chiffrer les données avant de les envoyer." }
-  - { id: b, text: "À supprimer les fichiers temporaires à chaque requête." }
-  - { id: c, text: "À garder une copie d'un résultat pour ne pas refaire le travail." }
+  - { id: a, text: "Il chiffre les données avant de les envoyer." }
+  - { id: b, text: "Il recalcule le résultat à chaque requête, pour qu'il soit toujours à jour." }
+  - { id: c, text: "Il garde une copie d'un résultat, pour ne pas refaire le travail." }
 correctChoiceId: c
+insight: "Sans règle d'expiration, on sert une copie trop vieille. Le gain est la vitesse ; le risque, c'est une donnée périmée."
+related: [arch.cdn.001, http.status.304]
 ---
 
 À quoi sert un cache ?
 
 ## Explication
 
-Le navigateur, un serveur ou une base peuvent cacher une réponse. Le gain est la vitesse. Le risque est une copie périmée : il faut savoir quand elle n'est plus valable.
+Un navigateur, un serveur ou une base peuvent garder cette copie. Il faut savoir quand elle n'est plus valable.

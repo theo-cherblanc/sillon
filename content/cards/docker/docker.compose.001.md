@@ -5,9 +5,9 @@ topic: docker
 tags: [docker]
 difficulty: 2
 choices:
-  - { id: a, text: "À compiler le Dockerfile plus vite grâce au cache." }
-  - { id: b, text: "À décrire et lancer plusieurs services ensemble, depuis un fichier." }
-  - { id: c, text: "À publier une image sur un registre public." }
+  - { id: a, text: "Il compile le Dockerfile plus vite grâce au cache." }
+  - { id: b, text: "Il décrit et lance plusieurs services depuis un fichier." }
+  - { id: c, text: "Il publie une image sur un registre public." }
 correctChoiceId: b
 ---
 
@@ -15,4 +15,4 @@ correctChoiceId: b
 
 ## Explication
 
-Le fichier nomme les services, leurs images, leurs ports et leurs volumes. Une commande lance l'ensemble au lieu d'enchaîner les `docker run` à la main. Compose ne remplace pas l'idée d'image et de conteneur.
+Le fichier nomme les services, leurs images, leurs ports et leurs volumes. Une commande lance tout ça, au lieu d'enchaîner les `docker run` à la main. Compose ne remplace pas l'idée d'image et de conteneur.

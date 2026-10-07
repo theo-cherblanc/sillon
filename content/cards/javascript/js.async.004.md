@@ -9,6 +9,8 @@ choices:
   - { id: b, text: "A, puis C, puis B" }
   - { id: c, text: "C, puis A, puis B" }
 correctChoiceId: b
+insight: "`await` rend la main à l'appelant. Ce n'est pas une pause de tout le programme : `C` s'affiche pendant que `run` attend."
+related: [js.async.001, js.async.cloze.001]
 ---
 
 Dans quel ordre les lettres s'affichent-elles ?

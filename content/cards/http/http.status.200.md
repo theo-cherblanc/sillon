@@ -9,6 +9,7 @@ choices:
   - { id: b, text: "`Created`. La requête a réussi, et une ressource a été créée." }
   - { id: c, text: "`Not Found`. Cette adresse ne correspond à aucune ressource." }
 correctChoiceId: a
+related: [http.status.201, http.status.204]
 ---
 
 Que signifie le statut HTTP `200` ?

@@ -9,6 +9,8 @@ choices:
   - { id: b, text: "undefined" }
   - { id: c, text: "une TypeError est lancée" }
 correctChoiceId: a
+related: [js.this.001, js.this.004]
+insight: "`call` (et `apply`) disent : « exécute-toi avec cet objet-là comme `this` »."
 ---
 
 Que renvoie `hello.call(user)` ?

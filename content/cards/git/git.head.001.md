@@ -5,13 +5,13 @@ topic: git
 tags: [git]
 difficulty: 2
 choices:
-  - { id: a, text: "Le commit actuellement extrait. En général, le bout de la branche en cours." }
+  - { id: a, text: "Le commit actuellement extrait, en général le bout de la branche en cours." }
   - { id: b, text: "Le premier commit du dépôt, celui qui n'a pas de parent." }
   - { id: c, text: "Le fichier qui liste les dépôts distants." }
 correctChoiceId: a
 ---
 
-Qu'est-ce que `HEAD` ?
+Que désigne `HEAD` ?
 
 ## Explication
 

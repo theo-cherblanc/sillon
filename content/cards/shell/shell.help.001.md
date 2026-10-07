@@ -7,7 +7,7 @@ difficulty: 1
 choices:
   - { id: a, text: "`help commande` uniquement. Le shell n'a pas d'autre aide." }
   - { id: b, text: "`man commande`, ou souvent `commande --help`." }
-  - { id: c, text: "`cat /help/commande`." }
+  - { id: c, text: "`info commande` seulement. Ni `man` ni `--help` n'existent." }
 correctChoiceId: b
 ---
 

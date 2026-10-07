@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from "react"
 import { cards } from "../../../shared/content/cards.ts"
 import type { Card } from "../../../shared/content/types.ts"
+import { cardLabel } from "../../library/index.ts"
 import { getDatabase, localProfileId } from "../../../shared/db/client.ts"
 import type { CardProgress } from "../../../shared/db/types.ts"
 import { localDate } from "../../../shared/lib/dates.ts"
@@ -13,6 +14,7 @@ import { Answer, Display, Kicker, Meta, Mono } from "../../../shared/ui/Type.tsx
 import { Choice, ChoiceList } from "../components/Choice.tsx"
 import { ClozeDock } from "../components/ClozeDock.tsx"
 import { Feedback } from "../components/Feedback.tsx"
+import { Notes } from "../components/Notes.tsx"
 import { GradeDock } from "../components/GradeDock.tsx"
 import { OrderList } from "../components/OrderList.tsx"
 import { PromptText } from "../components/PromptText.tsx"
@@ -81,7 +83,7 @@ export function SessionPage({ onClose, onRecorded }: { onClose: () => void; onRe
                 return [
                   {
                     cardId: row.cardId,
-                    title: cardTitle(source.prompt),
+                    title: cardLabel(source.prompt),
                     label: minutes < 0 ? "maintenant" : formatDelay(minutes),
                   },
                 ]
@@ -155,12 +157,6 @@ export function SessionPage({ onClose, onRecorded }: { onClose: () => void; onRe
       onGrade={grade}
     />
   )
-}
-
-function cardTitle(prompt: string) {
-  const line = prompt.split("\n").find((part) => part.trim().length > 0) ?? ""
-  const plain = line.replaceAll("`", "").trim()
-  return plain.length > 0 ? plain : "Carte"
 }
 
 function delayFor(choice: GradeChoice, delays: DelayPreview) {
@@ -308,11 +304,29 @@ function SessionCard({
             correct={card.type === "reveal" ? null : mcqCorrect}
             detail={wrongDetail(card, correctText)}
             explanation={card.explanation}
+            notes={
+              <Notes
+                mistake={card.commonMistake}
+                insight={card.insight}
+                source={card.source}
+                related={relatedCards(card)}
+              />
+            }
           />
         ) : null}
       </Stack>
     </Screen>
   )
+}
+
+function relatedCards(card: Card): { id: string; label: string }[] {
+  return (card.related ?? []).flatMap((id) => {
+    const found = cards.find((item) => item.id === id)
+    if (!found) {
+      return []
+    }
+    return [{ id, label: cardLabel(found.prompt) }]
+  })
 }
 
 function wrongDetail(card: Card, correctText: string | undefined): ReactNode {

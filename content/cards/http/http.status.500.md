@@ -9,6 +9,8 @@ choices:
   - { id: b, text: "`Bad Request`. Le serveur n'a pas compris la requête." }
   - { id: c, text: "`Not Found`. Cette adresse ne correspond à aucune ressource." }
 correctChoiceId: a
+related: [http.status.502, http.status.503]
+insight: "La requête du client pouvait être valide. La panne est du côté du serveur."
 ---
 
 Que signifie le statut HTTP `500` ?

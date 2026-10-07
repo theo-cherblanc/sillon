@@ -7,7 +7,7 @@ difficulty: 3
 choices:
   - { id: a, text: "timeout, puis promise" }
   - { id: b, text: "promise, puis timeout" }
-  - { id: c, text: "les deux en même temps" }
+  - { id: c, text: "Les deux en même temps" }
 correctChoiceId: b
 ---
 

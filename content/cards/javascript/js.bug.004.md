@@ -11,7 +11,7 @@ lines:
 bugLine: 2
 ---
 
-Quelle ligne empêche ce programme de démarrer ?
+Quelle ligne utilise `await` hors d'une fonction `async` ?
 
 ## Explication
 

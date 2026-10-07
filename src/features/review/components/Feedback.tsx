@@ -8,11 +8,13 @@ export function Feedback({
   correct,
   detail,
   explanation,
+  notes,
 }: {
   lead?: ReactNode
   correct: boolean | null
   detail?: ReactNode
   explanation: string
+  notes?: ReactNode
 }) {
   return (
     <Stack gap={6}>
@@ -28,6 +30,7 @@ export function Feedback({
         <Kicker as="h2">Explication</Kicker>
         <PromptText text={explanation} />
       </Stack>
+      {notes}
     </Stack>
   )
 }

@@ -5,9 +5,9 @@ topic: web
 tags: [web, http]
 difficulty: 1
 choices:
-  - { id: a, text: "`GET` lit, `POST` envoie des données à traiter" }
-  - { id: b, text: "`GET` supprime, `POST` ne fait que lire" }
-  - { id: c, text: "les deux font exactement la même chose" }
+  - { id: a, text: "`GET` lit. `POST` envoie des données à traiter." }
+  - { id: b, text: "`GET` supprime. `POST` ne fait que lire." }
+  - { id: c, text: "Les deux font exactement la même chose." }
 correctChoiceId: a
 ---
 

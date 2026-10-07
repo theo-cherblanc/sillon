@@ -5,14 +5,14 @@ topic: http
 tags: [http, status]
 difficulty: 2
 choices:
-  - { id: a, text: "une redirection temporaire : on garde l'ancienne adresse" }
-  - { id: b, text: "une redirection permanente" }
-  - { id: c, text: "une erreur du client" }
+  - { id: a, text: "`Found`. La ressource a changé d'adresse, mais seulement pour cette fois." }
+  - { id: b, text: "`Moved Permanently`. La ressource a changé d'adresse pour de bon." }
+  - { id: c, text: "`Bad Request`. Le serveur n'a pas compris la requête." }
 correctChoiceId: a
 ---
 
-Que fait un statut `302`, comparé à un `301` ?
+Que signifie le statut HTTP `302` ?
 
 ## Explication
 
-`302 Found` envoie vers une autre adresse pour cette fois. L'adresse d'origine reste la bonne pour plus tard. `301` dit au contraire que le déménagement est définitif.
+Le client va ailleurs pour cette requête. L'adresse d'origine reste la bonne pour plus tard. `301` dit au contraire que le déménagement est définitif.

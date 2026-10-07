@@ -7,6 +7,8 @@ difficulty: 2
 steps:
   - Récupérer les commits du dépôt distant
   - Les fusionner dans la branche actuelle
+insight: "D'abord récupérer les commits distants, ensuite les intégrer à la branche en cours."
+related: [git.fetch.001, git.pull.001]
 ---
 
 Dans quel ordre `git pull` agit-il, par défaut ?

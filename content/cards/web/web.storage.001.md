@@ -5,13 +5,13 @@ topic: web
 tags: [web, storage]
 difficulty: 2
 choices:
-  - { id: a, text: "le cookie peut être renvoyé au serveur, `localStorage` reste dans le navigateur" }
-  - { id: b, text: "les deux sont envoyés à chaque requête" }
-  - { id: c, text: "`localStorage` est chiffré par HTTPS, le cookie ne l'est pas" }
+  - { id: a, text: "Le cookie peut être renvoyé au serveur. `localStorage` reste dans le navigateur." }
+  - { id: b, text: "Les deux sont envoyés à chaque requête." }
+  - { id: c, text: "`localStorage` est chiffré par HTTPS, le cookie ne l'est pas." }
 correctChoiceId: a
 ---
 
-Quelle différence utile y a-t-il entre un cookie et `localStorage` ?
+Quelle différence y a-t-il entre un cookie et `localStorage` ?
 
 ## Explication
 

@@ -5,13 +5,15 @@ topic: architecture
 tags: [architecture]
 difficulty: 1
 choices:
-  - { id: a, text: "la variable disparaît avec le processus. La base garde la donnée" }
-  - { id: b, text: "une variable globale est déjà une base de données" }
-  - { id: c, text: "une base ne survit pas au redémarrage de la machine" }
+  - { id: a, text: "La variable disparaît avec le processus ; la base survit à l'arrêt." }
+  - { id: b, text: "Une variable globale est déjà une base de données." }
+  - { id: c, text: "Une base disparaît au redémarrage de la machine." }
 correctChoiceId: a
+insight: "La mémoire vive disparaît avec le processus. Une base survit au redémarrage et se partage entre plusieurs processus."
+related: [arch.stateless.001, docker.volume.001]
 ---
 
-Pourquoi une base de données, plutôt qu'une variable ?
+Pourquoi stocker une donnée dans une base plutôt que dans une variable ?
 
 ## Explication
 
