@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, type ReactNode } from "react"
 import { getDatabase } from "../shared/db/client.ts"
 import { LibraryPage } from "../features/library/index.ts"
 import { ProgressPage } from "../features/progress/pages/ProgressPage.tsx"
@@ -10,8 +10,9 @@ import type { ProgressFile } from "../features/settings/model/export.ts"
 
 export function App() {
   const [screen, setScreen] = useState<"today" | "progress" | "settings" | "session" | "library">("today")
-  const [openedCardId, setOpenedCardId] = useState<string | null>(null)
+  const [opened, setOpened] = useState<string[]>([])
   const [incoming, setIncoming] = useState<ProgressFile | null>(null)
+  const openedCardId = opened.at(-1) ?? null
 
   useEffect(() => {
     let cancelled = false
@@ -27,56 +28,63 @@ export function App() {
     }
   }, [])
 
+  function openCard(cardId: string) {
+    setOpened((ids) => (ids.at(-1) === cardId ? ids : [...ids, cardId]))
+  }
+
   if (incoming) {
     return <RemotePrompt file={incoming} onDone={() => setIncoming(null)} onDismiss={() => setIncoming(null)} />
   }
 
-  if (openedCardId) {
-    return (
+  let main: ReactNode
+  if (screen === "session") {
+    main = (
       <SessionPage
-        cardId={openedCardId}
-        onClose={() => setOpenedCardId(null)}
+        onClose={() => setScreen("today")}
         onRecorded={(at) => void publishMemory(at)}
+        onOpen={openCard}
       />
     )
-  }
-
-  if (screen === "session") {
-    return <SessionPage onClose={() => setScreen("today")} onRecorded={(at) => void publishMemory(at)} />
-  }
-
-  if (screen === "library") {
-    return (
+  } else if (screen === "library") {
+    main = (
       <LibraryPage
         onToday={() => setScreen("today")}
         onProgress={() => setScreen("progress")}
         onSettings={() => setScreen("settings")}
-        onOpen={setOpenedCardId}
+        onOpen={openCard}
       />
     )
-  }
-
-  if (screen === "progress") {
-    return (
+  } else if (screen === "progress") {
+    main = (
       <ProgressPage
         onToday={() => setScreen("today")}
         onSettings={() => setScreen("settings")}
         onLibrary={() => setScreen("library")}
       />
     )
-  }
-
-  if (screen === "settings") {
-    return (
-      <SettingsPage onToday={() => setScreen("today")} onProgress={() => setScreen("progress")} />
+  } else if (screen === "settings") {
+    main = <SettingsPage onToday={() => setScreen("today")} onProgress={() => setScreen("progress")} />
+  } else {
+    main = (
+      <TodayPage
+        onReview={() => setScreen("session")}
+        onProgress={() => setScreen("progress")}
+        onSettings={() => setScreen("settings")}
+      />
     )
   }
 
   return (
-    <TodayPage
-      onReview={() => setScreen("session")}
-      onProgress={() => setScreen("progress")}
-      onSettings={() => setScreen("settings")}
-    />
+    <>
+      <div className={openedCardId ? "hidden h-full" : "h-full"}>{main}</div>
+      {openedCardId ? (
+        <SessionPage
+          cardId={openedCardId}
+          onClose={() => setOpened((ids) => ids.slice(0, -1))}
+          onRecorded={(at) => void publishMemory(at)}
+          onOpen={openCard}
+        />
+      ) : null}
+    </>
   )
 }

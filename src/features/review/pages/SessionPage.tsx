@@ -31,19 +31,29 @@ export function SessionPage({
   cardId,
   onClose,
   onRecorded,
+  onOpen,
 }: {
   cardId?: string
   onClose: () => void
   onRecorded?: (at: number) => void
+  onOpen?: (cardId: string) => void
 }) {
   if (cardId) {
-    return <OpenedCard cardId={cardId} onClose={onClose} onRecorded={onRecorded} />
+    return <OpenedCard key={cardId} cardId={cardId} onClose={onClose} onRecorded={onRecorded} onOpen={onOpen} />
   }
 
-  return <TodaySession onClose={onClose} onRecorded={onRecorded} />
+  return <TodaySession onClose={onClose} onRecorded={onRecorded} onOpen={onOpen} />
 }
 
-function TodaySession({ onClose, onRecorded }: { onClose: () => void; onRecorded?: (at: number) => void }) {
+function TodaySession({
+  onClose,
+  onRecorded,
+  onOpen,
+}: {
+  onClose: () => void
+  onRecorded?: (at: number) => void
+  onOpen?: (cardId: string) => void
+}) {
   const { summary, queue, progress, error } = useToday()
   const [index, setIndex] = useState(0)
   const [saving, setSaving] = useState(false)
@@ -172,6 +182,7 @@ function TodaySession({ onClose, onRecorded }: { onClose: () => void; onRecorded
       total={summary.queueSize}
       onClose={onClose}
       onGrade={grade}
+      onOpen={onOpen}
     />
   )
 }
@@ -180,10 +191,12 @@ function OpenedCard({
   cardId,
   onClose,
   onRecorded,
+  onOpen,
 }: {
   cardId: string
   onClose: () => void
   onRecorded?: (at: number) => void
+  onOpen?: (cardId: string) => void
 }) {
   const card = cards.find((item) => item.id === cardId) ?? null
   const [remembered, setRemembered] = useState<CardProgress | null | undefined>(undefined)
@@ -262,6 +275,7 @@ function OpenedCard({
       error={saveError}
       onClose={onClose}
       onGrade={grade}
+      onOpen={onOpen}
     />
   )
 }
@@ -286,6 +300,7 @@ function SessionCard({
   error,
   onClose,
   onGrade,
+  onOpen,
 }: {
   card: Card
   remembered: CardProgress | null
@@ -296,6 +311,7 @@ function SessionCard({
   error?: string | null
   onClose: () => void
   onGrade: (choice: GradeChoice, mcqChoiceId: string | null, mcqCorrect: boolean | null) => void
+  onOpen?: (cardId: string) => void
 }) {
   const [choiceId, setChoiceId] = useState<string | null>(null)
   const [revealed, setRevealed] = useState(false)
@@ -424,6 +440,7 @@ function SessionCard({
                 insight={card.insight}
                 source={card.source}
                 related={relatedCards(card)}
+                onOpen={onOpen}
               />
             }
           />

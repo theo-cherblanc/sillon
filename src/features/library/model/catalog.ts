@@ -46,3 +46,26 @@ export function matchingTag<T extends { tags: readonly string[] }>(
   }
   return cards.filter((card) => card.tags.includes(tag))
 }
+
+export function matchingLibrary<T extends { tags: readonly string[]; mark: LibraryMark; label: string }>(
+  cards: readonly T[],
+  filter: { tag: string | null; mark: LibraryMark | null; query: string },
+): T[] {
+  const needle = foldQuery(filter.query)
+  return cards.filter((card) => {
+    if (filter.tag !== null && !card.tags.includes(filter.tag)) {
+      return false
+    }
+    if (filter.mark !== null && card.mark !== filter.mark) {
+      return false
+    }
+    if (needle.length > 0 && !foldQuery(card.label).includes(needle)) {
+      return false
+    }
+    return true
+  })
+}
+
+function foldQuery(value: string): string {
+  return value.trim().toLocaleLowerCase("fr")
+}

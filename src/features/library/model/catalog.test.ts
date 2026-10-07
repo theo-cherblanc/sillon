@@ -1,6 +1,6 @@
 import assert from "node:assert/strict"
 import { describe, it } from "node:test"
-import { cardLabel, libraryMark, libraryTags, matchingTag } from "./catalog.ts"
+import { cardLabel, libraryMark, libraryTags, matchingLibrary, matchingTag } from "./catalog.ts"
 
 describe("cardLabel", () => {
   it("uses the first line and drops the backticks", () => {
@@ -58,6 +58,36 @@ describe("matchingTag", () => {
     assert.deepEqual(
       matchingTag(cards, "http").map((card) => card.id),
       ["b"],
+    )
+  })
+})
+
+describe("matchingLibrary", () => {
+  const cards = [
+    { id: "a", tags: ["git"], mark: "new" as const, label: "Que fait git pull ?" },
+    { id: "b", tags: ["http"], mark: "due" as const, label: "Que signifie le statut HTTP 404 ?" },
+    { id: "c", tags: ["git"], mark: "ready" as const, label: "Que fait git push ?" },
+  ]
+
+  it("keeps every card when nothing is chosen", () => {
+    assert.deepEqual(
+      matchingLibrary(cards, { tag: null, mark: null, query: "  " }).map((card) => card.id),
+      ["a", "b", "c"],
+    )
+  })
+
+  it("filters by mark, tag, and a case-insensitive query", () => {
+    assert.deepEqual(
+      matchingLibrary(cards, { tag: "git", mark: null, query: "" }).map((card) => card.id),
+      ["a", "c"],
+    )
+    assert.deepEqual(
+      matchingLibrary(cards, { tag: null, mark: "due", query: "" }).map((card) => card.id),
+      ["b"],
+    )
+    assert.deepEqual(
+      matchingLibrary(cards, { tag: null, mark: null, query: "PULL" }).map((card) => card.id),
+      ["a"],
     )
   })
 })

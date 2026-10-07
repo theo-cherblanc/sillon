@@ -6,11 +6,13 @@ export function Notes({
   insight,
   source,
   related,
+  onOpen,
 }: {
   mistake?: string
   insight?: string
   source?: string
   related: readonly { id: string; label: string }[]
+  onOpen?: (cardId: string) => void
 }) {
   if (!mistake && !insight && !source && related.length === 0) {
     return null
@@ -46,9 +48,20 @@ export function Notes({
         <Stack gap={3}>
           <Kicker as="h2">Cartes liées</Kicker>
           <Stack gap={2}>
-            {related.map((item) => (
-              <Meta key={item.id}>{item.label}</Meta>
-            ))}
+            {related.map((item) =>
+              onOpen ? (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => onOpen(item.id)}
+                  className="min-h-11 w-full py-2 text-left text-base leading-normal text-accent"
+                >
+                  {item.label}
+                </button>
+              ) : (
+                <Meta key={item.id}>{item.label}</Meta>
+              ),
+            )}
           </Stack>
         </Stack>
       ) : null}
