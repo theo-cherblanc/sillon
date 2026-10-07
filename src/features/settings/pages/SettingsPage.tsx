@@ -251,18 +251,24 @@ function AccountSection() {
           <Stack gap={3}>
             <Field
               type="email"
+              name="email"
+              placeholder="E-mail"
               value={address}
               onChange={(event) => setAddress(event.target.value)}
               aria-label="E-mail"
+              autoComplete="email"
               autoCapitalize="off"
               autoCorrect="off"
               spellCheck={false}
             />
             <Field
               type="password"
+              name="password"
+              placeholder="Mot de passe"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               aria-label="Mot de passe"
+              autoComplete="current-password"
             />
             <Button variant="accent" type="submit" disabled={busy}>
               Se connecter

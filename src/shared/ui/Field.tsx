@@ -9,8 +9,8 @@ export function Field({
       {...props}
       className={
         mono
-          ? "w-full min-h-12 rounded-none border border-line bg-transparent px-3 py-2.5 font-mono text-sm"
-          : "w-full min-h-12 rounded-none border border-line bg-transparent px-3 py-2.5 text-base"
+          ? "w-full min-h-12 rounded-none border border-line bg-transparent px-3 py-2.5 font-mono text-sm placeholder:text-muted"
+          : "w-full min-h-12 rounded-none border border-line bg-transparent px-3 py-2.5 text-base placeholder:text-muted"
       }
     />
   )
