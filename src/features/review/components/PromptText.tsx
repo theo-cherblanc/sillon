@@ -1,3 +1,4 @@
+import { CodeBlock } from "../../../shared/ui/CodeBlock.tsx"
 import { promptParts } from "../model/prompt.ts"
 
 export function PromptText({ text }: { text: string }) {
@@ -5,11 +6,7 @@ export function PromptText({ text }: { text: string }) {
     <div className="text-[17px] leading-[1.55]">
       {promptParts(text).map((part, index) => {
         if (part.kind === "code") {
-          return (
-            <pre key={index} className="my-3 overflow-x-auto bg-code px-3.5 py-3 font-mono text-sm leading-normal">
-              <code>{part.text}</code>
-            </pre>
-          )
+          return <CodeBlock key={index} text={part.text} language={part.language} className="my-3" />
         }
         if (part.kind === "inline") {
           return (

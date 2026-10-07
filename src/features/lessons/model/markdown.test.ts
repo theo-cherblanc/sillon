@@ -20,7 +20,7 @@ const n = 1
         { kind: "heading", text: "L'idée" },
         { kind: "paragraph", text: "Un framework web." },
         { kind: "list", items: ["les composants", "les signals"] },
-        { kind: "code", text: "const n = 1" },
+        { kind: "code", text: "const n = 1", language: "ts" },
       ],
     )
   })

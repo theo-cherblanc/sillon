@@ -2,7 +2,7 @@ export type LessonBlock =
   | { kind: "heading"; text: string }
   | { kind: "paragraph"; text: string }
   | { kind: "list"; items: string[] }
-  | { kind: "code"; text: string }
+  | { kind: "code"; text: string; language: string }
 
 export type InlinePart = { kind: "text"; text: string } | { kind: "inline"; text: string }
 
@@ -21,6 +21,7 @@ export function lessonBlocks(source: string): LessonBlock[] {
     }
 
     if (line.startsWith("```")) {
+      const language = line.slice(3).trim()
       const chunk: string[] = []
       index += 1
       while (index < lines.length && !lines[index].startsWith("```")) {
@@ -30,7 +31,7 @@ export function lessonBlocks(source: string): LessonBlock[] {
       if (index < lines.length) {
         index += 1
       }
-      blocks.push({ kind: "code", text: chunk.join("\n") })
+      blocks.push({ kind: "code", text: chunk.join("\n"), language })
       continue
     }
 

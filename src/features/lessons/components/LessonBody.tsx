@@ -1,3 +1,4 @@
+import { CodeBlock } from "../../../shared/ui/CodeBlock.tsx"
 import { inlineParts, lessonBlocks } from "../model/markdown.ts"
 
 export function LessonBody({ body }: { body: string }) {
@@ -23,11 +24,7 @@ export function LessonBody({ body }: { body: string }) {
           )
         }
         if (block.kind === "code") {
-          return (
-            <pre key={index} className="overflow-x-auto bg-code px-3.5 py-3 font-mono text-sm leading-normal">
-              <code>{block.text}</code>
-            </pre>
-          )
+          return <CodeBlock key={index} text={block.text} language={block.language} />
         }
         return (
           <p key={index} className="text-[17px] leading-[1.55]">

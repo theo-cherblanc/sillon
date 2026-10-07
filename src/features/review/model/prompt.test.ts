@@ -10,7 +10,7 @@ describe("promptParts", () => {
         { kind: "text", text: "Que vaut " },
         { kind: "inline", text: "x" },
         { kind: "text", text: " ?\n\n" },
-        { kind: "code", text: "const x = 42" },
+        { kind: "code", text: "const x = 42", language: "js" },
         { kind: "text", text: "\n" },
       ],
     )

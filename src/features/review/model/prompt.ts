@@ -1,9 +1,9 @@
 export type PromptPart =
   | { kind: "text"; text: string }
   | { kind: "inline"; text: string }
-  | { kind: "code"; text: string }
+  | { kind: "code"; text: string; language: string }
 
-const fencePattern = /```[a-zA-Z0-9]*\n([\s\S]*?)```/g
+const fencePattern = /```([a-zA-Z0-9]*)\n([\s\S]*?)```/g
 const inlinePattern = /`([^`]+)`/g
 
 function pushText(parts: PromptPart[], source: string) {
@@ -27,7 +27,7 @@ export function promptParts(source: string): PromptPart[] {
   for (const match of source.matchAll(fencePattern)) {
     const index = match.index ?? 0
     pushText(parts, source.slice(last, index))
-    parts.push({ kind: "code", text: match[1].replace(/\n$/, "") })
+    parts.push({ kind: "code", text: match[2].replace(/\n$/, ""), language: match[1] })
     last = index + match[0].length
   }
   pushText(parts, source.slice(last))
