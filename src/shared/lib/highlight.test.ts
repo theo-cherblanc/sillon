@@ -7,6 +7,7 @@ describe("languageAlias", () => {
     assert.equal(languageAlias("ts"), "typescript")
     assert.equal(languageAlias("js"), "javascript")
     assert.equal(languageAlias("html"), "markup")
+    assert.equal(languageAlias("py"), "python")
     assert.equal(languageAlias(""), "typescript")
   })
 })
@@ -27,5 +28,14 @@ describe("highlightTokens", () => {
 
   it("keeps the source when nothing is a token", () => {
     assert.deepEqual(highlightTokens("   ", "ts"), [{ text: "   ", kind: "plain" }])
+  })
+
+  it("marks Python keywords apart from the rest", () => {
+    const tokens = highlightTokens("def f():\n    return 1", "py")
+    assert.equal(
+      tokens.some((token) => token.kind === "keyword" && token.text === "def"),
+      true,
+    )
+    assert.equal(tokens.map((token) => token.text).join(""), "def f():\n    return 1")
   })
 })

@@ -3,6 +3,7 @@ import "prismjs/components/prism-markup.js"
 import "prismjs/components/prism-clike.js"
 import "prismjs/components/prism-javascript.js"
 import "prismjs/components/prism-typescript.js"
+import "prismjs/components/prism-python.js"
 import Prism from "prismjs"
 
 export type CodeToken = {
@@ -33,6 +34,9 @@ export function languageAlias(language: string): string {
   }
   if (key === "html" || key === "xml" || key === "svg") {
     return "markup"
+  }
+  if (key === "py" || key === "python") {
+    return "python"
   }
   return key
 }

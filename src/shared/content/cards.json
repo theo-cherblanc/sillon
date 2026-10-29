@@ -4497,6 +4497,2265 @@
     ]
   },
   {
+    "id": "py.dict.empty.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Que crée `{}` ?",
+    "explanation": "Un dictionnaire vide. Le `set` vide, c'est `set()`. Les accolades vides ne sont pas interdites.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`{}` est un dict vide ; l'ensemble vide s'écrit `set()`."
+      },
+      {
+        "id": "b",
+        "text": "`{}` est un ensemble vide ; le dict vide s'écrit `dict()` uniquement."
+      },
+      {
+        "id": "c",
+        "text": "`{}` est interdit : Python exige `dict()` ou `set()`, jamais des accolades vides."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/datastructures.html",
+    "insight": "Accolades avec des valeurs : set. Accolades avec `clé: valeur` : dict. Vides : dict.",
+    "commonMistake": "Écrire `s = {}` puis s'étonner que ce ne soit pas un `set`.",
+    "related": [
+      "py.dict.set.001",
+      "py.dict.key.001"
+    ],
+    "lessonId": "py.dict.001"
+  },
+  {
+    "id": "py.dict.in.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Que teste `'guido' in tel` sur un dictionnaire ?",
+    "explanation": "La présence de la clé. Pas la valeur, pas la paire entière.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`in` sur un dict teste une clé, pas une valeur."
+      },
+      {
+        "id": "b",
+        "text": "`in` sur un dict teste une valeur, pas une clé."
+      },
+      {
+        "id": "c",
+        "text": "`in` sur un dict teste une paire `(clé, valeur)` uniquement."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/datastructures.html",
+    "insight": "`'guido' in tel` : oui. Le numéro `4127 in tel` : non, sauf s'il est aussi une clé.",
+    "commonMistake": "Chercher une valeur avec `in`, comme dans une liste.",
+    "related": [
+      "py.fn.in.001",
+      "py.dict.key.001"
+    ],
+    "lessonId": "py.dict.001"
+  },
+  {
+    "id": "py.dict.items.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "À quoi sert `dict.items()` ?",
+    "explanation": "À parcourir les paires. Ce n'est pas « valeurs seules », ni un résumé `(dict, length)`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`items()` fournit les paires `(clé, valeur)` pour un `for`."
+      },
+      {
+        "id": "b",
+        "text": "`items()` fournit seulement les valeurs ; les clés s'obtiennent par `keys()` obligatoire."
+      },
+      {
+        "id": "c",
+        "text": "`items()` fournit un tuple unique `(dict, length)`, pas une boucle de paires."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/datastructures.html",
+    "insight": "`for k, v in tel.items(): print(k, v)`. `list(tel)` suffit si on ne veut que les clés.",
+    "commonMistake": "Boucler `for v in tel` en croyant tenir les valeurs : on tient les clés.",
+    "related": [
+      "py.dict.unpack.001",
+      "py.dict.in.001"
+    ],
+    "lessonId": "py.dict.001"
+  },
+  {
+    "id": "py.dict.key.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Comment un dictionnaire stocke-t-il les données ?",
+    "explanation": "Clé → valeur, clés uniques. Une nouvelle clé s'écrit par assignation. Les valeurs, elles, peuvent se répéter.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un dict associe des clés uniques à des valeurs ; `tel['guido'] = 4127` ajoute ou remplace."
+      },
+      {
+        "id": "b",
+        "text": "Un dict associe des valeurs uniques à des clés ; deux clés ne peuvent pas partager une valeur."
+      },
+      {
+        "id": "c",
+        "text": "Un dict refuse l'assignation `tel['guido'] = 4127` si la clé n'existait pas encore."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/datastructures.html",
+    "insight": "`del tel['sape']` retire une paire. `list(tel)` liste les clés, dans l'ordre d'insertion.",
+    "commonMistake": "Exiger `append` pour ajouter une clé, comme sur une liste.",
+    "related": [
+      "py.dict.in.001",
+      "py.dict.items.001"
+    ],
+    "lessonId": "py.dict.001"
+  },
+  {
+    "id": "py.dict.set.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Qu'est-ce qu'un ensemble (`set`) ?",
+    "explanation": "Unique, sans ordre promis par cette page. Pas une liste bridée, pas un dict de `True`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un `set` est une collection non ordonnée, sans doublons, où `in` est rapide."
+      },
+      {
+        "id": "b",
+        "text": "Un `set` est une liste qui refuse `append`, mais garde l'ordre et les doublons."
+      },
+      {
+        "id": "c",
+        "text": "Un `set` est un dictionnaire dont les valeurs sont toujours `True`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/datastructures.html",
+    "insight": "`{'apple', 'orange', 'apple'}` ne garde qu'un `'apple'`. Idéal pour `in`.",
+    "commonMistake": "Compter sur l'ordre d'insertion comme sur une liste (pas le sujet du tutoriel ici).",
+    "related": [
+      "py.dict.empty.001",
+      "py.fn.in.001"
+    ],
+    "lessonId": "py.dict.001"
+  },
+  {
+    "id": "py.dict.single.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Comment écrit-on un tuple d'un seul élément ?",
+    "explanation": "La virgule. Les parenthèses seules n'y changent rien. `tuple('hello')` découpe la chaîne.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un singleton s'écrit `('hello',)` : c'est la virgule qui fait le tuple."
+      },
+      {
+        "id": "b",
+        "text": "Un singleton s'écrit `('hello')` : les parenthèses suffisent à créer le tuple."
+      },
+      {
+        "id": "c",
+        "text": "Un singleton s'écrit `tuple('hello')`, seul moyen d'avoir une chaîne dans un tuple."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/datastructures.html",
+    "insight": "`('hello')` est une chaîne entre parenthèses. `tuple('hello')` itère les caractères : `('h', 'e', ...)`.",
+    "commonMistake": "Oublier la virgule du singleton — classique d'entretien.",
+    "related": [
+      "py.dict.tuple.001",
+      "py.str.quotes.001"
+    ],
+    "lessonId": "py.dict.001"
+  },
+  {
+    "id": "py.dict.tuple.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Qu'est-ce qu'un tuple ?",
+    "explanation": "Une séquence figée. Pas une liste entre `()`, pas un dict d'indices.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un tuple est une suite immuable ; on l'indexe comme une liste, on n'écrase pas un élément."
+      },
+      {
+        "id": "b",
+        "text": "Un tuple est une liste qui s'écrit entre parenthèses, et reste mutable."
+      },
+      {
+        "id": "c",
+        "text": "Un tuple est un dictionnaire ordonné dont les clés sont 0, 1, 2."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/datastructures.html",
+    "insight": "`t = 12345, 54321, 'hello!'` : les parenthèses sont souvent optionnelles. La virgule fait le tuple.",
+    "commonMistake": "Écrire `t[0] = 1` comme sur une liste.",
+    "related": [
+      "py.dict.single.001",
+      "py.list.mut.001"
+    ],
+    "lessonId": "py.dict.001"
+  },
+  {
+    "id": "py.dict.unpack.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que fait `x, y, z = t` ?",
+    "explanation": "Ça dépaquette. Ça ne construit pas `t`, et `t` n'a pas besoin d'être un dict.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`x, y, z = t` dénomme les éléments d'un tuple (ou d'une séquence de même longueur)."
+      },
+      {
+        "id": "b",
+        "text": "`x, y, z = t` crée un nouveau tuple `t` à partir de trois variables déjà définies."
+      },
+      {
+        "id": "c",
+        "text": "`x, y, z = t` n'est légal que si `t` est un dict à trois clés."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/datastructures.html",
+    "insight": "Unpacking : le tutoriel le montre dès `t = 12345, 54321, 'hello!'`. La longueur doit matcher.",
+    "commonMistake": "Lire ça comme une construction de tuple, pas une destructuration.",
+    "related": [
+      "py.if.assign.001",
+      "py.dict.tuple.001"
+    ],
+    "lessonId": "py.dict.001"
+  },
+  {
+    "id": "py.err.eq.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Comment le tutoriel recommande-t-il de tester `None` ?",
+    "explanation": "`is None`. Pas `==` comme consigne de cette page, et pas `if not L` qui confond avec une liste vide.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le tutoriel teste `None` avec `is` : `if L is None`, pas avec `==`."
+      },
+      {
+        "id": "b",
+        "text": "Le tutoriel teste `None` avec `==` seulement : `is` est réservé aux listes."
+      },
+      {
+        "id": "c",
+        "text": "Le tutoriel interdit de tester `None` : on écrit `if not L`, qui suffit toujours."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "Dans le remède au défaut mutable : `if L is None: L = []`. `if not L` prendrait aussi `[]` passé exprès.",
+    "commonMistake": "Écrire `if not L` et recréer une liste alors que l'appelant en a fourni une vide.",
+    "related": [
+      "py.fn.mutable.001",
+      "py.err.is.001"
+    ],
+    "lessonId": "py.err.001"
+  },
+  {
+    "id": "py.err.exc.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Qu'est-ce qu'une exception, d'après le tutoriel ?",
+    "explanation": "Un échec pendant l'exécution. Pas le parseur, et un `try` peut la rattraper.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une exception est une erreur détectée à l'exécution, alors que le texte était syntaxiquement correct."
+      },
+      {
+        "id": "b",
+        "text": "Une exception est un second nom pour `SyntaxError`, levé par le parseur."
+      },
+      {
+        "id": "c",
+        "text": "Une exception arrête toujours le programme : aucun `try` ne peut la rattraper."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/errors.html",
+    "insight": "`10 * (1/0)` → `ZeroDivisionError`. `'2' + 2` → `TypeError`. `spam` inconnu → `NameError`.",
+    "commonMistake": "Tout regrouper sous « syntax error ».",
+    "related": [
+      "py.err.syntax.001",
+      "py.err.try.001"
+    ],
+    "lessonId": "py.err.001"
+  },
+  {
+    "id": "py.err.first.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Que se passe-t-il s'il y a plusieurs clauses `except` ?",
+    "explanation": "La première qui matche gagne, une seule. Pas toutes, pas la dernière par défaut.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Parmi plusieurs `except`, le premier dont le type matche s'exécute ; au plus un handler."
+      },
+      {
+        "id": "b",
+        "text": "Parmi plusieurs `except`, tous les handlers compatibles s'exécutent, du plus précis au plus large."
+      },
+      {
+        "id": "c",
+        "text": "Parmi plusieurs `except`, Python choisit le dernier écrit, comme un override."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/errors.html",
+    "insight": "Si `except B` est avant `except C` et que `C` hérite de `B`, tout passe dans `B`. L'ordre compte.",
+    "commonMistake": "Empiler les `except` en croyant qu'ils se cumulent.",
+    "related": [
+      "py.err.try.001",
+      "py.err.exc.001"
+    ],
+    "lessonId": "py.err.001"
+  },
+  {
+    "id": "py.err.is.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Quelle différence y a-t-il entre `is` et `==` ?",
+    "explanation": "Même objet vs mêmes valeurs. Ce n'est pas l'inverse, et ce n'est pas synonyme.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`is` teste l'identité : le même objet. `==` teste l'égalité des valeurs."
+      },
+      {
+        "id": "b",
+        "text": "`is` teste l'égalité des valeurs. `==` teste l'identité : le même objet."
+      },
+      {
+        "id": "c",
+        "text": "`is` et `==` sont deux graphies du même test d'égalité, sans différence."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/library/stdtypes.html#comparisons",
+    "insight": "Deux listes `[1]` et `[1]` sont `==`, rarement `is`. Pour `None`, le tutoriel écrit `if L is None`.",
+    "commonMistake": "Comparer des listes avec `is`, ou `None` avec `==` par habitude JS.",
+    "related": [
+      "py.err.eq.001",
+      "py.list.share.001"
+    ],
+    "lessonId": "py.err.001"
+  },
+  {
+    "id": "py.err.none.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que représente `None` ?",
+    "explanation": "L'absence de valeur, pas zéro, pas une erreur de parseur. Les fonctions « muettes » le rendent.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`None` est la valeur bâtie qui représente l'absence ; une fonction sans `return` la rend."
+      },
+      {
+        "id": "b",
+        "text": "`None` est l'entier `0` sous un autre nom, vrai dans un `if`."
+      },
+      {
+        "id": "c",
+        "text": "`None` est une `SyntaxError` déguisée, levée si une variable manque."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "`print(fib(0))` affiche `None`. Une variable absente, elle, c'est `NameError`.",
+    "commonMistake": "Tester `if x` pour « a une valeur » et rater `[]` ou `0`, ou confondre avec une variable non définie.",
+    "related": [
+      "py.fn.none.001",
+      "py.err.is.001"
+    ],
+    "lessonId": "py.err.001"
+  },
+  {
+    "id": "py.err.syntax.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Qu'est-ce qu'une erreur de syntaxe en Python ?",
+    "explanation": "Le parseur refuse le fichier. Ce n'est pas une exception d'exécution, et ce n'est pas un warning.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une erreur de syntaxe vient du parseur : le texte n'est pas du Python valide."
+      },
+      {
+        "id": "b",
+        "text": "Une erreur de syntaxe vient de l'exécution : le texte est valide, mais une opération échoue."
+      },
+      {
+        "id": "c",
+        "text": "Une erreur de syntaxe est un warning : le programme tourne, avec un message en plus."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/errors.html",
+    "insight": "`while True print('Hello world')` : il manque `:` avant `print`. Flèche du parseur, `SyntaxError`.",
+    "commonMistake": "Appeler `TypeError` une « erreur de syntaxe » parce que le message est rouge.",
+    "related": [
+      "py.err.exc.001",
+      "py.if.colon.001"
+    ],
+    "lessonId": "py.err.001"
+  },
+  {
+    "id": "py.err.try.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Dans quel ordre s'exécute `try` / `except` ?",
+    "explanation": "D'abord le `try`. Le `except` seulement si ça casse du bon type. Pas les deux à chaque fois.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`try` s'exécute d'abord ; si l'exception nommée survient, on passe dans le `except`."
+      },
+      {
+        "id": "b",
+        "text": "`except` s'exécute d'abord, pour déclarer les types ; puis `try` tourne sans risque."
+      },
+      {
+        "id": "c",
+        "text": "`try` et `except` s'exécutent tous les deux, à chaque fois, que l'erreur arrive ou non."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/errors.html",
+    "insight": "Sans exception, le `except` est sauté. Un autre type d'exception remonte.",
+    "commonMistake": "Croire que le `except` « prépare » le `try`.",
+    "related": [
+      "py.err.first.001",
+      "py.err.exc.001"
+    ],
+    "lessonId": "py.err.001"
+  },
+  {
+    "id": "py.err.try.order.001",
+    "type": "order",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Dans quel ordre le tutoriel décrit-il un `try` / `except` qui rattrape ?",
+    "explanation": "D'abord le `try`. Le `except` seulement en cas d'exception du bon type. Puis la suite du programme. Un autre type remonte, hors de cette séquence.",
+    "steps": [
+      "Exécuter les instructions du `try`.",
+      "Si une exception du type nommé survient, exécuter le `except`.",
+      "Continuer après le bloc `try` / `except`."
+    ],
+    "source": "https://docs.python.org/3/tutorial/errors.html",
+    "insight": "Sans exception, on saute le `except` et on arrive quand même après le bloc.",
+    "commonMistake": "Inverser : croire que le `except` s'enregistre avant que le `try` tourne.",
+    "related": [
+      "py.err.try.001",
+      "py.err.first.001"
+    ],
+    "lessonId": "py.err.001"
+  },
+  {
+    "id": "py.err.type.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Quelle exception lève `'2' + 2` ?",
+    "explanation": "`TypeError` : on ne concatène pas un `int` à une `str`. Ce n'est pas le parseur, et ce n'est pas un nom inconnu.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`TypeError`"
+      },
+      {
+        "id": "b",
+        "text": "`SyntaxError`"
+      },
+      {
+        "id": "c",
+        "text": "`NameError`"
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/errors.html",
+    "insight": "Le texte `'2' + 2` est du Python valide. C'est l'opération qui n'a pas de sens.",
+    "commonMistake": "Dire syntaxe, parce que « ça ne devrait pas s'écrire ».",
+    "related": [
+      "py.err.exc.001",
+      "py.err.syntax.001"
+    ],
+    "lessonId": "py.err.001"
+  },
+  {
+    "id": "py.fn.def.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Comment déclare-t-on une fonction en Python ?",
+    "explanation": "`def`, parenthèses, `:`, indentation. Pas le mot `function`, pas un corps collé sans bloc.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`def` introduit une fonction : nom, paramètres entre parenthèses, corps indenté."
+      },
+      {
+        "id": "b",
+        "text": "`function` introduit une fonction : nom, paramètres entre parenthèses, corps entre accolades."
+      },
+      {
+        "id": "c",
+        "text": "`def` introduit une fonction : le corps commence sur la même ligne, sans indentation."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "`def fib(n):` puis la docstring et le `while` indenté. Le mot `function` n'existe pas ici.",
+    "commonMistake": "Écrire `function fib(n) {` en Python.",
+    "related": [
+      "py.if.indent.001",
+      "py.fn.doc.001"
+    ],
+    "lessonId": "py.fn.001"
+  },
+  {
+    "id": "py.fn.default.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Quand Python évalue-t-il la valeur par défaut d'un paramètre ?",
+    "explanation": "À la définition. Pas à chaque appel, pas au premier appel seulement.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une valeur par défaut s'évalue une fois, à la définition, pas à chaque appel."
+      },
+      {
+        "id": "b",
+        "text": "Une valeur par défaut s'évalue à chaque appel, dans la portée de l'appelant."
+      },
+      {
+        "id": "c",
+        "text": "Une valeur par défaut s'évalue une fois, au premier appel, puis plus jamais."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "`i = 5` ; `def f(arg=i):` ; `i = 6` ; `f()` affiche `5`. Le défaut a figé `i` à la définition.",
+    "commonMistake": "Attendre que `f()` lise le `i` courant.",
+    "related": [
+      "py.fn.mutable.001",
+      "py.fn.def.001"
+    ],
+    "lessonId": "py.fn.001"
+  },
+  {
+    "id": "py.fn.doc.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Où s'écrit la chaîne de documentation d'une fonction ?",
+    "explanation": "Première instruction du corps, une `str`. Pas un `#` au-dessus, et ce n'est pas obligatoire pour parser.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "La première instruction du corps peut être une chaîne : c'est la docstring."
+      },
+      {
+        "id": "b",
+        "text": "La docstring s'écrit avec `#` au-dessus du `def`, comme un commentaire de module."
+      },
+      {
+        "id": "c",
+        "text": "La docstring est obligatoire : sans elle, `def` est une `SyntaxError`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "`\"\"\"Return a list containing the Fibonacci series up to n.\"\"\"` juste sous `def fib2(n):`.",
+    "commonMistake": "Mettre la doc en commentaire `#` : ce n'est pas `__doc__`.",
+    "related": [
+      "py.fn.def.001",
+      "py.num.hash.001"
+    ],
+    "lessonId": "py.fn.001"
+  },
+  {
+    "id": "py.fn.in.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que teste l'opérateur `in` hors d'un `for` ?",
+    "explanation": "L'appartenance à une séquence (ou un set). Pas « la variable existe », et pas uniquement la syntaxe de boucle.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`in` teste si une valeur appartient à une séquence, par exemple `reply in {'y', 'yes'}`."
+      },
+      {
+        "id": "b",
+        "text": "`in` introduit la boucle : on ne l'écrit que dans `for x in ...`."
+      },
+      {
+        "id": "c",
+        "text": "`in` teste si une variable a été définie, à la place de `NameError`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "Le tutoriel le rappelle dans `ask_ok`. `in` sert aussi au `for`, mais ce n'est pas son seul emploi.",
+    "commonMistake": "Réserver `in` aux boucles, et écrire une série de `==` pour un ensemble de réponses.",
+    "related": [
+      "py.for.in.001",
+      "py.dict.in.001"
+    ],
+    "lessonId": "py.fn.001"
+  },
+  {
+    "id": "py.fn.method.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Qu'est-ce qu'une méthode, dans le tutoriel Python ?",
+    "explanation": "Une fonction liée à un objet, notation pointée. Pas une fonction globale, pas un synonyme de `return`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une méthode est une fonction qui appartient à un objet, appelée `obj.methodname`."
+      },
+      {
+        "id": "b",
+        "text": "Une méthode est une fonction globale : `append(result, a)` plutôt que `result.append(a)`."
+      },
+      {
+        "id": "c",
+        "text": "Une méthode est un alias de `return` : elle rend toujours `None` après une mutation."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "`result.append(a)` : `append` est défini pour les listes. D'autres types ont d'autres méthodes du même nom, sans collision.",
+    "commonMistake": "Écrire `append(result, a)` comme une fonction libre.",
+    "related": [
+      "py.list.append.001",
+      "py.fn.def.001"
+    ],
+    "lessonId": "py.fn.001"
+  },
+  {
+    "id": "py.fn.mutable.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Que se passe-t-il avec `def f(a, L=[]):` qui `append` puis `return L` ?",
+    "explanation": "La même liste survit. Ce n'est pas recopié, et ce n'est pas une erreur de syntaxe.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un défaut `L=[]` est partagé entre les appels : `f(1)` puis `f(2)` accumulent dans la même liste."
+      },
+      {
+        "id": "b",
+        "text": "Un défaut `L=[]` est recopié à chaque appel : `f(1)` puis `f(2)` rendent `[1]` et `[2]`."
+      },
+      {
+        "id": "c",
+        "text": "Un défaut `L=[]` est interdit : Python lève `SyntaxError` sur un mutable en défaut."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "Le tutoriel imprime `[1]` puis `[1, 2]` puis `[1, 2, 3]`. Remède : `L=None` et `if L is None: L = []`.",
+    "commonMistake": "Promettre une liste neuve à chaque appel parce que `[]` est écrit dans la signature.",
+    "related": [
+      "py.fn.default.001",
+      "py.err.is.001"
+    ],
+    "lessonId": "py.fn.001"
+  },
+  {
+    "id": "py.fn.none.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que rend une fonction Python qui n'a pas d'instruction `return` ?",
+    "explanation": "`None`. Ce n'est pas une absence qui casse `print`, et ce n'est pas `0`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une fonction sans `return` rend `None` ; `print(fib(0))` l'affiche."
+      },
+      {
+        "id": "b",
+        "text": "Une fonction sans `return` ne rend rien, et `print(fib(0))` lève `TypeError`."
+      },
+      {
+        "id": "c",
+        "text": "Une fonction sans `return` rend `0`, comme une procédure C qui oublie le `return`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "Même une « procédure » qui ne fait que `print` a une valeur : `None`. L'interpréteur la cache, `print` non.",
+    "commonMistake": "Croire qu'il n'y a pas de valeur, puis chaîner `fib(0).append(...)`.",
+    "related": [
+      "py.fn.return.001",
+      "py.list.sort.001"
+    ],
+    "lessonId": "py.fn.001"
+  },
+  {
+    "id": "py.fn.return.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que fait `return` dans une fonction Python ?",
+    "explanation": "Il sort avec une valeur, ou `None`. Un `return` nu est légal. Ce n'est pas `_`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`return` avec une expression rend cette valeur ; sans expression, ou en fin de corps, c'est `None`."
+      },
+      {
+        "id": "b",
+        "text": "`return` sans expression lève `SyntaxError` ; il faut toujours une valeur."
+      },
+      {
+        "id": "c",
+        "text": "`return` sans expression reprend la dernière expression évaluée, comme `_` en interactif."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "`fib2` construit une liste et la `return`. Tomber à la fin du `def` équivaut à `return None`.",
+    "commonMistake": "Compter sur « la dernière ligne » comme valeur de retour implicite, style Ruby.",
+    "related": [
+      "py.fn.none.001",
+      "py.fn.def.001"
+    ],
+    "lessonId": "py.fn.001"
+  },
+  {
+    "id": "py.for.break.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que fait `break` ?",
+    "explanation": "Il interrompt la boucle la plus proche. Pas toutes, et pas la fonction.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`break` sort de la boucle `for` ou `while` la plus interne."
+      },
+      {
+        "id": "b",
+        "text": "`break` sort de toutes les boucles imbriquées d'un seul coup."
+      },
+      {
+        "id": "c",
+        "text": "`break` quitte la fonction, comme `return`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "Dans le crible du tutoriel, `break` sort du `for x` interne, pas du `for n` externe.",
+    "commonMistake": "Attendre un break étiqueté qui casse deux niveaux.",
+    "related": [
+      "py.for.continue.001",
+      "py.for.else.001"
+    ],
+    "lessonId": "py.for.001"
+  },
+  {
+    "id": "py.for.continue.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que fait `continue` ?",
+    "explanation": "Itération suivante. Ce n'est pas une sortie de boucle, et ça n'immobilise pas l'itérable.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`continue` passe à l'itération suivante de la boucle."
+      },
+      {
+        "id": "b",
+        "text": "`continue` sort de la boucle, comme `break`."
+      },
+      {
+        "id": "c",
+        "text": "`continue` reprend le `if` en cours, sans avancer l'itérable."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "Dans l'exemple pair/impair, `continue` évite le `print` impair après avoir annoncé un pair.",
+    "commonMistake": "S'en servir à la place de `break`.",
+    "related": [
+      "py.for.break.001",
+      "py.if.pass.001"
+    ],
+    "lessonId": "py.for.001"
+  },
+  {
+    "id": "py.for.else.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Quand le `else` d'une boucle `for` s'exécute-t-il ?",
+    "explanation": "Si aucun `break` n'a eu lieu. Pas « liste vide », pas « à chaque `if` faux ».",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le `else` d'un `for` s'exécute si la boucle finit sans `break`."
+      },
+      {
+        "id": "b",
+        "text": "Le `else` d'un `for` s'exécute si la séquence parcourue est vide."
+      },
+      {
+        "id": "c",
+        "text": "Le `else` d'un `for` s'exécute à chaque itération où le `if` interne est faux."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "Le tutoriel insiste : look closely, the else belongs to the for, not the if. Aucun facteur → « is a prime number ».",
+    "commonMistake": "Lire ce `else` comme celui d'un `if`, ou comme « si la liste est vide ».",
+    "related": [
+      "py.for.break.001",
+      "py.if.elif.001"
+    ],
+    "lessonId": "py.for.001"
+  },
+  {
+    "id": "py.for.end.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que vaut `list(range(5, 10))` ?",
+    "explanation": "5 inclus, 10 exclu. Ce n'est pas `range(5)` non plus.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`[5, 6, 7, 8, 9]`"
+      },
+      {
+        "id": "b",
+        "text": "`[5, 6, 7, 8, 9, 10]`"
+      },
+      {
+        "id": "c",
+        "text": "`[0, 1, 2, 3, 4]`"
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "Début 5, fin 10 exclue. Sans `list()`, `range(5, 10)` s'affiche `range(5, 10)`.",
+    "commonMistake": "Inclure 10, ou oublier que le départ n'est plus 0.",
+    "related": [
+      "py.for.range.001",
+      "py.for.notlist.001"
+    ],
+    "lessonId": "py.for.001"
+  },
+  {
+    "id": "py.for.in.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que parcourt `for w in words` ?",
+    "explanation": "Les éléments, dans l'ordre. Pas un compteur obligatoire, pas les indices par défaut.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`for` parcourt les éléments d'une séquence, dans l'ordre où ils apparaissent."
+      },
+      {
+        "id": "b",
+        "text": "`for` compte toujours de 0 à n-1 ; pour une liste, on écrit `for i in len(words)`."
+      },
+      {
+        "id": "c",
+        "text": "`for` parcourt les indices par défaut ; l'élément s'obtient ensuite par `words[w]`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "`for w in words: print(w, len(w))` : `w` est déjà `'cat'`, pas `0`.",
+    "commonMistake": "Importer le `for (i=0; ...)` du C et oublier que `in` donne l'élément.",
+    "related": [
+      "py.for.range.001",
+      "py.if.while.001"
+    ],
+    "lessonId": "py.for.001"
+  },
+  {
+    "id": "py.for.notlist.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "`range(10)` est-il une liste ?",
+    "explanation": "Non : un itérable. Pas une liste en mémoire, pas l'entier 10.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`range(10)` n'est pas une liste : c'est un itérable qui donne les valeurs à la demande."
+      },
+      {
+        "id": "b",
+        "text": "`range(10)` est une liste `[0, ..., 9]`, construite entièrement en mémoire."
+      },
+      {
+        "id": "c",
+        "text": "`range(10)` est un entier, égal à 10, que `for` déballe ensuite."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "`print(range(10))` affiche `range(0, 10)`. `list(...)` matérielise. `sum(range(4))` vaut 6.",
+    "commonMistake": "Attendre `[0, 1, ..., 9]` dès qu'on affiche un `range`.",
+    "related": [
+      "py.for.range.001",
+      "py.for.sum.001"
+    ],
+    "lessonId": "py.for.001"
+  },
+  {
+    "id": "py.for.range.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Quels nombres `range(5)` produit-il ?",
+    "explanation": "De 0 à 4. Pas 1–5, pas 0–5.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`range(5)` produit `0, 1, 2, 3, 4` : la borne de fin n'appartient pas à la suite."
+      },
+      {
+        "id": "b",
+        "text": "`range(5)` produit `1, 2, 3, 4, 5` : la borne de fin est incluse, comme en maths."
+      },
+      {
+        "id": "c",
+        "text": "`range(5)` produit `0, 1, 2, 3, 4, 5` : début et fin sont tous les deux inclus."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "`range(10)` : 10 valeurs, les indices légaux d'une séquence de longueur 10.",
+    "commonMistake": "Inclure la fin, puis avoir un tour de trop.",
+    "related": [
+      "py.for.end.001",
+      "py.for.notlist.001"
+    ],
+    "lessonId": "py.for.001"
+  },
+  {
+    "id": "py.for.sum.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Que vaut `sum(range(4))` ?",
+    "explanation": "`0+1+2+3`. Pas `10` (ça serait `range(5)`), pas `4`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`6`"
+      },
+      {
+        "id": "b",
+        "text": "`10`"
+      },
+      {
+        "id": "c",
+        "text": "`4`"
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "`0 + 1 + 2 + 3`. La fin 4 est exclue. `sum` prend un itérable, d'où `range` sans `list`.",
+    "commonMistake": "Ajouter 4, ou compter `1+2+3+4`.",
+    "related": [
+      "py.for.range.001",
+      "py.for.notlist.001"
+    ],
+    "lessonId": "py.for.001"
+  },
+  {
+    "id": "py.if.assign.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Dans quel ordre s'évalue `a, b = b, a+b` ?",
+    "explanation": "Toute la droite d'abord, ensuite les noms. Ce n'est pas `a = b` puis un `a+b` déjà mis à jour, et ce n'est pas interdit.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`a, b = b, a+b` évalue d'abord toute la droite, puis assigne : utile dans Fibonacci."
+      },
+      {
+        "id": "b",
+        "text": "`a, b = b, a+b` assigne `a = b` d'abord, donc `a+b` utilise déjà le nouveau `a`."
+      },
+      {
+        "id": "c",
+        "text": "`a, b = b, a+b` est une `SyntaxError` : Python n'assigne qu'une variable à la fois."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "Multiple assignment : the right-hand side expressions are all evaluated first.",
+    "commonMistake": "Lire ça comme deux lignes `a = b` puis `b = a+b` en impératif naïf.",
+    "related": [
+      "py.dict.unpack.001",
+      "py.num.assign.001"
+    ],
+    "lessonId": "py.if.001"
+  },
+  {
+    "id": "py.if.colon.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Quel rôle joue le deux-points après `if x < 0` ?",
+    "explanation": "Il ouvre le bloc indenté. Ce n'est pas un `;`, et l'indentation ne le remplace pas.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un `:` ouvre le bloc après `if`, `elif`, `else`, `while`, `for` et `def`."
+      },
+      {
+        "id": "b",
+        "text": "Un `:` termine l'instruction, comme le point-virgule en JavaScript."
+      },
+      {
+        "id": "c",
+        "text": "Un `:` est optionnel dès que la ligne suivante est indentée."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "`while True print(...)` : le parseur montre une flèche avant `print`, il manque le `:`.",
+    "commonMistake": "Oublier le `:` et blâmer seulement l'indentation.",
+    "related": [
+      "py.err.syntax.001",
+      "py.if.indent.001"
+    ],
+    "lessonId": "py.if.001"
+  },
+  {
+    "id": "py.if.elif.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "À quoi sert `elif` ?",
+    "explanation": "À enchaîner des branches. Il n'est pas obligatoire, et il ne remplace pas le premier `if`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`elif` est le « else if » de Python, pour enchaîner des tests sans empiler les indentations."
+      },
+      {
+        "id": "b",
+        "text": "`elif` est obligatoire après chaque `if` ; un `else` seul est une `SyntaxError`."
+      },
+      {
+        "id": "c",
+        "text": "`elif` remplace `if` : on n'écrit plus `if`, seulement `elif` / `else`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "Zéro ou plusieurs `elif`. `else` est optionnel. C'est le substitut du `switch` annoncé par le tutoriel (avant `match`).",
+    "commonMistake": "Écrire `else if`, syntaxe d'un autre langage.",
+    "related": [
+      "py.if.colon.001",
+      "py.if.indent.001"
+    ],
+    "lessonId": "py.if.001"
+  },
+  {
+    "id": "py.if.eq.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Quelle différence y a-t-il entre `=` et `==` ?",
+    "explanation": "Assigner vs comparer. Ce n'est pas l'inverse, et `:=` n'est pas le sujet de cette leçon.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`==` compare deux valeurs ; `=` assigne."
+      },
+      {
+        "id": "b",
+        "text": "`=` compare deux valeurs ; `==` assigne, comme en Pascal."
+      },
+      {
+        "id": "c",
+        "text": "`==` et `=` comparent tous les deux ; seul `:=` assigne dans un `if`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "Les opérateurs du tutoriel : `< > == <= >= !=`. L'assignation, c'est `=` tout seul.",
+    "commonMistake": "Écrire `if x = 0`.",
+    "related": [
+      "py.num.assign.001",
+      "py.err.is.001"
+    ],
+    "lessonId": "py.if.001"
+  },
+  {
+    "id": "py.if.indent.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Comment Python groupe-t-il le corps d'un `if` ou d'un `while` ?",
+    "explanation": "Par l'indentation. Pas par des `{}`. Le tutoriel ne dit pas que seuls les tabs marchent.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "L'indentation groupe les instructions d'un bloc ; toutes les lignes d'un bloc ont le même décalage."
+      },
+      {
+        "id": "b",
+        "text": "Les accolades groupent les blocs ; l'indentation n'est qu'une convention de lecture."
+      },
+      {
+        "id": "c",
+        "text": "Un seul espace d'indentation est interdit ; Python n'accepte que les tabulations."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "Pas d'accolades de bloc. Mélanger tabs et espaces dans un même bloc casse.",
+    "commonMistake": "Ouvrir `{` après le `:` comme en JS.",
+    "related": [
+      "py.if.colon.001",
+      "py.fn.def.001"
+    ],
+    "lessonId": "py.if.001"
+  },
+  {
+    "id": "py.if.pass.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "À quoi sert `pass` ?",
+    "explanation": "Un no-op syntaxique. Il ne retourne pas, il ne continue pas une boucle.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`pass` ne fait rien : il tient la place d'un bloc encore vide."
+      },
+      {
+        "id": "b",
+        "text": "`pass` sort de la fonction, comme un `return` sans valeur."
+      },
+      {
+        "id": "c",
+        "text": "`pass` saute le reste de la boucle, comme `continue`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/controlflow.html",
+    "insight": "`def initlog(*args): pass` : le parseur a un corps, le programme n'agit pas.",
+    "commonMistake": "Confondre avec `return` ou `continue`.",
+    "related": [
+      "py.for.continue.001",
+      "py.fn.none.001"
+    ],
+    "lessonId": "py.if.001"
+  },
+  {
+    "id": "py.if.truth.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Comment Python juge-t-il qu'une condition est vraie ?",
+    "explanation": "`0` et les séquences vides sont faux. Ce n'est pas « seulement le booléen `False` », et ce n'est pas « tout nombre est vrai ».",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un entier `0` est faux ; un entier non nul est vrai. Une séquence vide est fausse."
+      },
+      {
+        "id": "b",
+        "text": "Seul `False` est faux ; `0`, `''` et `[]` restent vrais dans un `if`."
+      },
+      {
+        "id": "c",
+        "text": "Tout nombre est vrai ; seules les séquences vides et `None` sont fausses."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "Le tutoriel le dit pour `while` : non-zero integer is true ; empty sequences are false.",
+    "commonMistake": "Tester `if count` et rater le zéro légitime.",
+    "related": [
+      "py.if.while.001",
+      "ts.narrow.truth.001"
+    ],
+    "lessonId": "py.if.001"
+  },
+  {
+    "id": "py.if.while.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que fait l'instruction `while` ?",
+    "explanation": "Elle boucle sur une condition. Elle ne parcourt pas une séquence à elle seule, et ce n'est pas un `do...while`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`while` répète le bloc tant que la condition reste vraie."
+      },
+      {
+        "id": "b",
+        "text": "`while` parcourt les éléments d'une séquence, comme `for`."
+      },
+      {
+        "id": "c",
+        "text": "`while` exécute le bloc une fois, puis teste, comme un `do...while`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "Le Fibonacci du tutoriel : `while a < 10`. Le test est en tête, pas en queue.",
+    "commonMistake": "S'en servir comme d'un `for w in words`.",
+    "related": [
+      "py.for.in.001",
+      "py.if.truth.001"
+    ],
+    "lessonId": "py.if.001"
+  },
+  {
+    "id": "py.list.append.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que fait `list.append` ?",
+    "explanation": "Il pousse à la fin, sur place. Ce n'est pas `insert(0, ...)`, et ce n'est pas une concaténation qui copie.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`append` ajoute un élément à la fin de la liste."
+      },
+      {
+        "id": "b",
+        "text": "`append` insère un élément à l'index 0, le reste étant décalé."
+      },
+      {
+        "id": "c",
+        "text": "`append` concatène deux listes et en rend une troisième, sans modifier l'originale."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "`cubes.append(216)` mute `cubes`. Pour coller deux listes, le tutoriel montre aussi `+`.",
+    "commonMistake": "Attendre une nouvelle liste, comme `+`, et ignorer que `append` rend `None`.",
+    "related": [
+      "py.list.sort.001",
+      "py.list.pop.001"
+    ],
+    "lessonId": "py.list.001"
+  },
+  {
+    "id": "py.list.comp.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Que produit `[x**2 for x in range(10)]` ?",
+    "explanation": "Une liste nouvelle. `range` n'est pas muté, et le résultat n'est pas un itérable paresseux.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une compréhension `[x**2 for x in range(10)]` construit une nouvelle liste de carrés."
+      },
+      {
+        "id": "b",
+        "text": "Une compréhension `[x**2 for x in range(10)]` mute `range` en remplaçant chaque entier."
+      },
+      {
+        "id": "c",
+        "text": "Une compréhension `[x**2 for x in range(10)]` rend un `range` paresseux, pas une liste."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/datastructures.html",
+    "insight": "Équivalent du `for` qui `append`. Le `for` seul laisse `x` vivant après la boucle ; la compréhension, non de la même façon.",
+    "commonMistake": "Croire que les crochets fabriquent un générateur (`(...)`) ou mutent `range`.",
+    "related": [
+      "py.for.range.001",
+      "py.list.append.001"
+    ],
+    "lessonId": "py.list.001"
+  },
+  {
+    "id": "py.list.copy.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Comment obtenir une copie d'une liste, d'après le tutoriel ?",
+    "explanation": "`[:]` ou `list.copy()`. Ce n'est pas un second nom, et ça n'interdit pas l'écriture.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une tranche `[:]` (ou `copy()`) fabrique une nouvelle liste, copie peu profonde."
+      },
+      {
+        "id": "b",
+        "text": "Une tranche `[:]` alias la liste d'origine, comme `rgba = rgb`."
+      },
+      {
+        "id": "c",
+        "text": "Une tranche `[:]` fige la liste : les index ne s'écrivent plus."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "Modifier `correct_rgba[-1]` ne change pas `rgba`. Les objets *à l'intérieur* restent partagés.",
+    "commonMistake": "Prendre `[:]` pour un clone profond de listes imbriquées.",
+    "related": [
+      "py.list.share.001",
+      "py.str.slice.001"
+    ],
+    "lessonId": "py.list.001"
+  },
+  {
+    "id": "py.list.mut.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Peut-on écrire `cubes[3] = 64` sur une liste ?",
+    "explanation": "Oui : la liste se modifie. Ce n'est pas une `str`. Le mélange de types n'interdit pas la mutation.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une liste est mutable : on peut remplacer un élément par assignation à un index."
+      },
+      {
+        "id": "b",
+        "text": "Une liste est immuable : remplacer un élément lève `TypeError`, comme une chaîne."
+      },
+      {
+        "id": "c",
+        "text": "Une liste est mutable seulement si tous les éléments ont le même type."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "`cubes[3] = 64` : le tutoriel corrige un cube faux. La `str` refuse ce geste.",
+    "commonMistake": "Traiter liste et chaîne comme le même genre de séquence à l'écriture.",
+    "related": [
+      "py.str.immut.001",
+      "py.list.append.001"
+    ],
+    "lessonId": "py.list.001"
+  },
+  {
+    "id": "py.list.pop.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que fait `list.pop` sans argument ?",
+    "explanation": "Il enlève le dernier et le rend. Ce n'est pas le premier, et ce n'est pas une simple lecture.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`pop()` retire et rend le dernier élément ; un index explicite choisit la position."
+      },
+      {
+        "id": "b",
+        "text": "`pop()` retire et rend le premier élément ; sans index, la liste se comporte en file."
+      },
+      {
+        "id": "c",
+        "text": "`pop()` rend le dernier élément sans le retirer, comme un accès `[-1]`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/datastructures.html",
+    "insight": "Liste comme pile : `append` / `pop()`. En file, le tutoriel dit que `pop(0)` est lent, et montre `deque`.",
+    "commonMistake": "Prendre `pop()` pour un `shift` (premier élément).",
+    "related": [
+      "py.list.append.001",
+      "py.list.mut.001"
+    ],
+    "lessonId": "py.list.001"
+  },
+  {
+    "id": "py.list.share.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Que se passe-t-il après `rgba = rgb` puis `rgba.append(\"Alph\")` ?",
+    "explanation": "Les deux noms voient `\"Alph\"`. Ce n'est pas une copie, et la liste n'est pas figée.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`rgba = rgb` partage le même objet : un `append` se voit des deux côtés."
+      },
+      {
+        "id": "b",
+        "text": "`rgba = rgb` copie la liste : un `append` sur `rgba` laisse `rgb` intact."
+      },
+      {
+        "id": "c",
+        "text": "`rgba = rgb` fige `rgb` : tout `append` suivant lève `TypeError`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "`id(rgb) == id(rgba)` vaut `True`. L'assignation ne copie jamais les données.",
+    "commonMistake": "Croire que `=` clone, comme on le voudrait en entretien sur les références.",
+    "related": [
+      "py.list.copy.001",
+      "py.err.is.001"
+    ],
+    "lessonId": "py.list.001"
+  },
+  {
+    "id": "py.list.slice.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Que fait l'assignation à une tranche de liste ?",
+    "explanation": "Elle peut remplacer, raccourcir ou vider. Pas une erreur, pas une imbrication d'un `[]`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Assigner `[]` à une tranche supprime ces éléments ; `letters[:] = []` vide la liste."
+      },
+      {
+        "id": "b",
+        "text": "Assigner `[]` à une tranche lève `TypeError`, une liste ne s'écrivant que par `append`."
+      },
+      {
+        "id": "c",
+        "text": "Assigner `[]` à une tranche insère une liste vide comme un seul élément imbriqué."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "`letters[2:5] = ['C', 'D', 'E']` remplace. `= []` retire. `letters[:] = []` efface tout.",
+    "commonMistake": "Croire qu'on ne mute une liste que via des méthodes.",
+    "related": [
+      "py.list.mut.001",
+      "py.list.copy.001"
+    ],
+    "lessonId": "py.list.001"
+  },
+  {
+    "id": "py.list.sort.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Que rendent `list.sort()` et `list.reverse()` ?",
+    "explanation": "`None`, après avoir muté. Pas une copie, pas la liste elle-même pour chaîner.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`sort` et `reverse` trient ou inversent sur place, et rendent `None`."
+      },
+      {
+        "id": "b",
+        "text": "`sort` et `reverse` rendent une nouvelle liste triée, sans toucher à l'originale."
+      },
+      {
+        "id": "c",
+        "text": "`sort` et `reverse` rendent la même liste, ce qui autorise `fruits.sort().append(...)`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/datastructures.html",
+    "insight": "Principe des structures mutables : qui mute rend `None`. `sorted(iterable)` est l'autre outil, plus tard.",
+    "commonMistake": "Écrire `fruits = fruits.sort()` et se retrouver avec `None`.",
+    "related": [
+      "py.list.append.001",
+      "py.fn.none.001"
+    ],
+    "lessonId": "py.list.001"
+  },
+  {
+    "id": "py.list.sort.bug.001",
+    "type": "bug",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Quelle ligne rend `fruits` égal à `None` avant le `print` ?",
+    "explanation": "`sort()` travaille sur place et rend `None`. Réassigner ce résultat écrase la liste. Les deux autres lignes sont saines.",
+    "lines": [
+      "fruits = ['orange', 'apple', 'pear']",
+      "fruits = fruits.sort()",
+      "print(fruits[0])"
+    ],
+    "bugLine": 2,
+    "source": "https://docs.python.org/3/tutorial/datastructures.html",
+    "insight": "`sort()` mute et rend `None`. `fruits` devient `None`, puis `fruits[0]` casse.",
+    "commonMistake": "Chaîner une méthode qui mute, comme si elle rendait la liste.",
+    "related": [
+      "py.list.sort.001",
+      "py.fn.none.001"
+    ],
+    "lessonId": "py.list.001"
+  },
+  {
+    "id": "py.num.assign.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que fait l'opérateur `=` en Python ?",
+    "explanation": "Il nomme une valeur. Il ne compare pas, et il n'affiche pas tout seul le résultat.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`=` assigne une valeur à une variable ; rien ne s'affiche avant le prochain calcul."
+      },
+      {
+        "id": "b",
+        "text": "`=` compare deux valeurs, comme `==` dans les autres langages."
+      },
+      {
+        "id": "c",
+        "text": "`=` affiche le résultat, puis garde la valeur dans la variable `_`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "En interactif, c'est une expression qui s'affiche. Une assignation, non.",
+    "commonMistake": "Tester `if x = 0` : ce n'est pas une comparaison.",
+    "related": [
+      "py.num.name.001",
+      "py.if.eq.001"
+    ],
+    "lessonId": "py.num.001"
+  },
+  {
+    "id": "py.num.div.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que vaut `8 / 5` ?",
+    "explanation": "La division classique produit un `float`. Ce n'est ni le quotient entier `1`, ni un arrondi `2`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`1.6`"
+      },
+      {
+        "id": "b",
+        "text": "`1`"
+      },
+      {
+        "id": "c",
+        "text": "`2`"
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "`/` rend toujours un flottant. Pour un entier, c'est `//`.",
+    "commonMistake": "Attendre `1` comme en division entière d'un autre langage.",
+    "related": [
+      "py.num.floor.001",
+      "py.num.int.001"
+    ],
+    "lessonId": "py.num.001"
+  },
+  {
+    "id": "py.num.floor.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que vaut `17 // 3` ?",
+    "explanation": "Division entière : le quotient sans la fraction. Pas le flottant de `/`, pas le reste.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`5`"
+      },
+      {
+        "id": "b",
+        "text": "`5.666...`"
+      },
+      {
+        "id": "c",
+        "text": "`2`"
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "`17 / 3` est le flottant. `17 % 3` est le reste `2`. `//` jette la fraction.",
+    "commonMistake": "Confondre `//` avec `%`, ou avec `/`.",
+    "related": [
+      "py.num.div.001",
+      "py.num.mod.001"
+    ],
+    "lessonId": "py.num.001"
+  },
+  {
+    "id": "py.num.hash.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Comment s'écrit un commentaire en Python ?",
+    "explanation": "`#` jusqu'à la fin de ligne. Pas jusqu'à l'espace suivant, et pas `//`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un commentaire commence par `#` et va jusqu'à la fin de la ligne."
+      },
+      {
+        "id": "b",
+        "text": "Un commentaire commence par `#` et s'arrête au premier espace."
+      },
+      {
+        "id": "c",
+        "text": "Un commentaire commence par `//` et va jusqu'à la fin de la ligne, comme en JS."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "`text = \"# Ceci n'est pas un commentaire\"` : le dièse est dans la chaîne.",
+    "commonMistake": "Coller `//` de JavaScript dans un fichier Python.",
+    "related": [
+      "py.num.int.001",
+      "py.if.indent.001"
+    ],
+    "lessonId": "py.num.001"
+  },
+  {
+    "id": "py.num.int.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Comment Python nomme-t-il les nombres entiers et les nombres à virgule ?",
+    "explanation": "`int` et `float`, deux types. Pas un seul `number`, et l'entier n'est pas un `float` déguisé.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Les entiers ont le type `int` ; ceux avec une partie fractionnaire ont le type `float`."
+      },
+      {
+        "id": "b",
+        "text": "Les entiers ont le type `float` ; Python n'a pas de type `int` distinct."
+      },
+      {
+        "id": "c",
+        "text": "Les entiers ont le type `number` ; Python reprend le seul type numérique de JavaScript."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "`2` est un `int`. `5.0` et `1.6` sont des `float`. Le tutoriel le pose dès la calculatrice.",
+    "commonMistake": "Coller `number` de JS sur Python.",
+    "related": [
+      "py.num.div.001",
+      "py.num.floor.001"
+    ],
+    "lessonId": "py.num.001"
+  },
+  {
+    "id": "py.num.mod.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que vaut `17 % 3` ?",
+    "explanation": "C'est le reste. `5` est le quotient `//`. Le flottant, c'est `/`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`2`"
+      },
+      {
+        "id": "b",
+        "text": "`5`"
+      },
+      {
+        "id": "c",
+        "text": "`5.666...`"
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "`5 * 3 + 2` reconstruit `17` : quotient `//` fois diviseur, plus reste.",
+    "commonMistake": "Lire `%` comme un pourcentage.",
+    "related": [
+      "py.num.floor.001",
+      "py.num.div.001"
+    ],
+    "lessonId": "py.num.001"
+  },
+  {
+    "id": "py.num.name.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que se passe-t-il si on utilise `n` sans l'avoir défini ?",
+    "explanation": "Une exception `NameError`. Ce n'est pas `None`, ce n'est pas zéro.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Lire une variable jamais assignée lève `NameError`."
+      },
+      {
+        "id": "b",
+        "text": "Lire une variable jamais assignée vaut `None`."
+      },
+      {
+        "id": "c",
+        "text": "Lire une variable jamais assignée vaut `0`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "`n  # try to access an undefined variable` → `NameError: name 'n' is not defined`.",
+    "commonMistake": "Attendre `None` ou `undefined`, comme un champ JS manquant.",
+    "related": [
+      "py.fn.none.001",
+      "py.err.exc.001"
+    ],
+    "lessonId": "py.num.001"
+  },
+  {
+    "id": "py.num.pow.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que vaut `5 ** 2` ?",
+    "explanation": "Cinq au carré. Pas `5+5`, pas `5*2`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`25`"
+      },
+      {
+        "id": "b",
+        "text": "`10`"
+      },
+      {
+        "id": "c",
+        "text": "`7`"
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "`**` est la puissance. `5 ** 2` n'est pas `5 * 2`.",
+    "commonMistake": "Lire `**` comme un `^` bitwise d'un autre langage, ou comme une multiplication.",
+    "related": [
+      "py.num.unary.001",
+      "py.num.int.001"
+    ],
+    "lessonId": "py.num.001"
+  },
+  {
+    "id": "py.num.unary.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Que vaut `-3 ** 2` ?",
+    "explanation": "D'abord `3**2` = 9, puis le moins : `-9`. Ce n'est pas `(-3)**2`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`-9`"
+      },
+      {
+        "id": "b",
+        "text": "`9`"
+      },
+      {
+        "id": "c",
+        "text": "`-6`"
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "`**` passe avant le moins unaire : `-(3**2)`. Pour `9`, il faut `(-3)**2`.",
+    "commonMistake": "Lire `-3**2` comme « moins trois, au carré ».",
+    "related": [
+      "py.num.pow.001",
+      "py.num.div.001"
+    ],
+    "lessonId": "py.num.001"
+  },
+  {
+    "id": "py.str.concat.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Comment concatène-t-on du texte en Python ?",
+    "explanation": "`+` (et `*` pour répéter). Le collage implicite ne marche que entre littéraux, pas avec une variable.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Deux littéraux côte à côte se collent ; une variable et un littéral exigent `+`."
+      },
+      {
+        "id": "b",
+        "text": "Une variable et un littéral se collent tout seuls, comme deux littéraux côte à côte."
+      },
+      {
+        "id": "c",
+        "text": "Deux littéraux côte à côte lèvent `SyntaxError` ; seule la méthode `join` concatène."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "`'Py' 'thon'` vaut `'Python'`. `prefix 'thon'` est une `SyntaxError`.",
+    "commonMistake": "Oublier `+` dès qu'un des deux n'est plus un littéral.",
+    "related": [
+      "py.str.immut.001",
+      "py.num.hash.001"
+    ],
+    "lessonId": "py.str.001"
+  },
+  {
+    "id": "py.str.immut.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que se passe-t-il si on écrit `word[0] = 'J'` sur une chaîne ?",
+    "explanation": "`TypeError` : pas d'écriture dans un index de `str`. Ce n'est pas une mutation silencieuse, et ce n'est pas un souci de borne.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une chaîne est immuable : assigner `word[0] = 'J'` lève `TypeError`."
+      },
+      {
+        "id": "b",
+        "text": "Une chaîne est mutable : assigner `word[0] = 'J'` remplace le premier caractère."
+      },
+      {
+        "id": "c",
+        "text": "Une chaîne est immuable : assigner `word[0] = 'J'` lève `IndexError`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "On fabrique une nouvelle chaîne : `'J' + word[1:]`. L'index trop grand, lui, c'est `IndexError`.",
+    "commonMistake": "Traiter la `str` comme une liste de caractères qu'on peut écraser.",
+    "related": [
+      "py.list.mut.001",
+      "py.str.oob.001"
+    ],
+    "lessonId": "py.str.001"
+  },
+  {
+    "id": "py.str.index.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que vaut `'Python'[0]` ?",
+    "explanation": "Index 0-based : `'P'`. `'y'` est `[1]`. `'n'` est le dernier, `[-1]` ou `[5]`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`'P'`"
+      },
+      {
+        "id": "b",
+        "text": "`'y'`"
+      },
+      {
+        "id": "c",
+        "text": "`'n'`"
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "Le premier caractère a l'index 0. Un caractère est une `str` de longueur 1.",
+    "commonMistake": "Compter à partir de 1, comme dans un autre langage.",
+    "related": [
+      "py.str.neg.001",
+      "py.str.slice.001"
+    ],
+    "lessonId": "py.str.001"
+  },
+  {
+    "id": "py.str.len.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Comment mesure-t-on la longueur d'une chaîne ?",
+    "explanation": "La fonction `len(...)`. Ni une méthode `len()`, ni un champ `length`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`len` est une fonction bâtie qui renvoie la longueur d'une chaîne."
+      },
+      {
+        "id": "b",
+        "text": "`len` est une méthode : on l'écrit `word.len()`, comme `append` sur une liste."
+      },
+      {
+        "id": "c",
+        "text": "`len` est un attribut : on lit `word.length`, comme en JavaScript."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "`len(s)`, pas `s.length`. Ça marche aussi pour les listes.",
+    "commonMistake": "Coller `.length` de JS, ou `.len()` comme une méthode.",
+    "related": [
+      "py.list.mut.001",
+      "py.str.index.001"
+    ],
+    "lessonId": "py.str.001"
+  },
+  {
+    "id": "py.str.neg.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que vaut `'Python'[-1]` ?",
+    "explanation": "Les négatifs comptent depuis la fin. `'P'` est `[0]` ou `[-6]`. `'o'` est `[-2]`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`'n'`"
+      },
+      {
+        "id": "b",
+        "text": "`'P'`"
+      },
+      {
+        "id": "c",
+        "text": "`'o'`"
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "`-1` est le dernier, `-2` l'avant-dernier. `-0` n'existe pas : c'est `0`.",
+    "commonMistake": "Lire `[-1]` comme « une erreur d'index ».",
+    "related": [
+      "py.str.index.001",
+      "py.str.slice.001"
+    ],
+    "lessonId": "py.str.001"
+  },
+  {
+    "id": "py.str.oob.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 2,
+    "prompt": "Que se passe-t-il si l'index dépasse la longueur de la chaîne ?",
+    "explanation": "Lecture d'un caractère : `IndexError`. Tranche : résultat vide, pas d'exception. Ce n'est pas `None`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un index trop grand lève `IndexError` ; une tranche hors bornes se coupe sans erreur."
+      },
+      {
+        "id": "b",
+        "text": "Un index trop grand et une tranche hors bornes lèvent tous les deux `IndexError`."
+      },
+      {
+        "id": "c",
+        "text": "Un index trop grand vaut `None` ; une tranche hors bornes lève `IndexError`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "`word[42]` explose. `word[42:]` vaut `''`. L'asymétrie surprend en entretien.",
+    "commonMistake": "Attendre la même exception pour `[i]` et `[i:]`.",
+    "related": [
+      "py.str.slice.001",
+      "py.str.immut.001"
+    ],
+    "lessonId": "py.str.001"
+  },
+  {
+    "id": "py.str.quotes.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Quelle différence y a-t-il entre `'spam'` et `\"spam\"` ?",
+    "explanation": "Aucune pour le type : c'est une `str` dans les deux cas. Pas un caractère vs une chaîne, pas d'interpolation magique.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Les guillemets simples et doubles délimitent la même sorte de chaîne."
+      },
+      {
+        "id": "b",
+        "text": "Les guillemets simples créent des caractères ; les doubles créent des chaînes."
+      },
+      {
+        "id": "c",
+        "text": "Les guillemets doubles interpolent des variables ; les simples restent bruts."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "On choisit la paire qui évite d'échapper. L'interpolation, c'est plutôt une f-string, autre sujet.",
+    "commonMistake": "Importer la distinction char/string du C, ou le template JS des backticks.",
+    "related": [
+      "py.str.concat.001",
+      "py.num.hash.001"
+    ],
+    "lessonId": "py.str.001"
+  },
+  {
+    "id": "py.str.slice.001",
+    "type": "mcq",
+    "topic": "python",
+    "tags": [
+      "python"
+    ],
+    "difficulty": 1,
+    "prompt": "Que vaut `'Python'[0:2]` ?",
+    "explanation": "Caractères 0 et 1, pas 2. Ce n'est pas `'Pyt'`, pas `'yt'`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`'Py'`"
+      },
+      {
+        "id": "b",
+        "text": "`'Pyt'`"
+      },
+      {
+        "id": "c",
+        "text": "`'yt'`"
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "insight": "Début inclus, fin exclue. `s[:i] + s[i:]` reconstruit `s`.",
+    "commonMistake": "Inclure l'index de fin, comme un `substring` fermé à droite.",
+    "related": [
+      "py.str.index.001",
+      "py.str.oob.001"
+    ],
+    "lessonId": "py.str.001"
+  },
+  {
     "id": "shell.and.001",
     "type": "mcq",
     "topic": "shell",
@@ -4789,6 +7048,2202 @@
       }
     ],
     "correctChoiceId": "a"
+  },
+  {
+    "id": "ts.alias.as.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Que reste-t-il d'une assertion `as HTMLCanvasElement` une fois compilée ?",
+    "explanation": "Rien. Pas de test `instanceof`, pas de conversion. Le handbook : no runtime checking associated with a type assertion.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une assertion `as` est effacée : aucun contrôle à l'exécution si elle est fausse."
+      },
+      {
+        "id": "b",
+        "text": "Une assertion `as` insère un `instanceof` qui lève si la valeur ne correspond pas."
+      },
+      {
+        "id": "c",
+        "text": "Une assertion `as` convertit vraiment la valeur, comme `Number(\"1\")` en JavaScript."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "`as HTMLCanvasElement` ne vérifie pas le DOM. Si ce n'est pas un canvas, le JS continue.",
+    "commonMistake": "S'appuyer sur `as` comme sur un parseur qui garantit le type au runtime.",
+    "related": [
+      "ts.check.erase.001",
+      "ts.alias.impossible.001"
+    ],
+    "lessonId": "ts.alias.001"
+  },
+  {
+    "id": "ts.alias.iface.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Que peut nommer une `interface`, d'après le handbook ?",
+    "explanation": "Une forme d'objet. Pas un primitif, pas une union. Et ce n'est pas une classe émise en JS.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une `interface` nomme une forme d'objet ; elle ne renomme pas un primitif."
+      },
+      {
+        "id": "b",
+        "text": "Une `interface` renomme n'importe quel type, y compris `string` et une union."
+      },
+      {
+        "id": "c",
+        "text": "Une `interface` est une classe émise dans le JavaScript, avec un constructeur."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "Pour `number | string`, c'est `type ID = ...`. L'interface s'occupe des formes d'objets.",
+    "commonMistake": "Écrire `interface ID = string` — ce n'est pas la syntaxe, ni le rôle.",
+    "related": [
+      "ts.alias.type.001",
+      "ts.alias.merge.001"
+    ],
+    "lessonId": "ts.alias.001"
+  },
+  {
+    "id": "ts.alias.impossible.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Que fait TypeScript face à `\"hello\" as number` ?",
+    "explanation": "Il refuse la coercition « impossible ». Il n'obéit pas aveuglément, et il n'émet pas un `NaN`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "TypeScript refuse `\"hello\" as number`, faute de recouvrement suffisant entre les deux types."
+      },
+      {
+        "id": "b",
+        "text": "TypeScript accepte `\"hello\" as number`, car toute assertion est un ordre donné au compilateur."
+      },
+      {
+        "id": "c",
+        "text": "TypeScript convertit `\"hello\" as number` en `NaN` au runtime, puis type le résultat `number`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "Pour forcer, on passe par `unknown` ou `any`, puis le type voulu. Double assertion, toujours effacée.",
+    "commonMistake": "Enchaîner `as any as number` en croyant qu'un vrai nombre sortira à l'exécution.",
+    "related": [
+      "ts.alias.as.001",
+      "ts.everyday.any.001"
+    ],
+    "lessonId": "ts.alias.001"
+  },
+  {
+    "id": "ts.alias.merge.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Quelle différence de fusion le handbook retient-il entre `type` et `interface` ?",
+    "explanation": "L'interface se rouvre (declaration merging). L'alias, non. Ce n'est pas l'inverse, et ce n'est pas le même comportement.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une `interface` peut être rouverte pour ajouter des champs ; un `type` ne se fusionne pas."
+      },
+      {
+        "id": "b",
+        "text": "Un `type` peut être rouvert pour ajouter des champs ; une `interface` est figée."
+      },
+      {
+        "id": "c",
+        "text": "`type` et `interface` se fusionnent de la même façon dès que le nom est répété."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "Deux `interface Window { ... }` se recollent. Deux `type Window = ...` : identifiant en double.",
+    "commonMistake": "Réécrire un `type` pour « ajouter un champ » et tomber sur Duplicate identifier.",
+    "related": [
+      "ts.union.and.001",
+      "ts.alias.iface.001"
+    ],
+    "lessonId": "ts.alias.001"
+  },
+  {
+    "id": "ts.alias.same.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Un alias `type UserInputSanitizedString = string` crée-t-il un nouveau type distinct ?",
+    "explanation": "Non : c'est le même `string`. Pas de marque runtime, pas d'interdiction d'y remettre une chaîne.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un alias n'invente pas un type distinct : le remplacer par le type écrit revient au même."
+      },
+      {
+        "id": "b",
+        "text": "Un alias invente une marque à l'exécution, qui empêche d'assigner le type de base."
+      },
+      {
+        "id": "c",
+        "text": "Un alias verrouille le type : une valeur `string` ne peut plus aller dans `type ID = string`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "`UserInputSanitizedString` reste un `string`. On peut encore y remettre une chaîne brute.",
+    "commonMistake": "Croire qu'un alias « sanitizé » protège au runtime contre une string quelconque.",
+    "related": [
+      "ts.alias.type.001",
+      "ts.check.erase.001"
+    ],
+    "lessonId": "ts.alias.001"
+  },
+  {
+    "id": "ts.alias.struct.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Comment TypeScript décide-t-il qu'un objet convient à un type objet ?",
+    "explanation": "Il regarde la forme, pas le nom de la déclaration. `type` et `interface` se valent sur ce point. Ce n'est pas un système nominal.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "TypeScript est structurel : un objet convient s'il a les propriétés attendues."
+      },
+      {
+        "id": "b",
+        "text": "TypeScript est nominal : un objet ne convient que s'il a été déclaré avec le même nom."
+      },
+      {
+        "id": "c",
+        "text": "TypeScript est structurel pour `type` et nominal pour `interface`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "`printCoord({ x: 100, y: 100 })` : pas besoin d'avoir écrit `implements Point`.",
+    "commonMistake": "Exiger une classe ou un `implements` pour passer un objet littéral.",
+    "related": [
+      "ts.alias.iface.001",
+      "ts.alias.type.001"
+    ],
+    "lessonId": "ts.alias.001"
+  },
+  {
+    "id": "ts.alias.type.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Que permet un alias déclaré avec `type` ?",
+    "explanation": "C'est un nom pour tout type. Pas seulement un objet, et rien n'est créé à l'exécution.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un alias `type` donne un nom à n'importe quel type : objet, union ou littéral."
+      },
+      {
+        "id": "b",
+        "text": "Un alias `type` ne peut nommer qu'une forme d'objet, jamais une union."
+      },
+      {
+        "id": "c",
+        "text": "Un alias `type` crée une classe à l'exécution, distincte du type écrit à droite."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "`type ID = number | string` : un nom, pas un nouvel objet runtime.",
+    "commonMistake": "Réserver `type` aux objets et `interface` aux unions — c'est l'inverse qui bloque : l'interface ne renomme pas un primitif.",
+    "related": [
+      "ts.alias.same.001",
+      "ts.alias.iface.001"
+    ],
+    "lessonId": "ts.alias.001"
+  },
+  {
+    "id": "ts.check.date.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Que renvoie l'appel `Date()` sans `new`, en JavaScript ?",
+    "explanation": "L'appel sans `new` produit une chaîne. D'où l'erreur TypeScript si un paramètre attend un `Date` : il faut `new Date()`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "une chaîne"
+      },
+      {
+        "id": "b",
+        "text": "un objet `Date`"
+      },
+      {
+        "id": "c",
+        "text": "`undefined`"
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/basic-types.html",
+    "insight": "`new Date()` construit la date. `Date()` tout seul, en JavaScript, rend une string.",
+    "commonMistake": "Passer `Date()` à un paramètre typé `Date` : TypeScript le refuse, à raison.",
+    "related": [
+      "ts.check.static.001",
+      "ts.fn.param.001"
+    ],
+    "lessonId": "ts.check.001"
+  },
+  {
+    "id": "ts.check.emit.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Que fait `tsc` par défaut quand le type-check trouve une erreur ?",
+    "explanation": "Il signale l'erreur et écrit tout de même le `.js`. Il ne coupe pas les lignes fautives. Pour bloquer l'émission, il faut `noEmitOnError`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Par défaut, `tsc` émet quand même le JavaScript s'il a signalé des erreurs."
+      },
+      {
+        "id": "b",
+        "text": "Par défaut, `tsc` refuse d'écrire le `.js` dès qu'une erreur de type existe."
+      },
+      {
+        "id": "c",
+        "text": "Par défaut, `tsc` supprime les lignes en erreur et émet le reste du fichier."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/basic-types.html",
+    "insight": "C'est voulu : en migrant du JS, le code tournait déjà. TypeScript ne bloque pas l'émission par défaut.",
+    "commonMistake": "Croire qu'une erreur rouge dans `tsc` empêche toujours d'obtenir un `.js`.",
+    "related": [
+      "ts.check.noemit.001",
+      "ts.check.erase.001"
+    ],
+    "lessonId": "ts.check.001"
+  },
+  {
+    "id": "ts.check.erase.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Que devient une annotation de type une fois `tsc` passé ?",
+    "explanation": "Les annotations ne font pas partie de JavaScript. `tsc` les retire. Aucun `typeof` n'est injecté à la place, et le navigateur ne les lit pas.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le compilateur efface les annotations de types en émettant le JavaScript."
+      },
+      {
+        "id": "b",
+        "text": "Le compilateur convertit les annotations en tests `typeof` exécutés au runtime."
+      },
+      {
+        "id": "c",
+        "text": "Le compilateur laisse les annotations dans le fichier `.js` pour le navigateur."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/basic-types.html",
+    "insight": "Ouvre le `.js` émis : plus de `: string`. Le runtime n'a jamais vu l'annotation.",
+    "commonMistake": "Attendre que `person: string` lève une exception si on passe un nombre en JS déjà émis.",
+    "related": [
+      "ts.check.runtime.001",
+      "ts.check.emit.001"
+    ],
+    "lessonId": "ts.check.001"
+  },
+  {
+    "id": "ts.check.infer.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Que fait TypeScript quand on écrit `const msg = \"hello there!\"` sans annotation ?",
+    "explanation": "Il figure le type d'après la valeur. Ce n'est pas `any` par défaut ici, et ce n'est pas une erreur d'omission.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "TypeScript infère souvent le type tout seul, d'après l'initialiseur."
+      },
+      {
+        "id": "b",
+        "text": "TypeScript exige une annotation sur chaque `const`, sinon le type reste `any`."
+      },
+      {
+        "id": "c",
+        "text": "TypeScript refuse d'inférer : sans annotation, le fichier ne compile pas."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/basic-types.html",
+    "insight": "`const msg = \"hello there!\"` est déjà un `string`. L'annotation en plus ne change rien.",
+    "commonMistake": "Annoter par réflexe chaque variable, y compris quand l'inférence dit la même chose.",
+    "related": [
+      "ts.check.strict.001",
+      "ts.everyday.annot.001"
+    ],
+    "lessonId": "ts.check.001"
+  },
+  {
+    "id": "ts.check.noemit.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "À quoi sert l'option `noEmitOnError` ?",
+    "explanation": "Elle bloque la mise à jour du `.js` si le type-check a échoué. Elle n'ajoute rien au runtime, et elle n'est pas le mode `strict`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`noEmitOnError` empêche `tsc` d'écrire le JavaScript en cas d'erreur de type."
+      },
+      {
+        "id": "b",
+        "text": "`noEmitOnError` efface les annotations mais laisse toujours le fichier `.js`."
+      },
+      {
+        "id": "c",
+        "text": "`noEmitOnError` transforme chaque erreur de type en exception au runtime."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/basic-types.html",
+    "insight": "Le défaut reste permissif. Ce drapeau, c'est le cran « ne sors pas de JS douteux ».",
+    "commonMistake": "Confondre ce drapeau avec `strict`, qui serre la vérif sans parler d'émission.",
+    "related": [
+      "ts.check.emit.001",
+      "ts.check.strict.001"
+    ],
+    "lessonId": "ts.check.001"
+  },
+  {
+    "id": "ts.check.runtime.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Quel effet une annotation de type a-t-elle sur le programme qui tourne ?",
+    "explanation": "Elle sert au vérificateur, puis disparaît. Elle n'ajoute pas de test runtime, et elle ne convertit pas les valeurs.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Les annotations de types ne changent jamais le comportement à l'exécution."
+      },
+      {
+        "id": "b",
+        "text": "Les annotations de types insèrent un contrôle `typeof` avant chaque appel."
+      },
+      {
+        "id": "c",
+        "text": "Les annotations de types convertissent les valeurs, comme un cast C à l'exécution."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/basic-types.html",
+    "insight": "Le handbook le dit tel quel : remember, type annotations never change the runtime behavior.",
+    "commonMistake": "Traiter `: string` comme un garde-fou qui arrêtera le JS déjà compilé.",
+    "related": [
+      "ts.check.erase.001",
+      "ts.alias.as.001"
+    ],
+    "lessonId": "ts.check.001"
+  },
+  {
+    "id": "ts.check.static.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Que fait un vérificateur de types statique comme TypeScript ?",
+    "explanation": "Il prédit formes et comportements avant l'exécution. Ce n'est pas un second moteur JS, et ce n'est pas non plus « lancer pour voir ».",
+    "choices": [
+      {
+        "id": "a",
+        "text": "TypeScript décrit les types avant d'exécuter le programme, et signale ce qui déraille."
+      },
+      {
+        "id": "b",
+        "text": "TypeScript exécute le programme pour lire les types au moment du crash."
+      },
+      {
+        "id": "c",
+        "text": "TypeScript remplace JavaScript dans le navigateur et y interprète les annotations."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/basic-types.html",
+    "insight": "Le type-checker parle avant le runtime. JavaScript, lui, découvre les types en courant.",
+    "commonMistake": "Croire que TypeScript est une machine virtuelle qui exécute les annotations.",
+    "related": [
+      "ts.check.erase.001",
+      "ts.check.runtime.001"
+    ],
+    "lessonId": "ts.check.001"
+  },
+  {
+    "id": "ts.check.strict.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Que fait le drapeau `strict` dans TypeScript ?",
+    "explanation": "C'est un interrupteur groupé pour la sévérité du type-check, pas pour l'émission du JS, et pas une réécriture automatique de `any`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`strict` allume d'un coup les drapeaux de vérif, dont `noImplicitAny` et `strictNullChecks`."
+      },
+      {
+        "id": "b",
+        "text": "`strict` empêche `tsc` d'émettre le JavaScript dès la première erreur de type."
+      },
+      {
+        "id": "c",
+        "text": "`strict` convertit chaque `any` en `unknown` sans changer les autres drapeaux."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/basic-types.html",
+    "insight": "Un code neuf gagne à partir de `\"strict\": true`. On peut encore retirer un drapeau un par un.",
+    "commonMistake": "Prendre `strict` pour `noEmitOnError` : l'un vérifie plus, l'autre refuse d'écrire le `.js`.",
+    "related": [
+      "ts.check.noemit.001",
+      "ts.everyday.any.001"
+    ],
+    "lessonId": "ts.check.001"
+  },
+  {
+    "id": "ts.check.tsc.001",
+    "type": "cloze",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Le compilateur TypeScript, qui type-check puis émet du JavaScript, s'appelle ____.",
+    "explanation": "`tsc` est le TypeScript compiler. Il vérifie les types et écrit le `.js`. Ce n'est pas le runtime Node, ni un linter.",
+    "answer": "tsc",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/basic-types.html",
+    "insight": "`npx tsc` ou le binaire du package `typescript`. C'est le type-checker et l'émetteur JS.",
+    "commonMistake": "Nommer `node` ou `eslint` à la place du compilateur TypeScript.",
+    "related": [
+      "ts.check.emit.001",
+      "ts.check.erase.001"
+    ],
+    "lessonId": "ts.check.001"
+  },
+  {
+    "id": "ts.everyday.annot.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Où s'écrit une annotation de type sur une variable ?",
+    "explanation": "Toujours après le nom. Pas à gauche comme en C, et pas collée à la seule valeur à droite du `=`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "L'annotation de type se place après le nom, comme `let myName: string`."
+      },
+      {
+        "id": "b",
+        "text": "L'annotation de type se place avant le nom, comme `string myName` en C."
+      },
+      {
+        "id": "c",
+        "text": "L'annotation de type se place après `=`, autour de la valeur initiale seulement."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "TypeScript n'écrit pas `int x = 0`. Le type suit toujours la chose typée.",
+    "commonMistake": "Ramener la syntaxe « type à gauche » d'un autre langage.",
+    "related": [
+      "ts.check.infer.001",
+      "ts.fn.param.001"
+    ],
+    "lessonId": "ts.everyday.001"
+  },
+  {
+    "id": "ts.everyday.any.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Que permet le type `any` ?",
+    "explanation": "Il désactive la suite des contrôles sur cette valeur. Ce n'est pas un union prudent, et ça n'interdit pas les appels.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`any` coupe la vérif : on peut tout lire, tout appeler, tout assigner."
+      },
+      {
+        "id": "b",
+        "text": "`any` accepte toutes les valeurs mais bloque les appels et les lectures de propriétés."
+      },
+      {
+        "id": "c",
+        "text": "`any` est un union de tous les primitifs, sans désactiver le type-check."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "Une ligne en `any` n'est plus du TypeScript utile : la suite est supposée « tu sais mieux ».",
+    "commonMistake": "Poser `any` « pour débloquer » et croire que le reste du fichier reste protégé.",
+    "related": [
+      "ts.check.strict.001",
+      "ts.gen.any.001"
+    ],
+    "lessonId": "ts.everyday.001"
+  },
+  {
+    "id": "ts.everyday.array.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Comment type-t-on un tableau comme `[1, 2, 3]` ?",
+    "explanation": "`T[]` ou `Array<T>`. `[number]` est la notation de tuple, pas celle du tableau. Les rest parameters s'écrivent autrement.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un tableau de nombres s'écrit `number[]`, ou de façon équivalente `Array<number>`."
+      },
+      {
+        "id": "b",
+        "text": "Un tableau de nombres s'écrit `[number]`, un tuple d'un seul élément étant autre chose."
+      },
+      {
+        "id": "c",
+        "text": "Un tableau de nombres s'écrit `number...`, la syntaxe restant identique aux rest parameters."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "`string[]` suit le même moule. `[number]` attend un tuple d'un `number`, pas un tableau.",
+    "commonMistake": "Croire que `[number]` et `number[]` se lisent pareil.",
+    "related": [
+      "ts.everyday.tuple.001",
+      "ts.everyday.primitive.001"
+    ],
+    "lessonId": "ts.everyday.001"
+  },
+  {
+    "id": "ts.everyday.capital.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Que désignent les types `String`, `Number` et `Boolean` avec une capitale ?",
+    "explanation": "Ce sont des types bâtis à part, rarement écrits. Ils ne sont pas la graphie obligatoire des primitifs, ni de simples alias interchangeables au quotidien.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`String`, `Number` et `Boolean` nomment des objets internes, pas les types du quotidien."
+      },
+      {
+        "id": "b",
+        "text": "`String`, `Number` et `Boolean` sont les seules graphies acceptées pour les primitifs."
+      },
+      {
+        "id": "c",
+        "text": "`String`, `Number` et `Boolean` sont des alias stricts de `string`, `number` et `boolean`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "Le handbook est net : always use `string`, `number`, or `boolean` for types.",
+    "commonMistake": "Copier `String` depuis un autre langage à types capitalisés.",
+    "related": [
+      "ts.everyday.primitive.001",
+      "ts.everyday.annot.001"
+    ],
+    "lessonId": "ts.everyday.001"
+  },
+  {
+    "id": "ts.everyday.context.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Que fait le typage contextuel sur une fonction anonyme ?",
+    "explanation": "Le contexte (`forEach` d'un `string[]`) fixe le type du paramètre. Ça marche aussi pour les flèches, et ça ne force pas `any`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le typage contextuel donne un type au paramètre d'un callback, d'après l'endroit de l'appel."
+      },
+      {
+        "id": "b",
+        "text": "Le typage contextuel force `any` sur tout callback, même passé à `forEach`."
+      },
+      {
+        "id": "c",
+        "text": "Le typage contextuel n'existe que pour les fonctions déclarées avec `function`, jamais les flèches."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "Sur `string[].forEach`, `s` est un `string` sans annotation. Les flèches aussi.",
+    "commonMistake": "Réannoter chaque callback « pour que ce soit du vrai TypeScript ».",
+    "related": [
+      "ts.fn.context.001",
+      "ts.check.infer.001"
+    ],
+    "lessonId": "ts.everyday.001"
+  },
+  {
+    "id": "ts.everyday.optional.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Comment déclare-t-on une propriété d'objet que l'on peut omettre ?",
+    "explanation": "`last?: string` : le champ peut être absent, donc `undefined` à la lecture. Ce n'est pas un `any`, et le `?` se met après le nom.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une propriété optionnelle s'écrit avec `?` après le nom, et peut valoir `undefined`."
+      },
+      {
+        "id": "b",
+        "text": "Une propriété optionnelle s'écrit avec `?` avant le type, et ne peut plus être absente."
+      },
+      {
+        "id": "c",
+        "text": "Une propriété optionnelle s'écrit en union avec `any`, sans marqueur `?`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "Lire `obj.last.toUpperCase()` sans test : TypeScript prévient, `last` peut manquer.",
+    "commonMistake": "Appeler une méthode sur `last?` sans `?.` ni `if`.",
+    "related": [
+      "ts.union.null.001",
+      "ts.fn.optional.001"
+    ],
+    "lessonId": "ts.everyday.001"
+  },
+  {
+    "id": "ts.everyday.primitive.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Comment s'écrivent les types primitifs du quotidien en TypeScript ?",
+    "explanation": "Minuscules, comme `typeof`. JavaScript n'a pas d'`int` séparé. Les versions capitalisées nomment d'autres objets internes, rarement utiles ici.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Les primitifs courants s'écrivent `string`, `number` et `boolean`, en minuscules."
+      },
+      {
+        "id": "b",
+        "text": "Les primitifs courants s'écrivent `String`, `Number` et `Boolean`, avec une capitale."
+      },
+      {
+        "id": "c",
+        "text": "Les primitifs courants s'écrivent `int`, `float` et `bool`, comme en Java."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "Ce sont les mêmes noms que `typeof` à l'exécution. Un seul `number` : pas d'`int` à part.",
+    "commonMistake": "Typer avec `String` parce que ça « fait plus objet ».",
+    "related": [
+      "ts.everyday.capital.001",
+      "ts.everyday.array.001"
+    ],
+    "lessonId": "ts.everyday.001"
+  },
+  {
+    "id": "ts.everyday.tuple.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Que décrit la notation `[number]`, d'après le handbook ?",
+    "explanation": "C'est un tuple d'un `number`. Ce n'est pas `number[]`, et ce n'est pas un objet à clé optionnelle.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`[number]` décrit un tuple d'un élément, pas un tableau de nombres."
+      },
+      {
+        "id": "b",
+        "text": "`[number]` est la graphie courte de `number[]`, les deux types étant identiques."
+      },
+      {
+        "id": "c",
+        "text": "`[number]` décrit un objet dont la clé `number` est optionnelle."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "Crochets après le type : tableau. Crochets autour du type : tuple.",
+    "commonMistake": "Lire `[number]` comme « un array de number » en glissant l'ordre des crochets.",
+    "related": [
+      "ts.everyday.array.001",
+      "ts.gen.array.001"
+    ],
+    "lessonId": "ts.everyday.001"
+  },
+  {
+    "id": "ts.fn.context.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Quel type a `s` dans `names.forEach(function (s) { ... })` si `names` est un `string[]` ?",
+    "explanation": "`string`, par typage contextuel. Pas `any`, et les flèches suivent la même règle.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un callback passé à `forEach` sur `string[]` voit son paramètre typé `string` par le contexte."
+      },
+      {
+        "id": "b",
+        "text": "Un callback passé à `forEach` sur `string[]` voit son paramètre rester `any` sans annotation."
+      },
+      {
+        "id": "c",
+        "text": "Un callback passé à `forEach` sur `string[]` doit être une `function`, les flèches restant `any`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "Même chose pour `(s) => s.toUpperCase()`. L'annotation sur `s` est souvent du bruit.",
+    "commonMistake": "Réécrire `: string` sur chaque callback « pour être strict ».",
+    "related": [
+      "ts.everyday.context.001",
+      "ts.check.infer.001"
+    ],
+    "lessonId": "ts.fn.001"
+  },
+  {
+    "id": "ts.fn.count.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "TypeScript compte-t-il les arguments d'une fonction non annotée ?",
+    "explanation": "Oui : l'arité est checkée. Ce n'est pas le far-west JS, et ce n'est pas non plus « zéro argument obligatoire ».",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Même sans annotation sur les paramètres, TypeScript vérifie le nombre d'arguments passés."
+      },
+      {
+        "id": "b",
+        "text": "Sans annotation sur les paramètres, TypeScript n'a aucun avis sur le nombre d'arguments."
+      },
+      {
+        "id": "c",
+        "text": "Sans annotation sur les paramètres, TypeScript exige exactement zéro argument, comme en JS strict."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "Le handbook : even if you don't have type annotations on your parameters, TypeScript will still check that you passed the right number of arguments.",
+    "commonMistake": "Croire qu'une fonction JS « non typée » dans un fichier `.ts` accepte n'importe quel arity.",
+    "related": [
+      "ts.fn.param.001",
+      "ts.check.infer.001"
+    ],
+    "lessonId": "ts.fn.001"
+  },
+  {
+    "id": "ts.fn.expr.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Comment s'écrit le type d'une fonction qui prend un `string` et ne rend rien d'utilisable ?",
+    "explanation": "`(a: string) => void`. Pas le mot `function` dans le type, et les parenthèses autour du paramètre restent.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une expression de type fonction s'écrit `(a: string) => void`."
+      },
+      {
+        "id": "b",
+        "text": "Une expression de type fonction s'écrit `function(a: string): void`, comme une déclaration."
+      },
+      {
+        "id": "c",
+        "text": "Une expression de type fonction s'écrit `string => void`, sans parenthèses autour du paramètre."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/functions.html",
+    "insight": "C'est le type, pas le corps. On s'en sert pour typer une variable ou un paramètre callback.",
+    "commonMistake": "Oublier les parenthèses : `a: string => void` se parse autrement.",
+    "related": [
+      "ts.fn.void.001",
+      "ts.fn.param.001"
+    ],
+    "lessonId": "ts.fn.001"
+  },
+  {
+    "id": "ts.fn.optional.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Comment rend-on un paramètre de fonction omissible ?",
+    "explanation": "`?` ou une valeur par défaut. Le défaut n'oblige pas à passer l'argument. Ce n'est pas `string | void`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un paramètre `name?: string`, ou un défaut `name = \"world\"`, peut être omis à l'appel."
+      },
+      {
+        "id": "b",
+        "text": "Un paramètre `name?: string` peut être omis ; un défaut `name = \"world\"` reste obligatoire."
+      },
+      {
+        "id": "c",
+        "text": "Un paramètre optionnel s'écrit `name: string | void`, sans `?` ni valeur par défaut."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/functions.html",
+    "insight": "Le `?` et le défaut rendent tous les deux le paramètre omissible. Le défaut sert aussi de valeur.",
+    "commonMistake": "Mettre `?` et un défaut, puis s'étonner que `undefined` explicite passe encore.",
+    "related": [
+      "ts.everyday.optional.001",
+      "ts.fn.param.001"
+    ],
+    "lessonId": "ts.fn.001"
+  },
+  {
+    "id": "ts.fn.param.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Où s'écrit le type d'un paramètre de fonction ?",
+    "explanation": "Après le nom : `name: string`. Les appels sont checkés. Ce n'est pas `string name`, et l'annotation n'est pas décorative.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "L'annotation d'un paramètre suit le nom, et les arguments passés sont alors vérifiés."
+      },
+      {
+        "id": "b",
+        "text": "L'annotation d'un paramètre précède le nom, comme `function greet(string name)`."
+      },
+      {
+        "id": "c",
+        "text": "L'annotation d'un paramètre est ignorée à l'appel : seul le nombre d'arguments compte."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "`greet(42)` : Argument of type 'number' is not assignable to parameter of type 'string'.",
+    "commonMistake": "Remettre le type à gauche, syntaxe d'un autre langage.",
+    "related": [
+      "ts.everyday.annot.001",
+      "ts.fn.return.001"
+    ],
+    "lessonId": "ts.fn.001"
+  },
+  {
+    "id": "ts.fn.promise.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Comment annote-t-on le retour d'une fonction qui rend une Promise de nombre ?",
+    "explanation": "`Promise<number>`. `async` ne dispense pas d'écrire `Promise` dans l'annotation. Ce n'est pas `any`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une fonction async qui rend un nombre s'annote `Promise<number>`, pas `number`."
+      },
+      {
+        "id": "b",
+        "text": "Une fonction async qui rend un nombre s'annote `number`, `async` impliquant déjà la Promise."
+      },
+      {
+        "id": "c",
+        "text": "Une fonction async qui rend un nombre s'annote `any`, car le type de Promise n'est pas exprimable."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "Le handbook : if you want to annotate the return type of a function which returns a promise, use the `Promise` type.",
+    "commonMistake": "Écrire `: number` sur un `async` et s'étonner que ce ne soit pas assignable à `number`.",
+    "related": [
+      "ts.fn.return.001",
+      "ts.util.exclude.001"
+    ],
+    "lessonId": "ts.fn.001"
+  },
+  {
+    "id": "ts.fn.return.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Comment annote-t-on le retour d'une fonction ?",
+    "explanation": "Après `)` : `(): number`. Pas avant `function`. L'omettre n'est pas une erreur si l'inférence est claire.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le type de retour se place après la liste des paramètres, et l'inférence suffit souvent."
+      },
+      {
+        "id": "b",
+        "text": "Le type de retour se place avant `function`, comme `number function getFavoriteNumber()`."
+      },
+      {
+        "id": "c",
+        "text": "Le type de retour est obligatoire : sans lui, TypeScript refuse de compiler la fonction."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "`(): number` fige le contrat. Sans ça, les `return` suffisent souvent à inférer.",
+    "commonMistake": "Annoter par réflexe chaque retour, y compris quand rien ne change.",
+    "related": [
+      "ts.fn.promise.001",
+      "ts.fn.void.001"
+    ],
+    "lessonId": "ts.fn.001"
+  },
+  {
+    "id": "ts.fn.void.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Que signifie le type de retour `void` ?",
+    "explanation": "L'appelant n'utilise pas la valeur. Ce n'est pas le contrat `undefined` obligatoire, et ce n'est pas `never`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`void` décrit une fonction dont la valeur de retour n'est pas destinée à être utilisée."
+      },
+      {
+        "id": "b",
+        "text": "`void` est identique à `undefined` : la fonction doit `return undefined` à chaque chemin."
+      },
+      {
+        "id": "c",
+        "text": "`void` est identique à `never` : la fonction ne doit pas terminer son exécution."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/functions.html",
+    "insight": "Un callback `() => void` peut parfois `return true` : l'appelant n'est pas censé lire le résultat.",
+    "commonMistake": "Exiger `return undefined` partout, ou confondre avec `never` (la fonction qui ne rend pas).",
+    "related": [
+      "ts.narrow.never.001",
+      "ts.fn.return.001"
+    ],
+    "lessonId": "ts.fn.001"
+  },
+  {
+    "id": "ts.gen.any.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "En quoi `identity(arg: any): any` diffère-t-il d'un générique ?",
+    "explanation": "Les deux acceptent beaucoup. Seul le générique se souvient de ce qui est entré. Ce n'est pas l'inverse.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`any` accepte tout mais oublie le type au retour ; le générique le conserve."
+      },
+      {
+        "id": "b",
+        "text": "`any` et un générique sont équivalents : les deux conservent le type au retour."
+      },
+      {
+        "id": "c",
+        "text": "`any` conserve le type au retour ; un générique l'élargit toujours à `unknown`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+    "insight": "Le handbook : using `any` is generic in that it accepts all types, but we lose what that type was when the function returns.",
+    "commonMistake": "Remplacer `<Type>` par `any` dès que le compilateur râle sur `length`.",
+    "related": [
+      "ts.everyday.any.001",
+      "ts.gen.ident.001"
+    ],
+    "lessonId": "ts.gen.001"
+  },
+  {
+    "id": "ts.gen.array.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Comment faire pour lire `length` sur l'argument d'un générique, selon le handbook ?",
+    "explanation": "Travailler sur un tableau `Type[]` (ou `Array<Type>`). Ça n'interdit pas `length`, et ça ne retombe pas sur `any[]`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Typer `arg` en `Type[]` autorise `length`, parce qu'un tableau a toujours cette propriété."
+      },
+      {
+        "id": "b",
+        "text": "Typer `arg` en `Type[]` interdit `length`, le générique restant trop vague."
+      },
+      {
+        "id": "c",
+        "text": "Typer `arg` en `Type[]` convertit `Type` en `any[]`, et `length` redevient un `any`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+    "insight": "`loggingIdentity` : « takes Type, an argument arg which is an array of Types, and returns an array of Types ».",
+    "commonMistake": "Garder `Type` nu et caster `as any` pour lire `length`.",
+    "related": [
+      "ts.gen.length.001",
+      "ts.everyday.array.001"
+    ],
+    "lessonId": "ts.gen.001"
+  },
+  {
+    "id": "ts.gen.call.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Comment passe-t-on explicitement l'argument de type à `identity` ?",
+    "explanation": "Entre `<>`, avant les parenthèses de valeur. Pas comme un argument JS supplémentaire, ni avant la valeur dans `()`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "On peut passer le type explicitement : `identity<string>(\"myString\")`, entre chevrons."
+      },
+      {
+        "id": "b",
+        "text": "On peut passer le type explicitement : `identity(\"myString\", string)`, après la valeur."
+      },
+      {
+        "id": "c",
+        "text": "On peut passer le type explicitement : `identity(string, \"myString\")`, avant la valeur."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+    "insight": "Les `<>` sont des arguments de type, distincts des `()` d'arguments de valeur.",
+    "commonMistake": "Glisser le type dans la liste des valeurs, comme un paramètre de plus.",
+    "related": [
+      "ts.gen.infer.001",
+      "ts.gen.ident.001"
+    ],
+    "lessonId": "ts.gen.001"
+  },
+  {
+    "id": "ts.gen.extends.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Que fait une contrainte de générique écrite avec `extends` ?",
+    "explanation": "Elle limite `Type` aux formes qui conviennent. Elle n'ajoute pas `length` à un `number`, et elle n'est pas réservée aux tableaux.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une contrainte `Type extends { length: number }` n'accepte que les types qui ont `length`."
+      },
+      {
+        "id": "b",
+        "text": "Une contrainte `Type extends { length: number }` ajoute `length` à tous les types, y compris `number`."
+      },
+      {
+        "id": "c",
+        "text": "Une contrainte `Type extends { length: number }` est un alias de `Type[]`, réservé aux tableaux."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+    "insight": "`longest(\"alice\", \"bob\")` marche : les chaînes ont `length`. `longest(10, 20)` non.",
+    "commonMistake": "Lire `extends` comme l'héritage de classes uniquement. Ici, c'est une contrainte de forme.",
+    "related": [
+      "ts.gen.length.001",
+      "ts.alias.struct.001"
+    ],
+    "lessonId": "ts.gen.001"
+  },
+  {
+    "id": "ts.gen.ident.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Que fait une fonction générique d'identité `identity<Type>(arg: Type): Type` ?",
+    "explanation": "Le type entre et ressort identique. Il n'est pas oublié en `any`, et on n'a pas besoin d'appeler avec `<any>`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un générique capte le type de l'argument et le réutilise au retour, sans le perdre."
+      },
+      {
+        "id": "b",
+        "text": "Un générique capte le type de l'argument puis le remplace par `any` au retour."
+      },
+      {
+        "id": "c",
+        "text": "Un générique capte le type de l'argument seulement si on écrit `identity<any>(...)`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+    "insight": "`function identity<Type>(arg: Type): Type` : le hello world du handbook. C'est l'écho typé.",
+    "commonMistake": "Réécrire l'identité en `any` « pour que ça marche partout » et perdre le type en sortie.",
+    "related": [
+      "ts.gen.any.001",
+      "ts.gen.infer.001"
+    ],
+    "lessonId": "ts.gen.001"
+  },
+  {
+    "id": "ts.gen.infer.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Faut-il passer l'argument de type à chaque appel d'`identity` ?",
+    "explanation": "Non : l'inférence le lit sur la valeur. Ce n'est pas `any` par défaut, et ce n'est pas une erreur de syntaxe.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "On peut omettre `<string>` : le compilateur infère `Type` d'après l'argument passé."
+      },
+      {
+        "id": "b",
+        "text": "On doit toujours écrire `<string>` : sans ça, `Type` retombe sur `any`."
+      },
+      {
+        "id": "c",
+        "text": "On doit toujours écrire `<string>` : sans ça, l'appel est une erreur de syntaxe."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+    "insight": "`identity(\"myString\")` : `Type` devient `string`. Les `<>` restent pour les cas où l'inférence décroche.",
+    "commonMistake": "Répéter le type en `<>` et dans l'argument, à chaque appel simple.",
+    "related": [
+      "ts.gen.call.001",
+      "ts.check.infer.001"
+    ],
+    "lessonId": "ts.gen.001"
+  },
+  {
+    "id": "ts.gen.length.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Pourquoi ne peut-on pas lire `arg.length` dans `identity<Type>(arg: Type)` ?",
+    "explanation": "`Type` tient lieu de n'importe quel type. Ce n'est pas vrai que tout a `length`, et TypeScript n'ajoute pas ce champ.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Sans contrainte, `arg.length` est refusé : `Type` peut être un `number`, sans `length`."
+      },
+      {
+        "id": "b",
+        "text": "Sans contrainte, `arg.length` est autorisé : tout type JavaScript a une propriété `length`."
+      },
+      {
+        "id": "c",
+        "text": "Sans contrainte, `arg.length` est autorisé : TypeScript ajoute `length` à chaque générique."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+    "insight": "Property 'length' does not exist on type 'Type'. Un `number` passé à `identity` n'a pas `length`.",
+    "commonMistake": "Lire `.length` « parce que c'est souvent une string », sans le dire au type.",
+    "related": [
+      "ts.gen.array.001",
+      "ts.gen.extends.001"
+    ],
+    "lessonId": "ts.gen.001"
+  },
+  {
+    "id": "ts.gen.var.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Qu'est-ce qu'une variable de type dans un générique ?",
+    "explanation": "Un paramètre pour les types. Pas une valeur JS, pas un `any` déguisé.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une variable de type (`Type`, souvent `T`) travaille sur les types, pas sur les valeurs."
+      },
+      {
+        "id": "b",
+        "text": "Une variable de type (`Type`, souvent `T`) est une variable JavaScript, lisible au runtime."
+      },
+      {
+        "id": "c",
+        "text": "Une variable de type (`Type`, souvent `T`) est un alias obligatoire de `any` dans le corps."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+    "insight": "`Type` disparaît à la compilation, comme les autres annotations. On n'écrit pas `console.log(Type)`.",
+    "commonMistake": "Chercher `T` dans le `.js` émis, ou s'en servir comme d'une valeur.",
+    "related": [
+      "ts.check.erase.001",
+      "ts.gen.ident.001"
+    ],
+    "lessonId": "ts.gen.001"
+  },
+  {
+    "id": "ts.narrow.guard.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Que fait le narrowing en TypeScript ?",
+    "explanation": "Il raffine le type connu dans une branche. Il ne convertit pas la valeur, et il n'élargit pas vers `any`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Le narrowing affine un type déclaré vers un type plus précis, d'après le flux du code."
+      },
+      {
+        "id": "b",
+        "text": "Le narrowing convertit la valeur au runtime, comme un cast qui change la représentation."
+      },
+      {
+        "id": "c",
+        "text": "Le narrowing élargit un littéral vers `any` dès qu'un `if` a été évalué."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+    "insight": "`if (typeof padding === \"number\")` : dans la branche, `padding` est un `number`. Rien n'a été converti.",
+    "commonMistake": "Croire qu'un type guard « transforme » l'objet, alors qu'il renseigne seulement le vérificateur.",
+    "related": [
+      "ts.narrow.typeof.001",
+      "ts.union.op.001"
+    ],
+    "lessonId": "ts.narrow.001"
+  },
+  {
+    "id": "ts.narrow.in.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Que permet l'opérateur `in` pour le narrowing ?",
+    "explanation": "Il distingue les membres d'une union d'objets par un nom de champ. Ce n'est pas `typeof`, et TypeScript le comprend.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`in` est un type guard : il affine selon la présence d'un nom de propriété."
+      },
+      {
+        "id": "b",
+        "text": "`in` est un type guard : il affine selon le résultat de `typeof` sur la valeur."
+      },
+      {
+        "id": "c",
+        "text": "`in` n'est pas un type guard : TypeScript l'ignore, comme une lecture dynamique."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+    "insight": "`\"swim\" in pet` : si `Fish` a `swim` et `Bird` non, la branche sait quel membre on tient.",
+    "commonMistake": "Écrire `typeof pet === \"Fish\"` : `typeof` ne rend pas le nom d'une interface.",
+    "related": [
+      "ts.narrow.kind.001",
+      "ts.narrow.typeof.001"
+    ],
+    "lessonId": "ts.narrow.001"
+  },
+  {
+    "id": "ts.narrow.kind.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Comment une union discriminée permet-elle de réduire le type ?",
+    "explanation": "Un champ à littéraux différents sert de bascule. Pas besoin d'`any`, et `instanceof` n'est pas obligatoire ici.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une union discriminée partage un champ littéral, souvent `kind`, qui réduit chaque branche."
+      },
+      {
+        "id": "b",
+        "text": "Une union discriminée partage un champ `any`, pour que chaque branche accepte tout."
+      },
+      {
+        "id": "c",
+        "text": "Une union discriminée exige `instanceof`, les littéraux ne suffisant jamais à réduire."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+    "insight": "`switch (shape.kind)` : `\"circle\"` donne `radius`, `\"square\"` donne `sideLength`.",
+    "commonMistake": "Typer `kind: string` : plus de littéraux, plus de discrimination.",
+    "related": [
+      "ts.narrow.never.001",
+      "ts.union.literal.001"
+    ],
+    "lessonId": "ts.narrow.001"
+  },
+  {
+    "id": "ts.narrow.never.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "À quoi sert le type `never` dans un `switch` sur une union ?",
+    "explanation": "Il marque l'impossible. Un cas oublié n'est plus `never`. Ce n'est pas `void`, et ce n'est pas `null`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`never` est le type des valeurs qui n'arrivent jamais ; il rend un `switch` exhaustif."
+      },
+      {
+        "id": "b",
+        "text": "`never` est un alias de `void`, pour les fonctions qui n'utilisent pas leur retour."
+      },
+      {
+        "id": "c",
+        "text": "`never` est le type de `null` une fois `strictNullChecks` allumé."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+    "insight": "Dans le `default`, assigner `shape` à une variable `never` : un nouveau membre d'`union` cassera la compil.",
+    "commonMistake": "Écrire `default: return 0` silencieux, et oublier le cas `triangle` plus tard.",
+    "related": [
+      "ts.narrow.kind.001",
+      "ts.fn.void.001"
+    ],
+    "lessonId": "ts.narrow.001"
+  },
+  {
+    "id": "ts.narrow.null.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Pourquoi `typeof strs === \"object\"` ne prouve-t-il pas qu'on a un tableau ?",
+    "explanation": "`null` répond aussi `\"object\"`. Le test ne produit pas `\"null\"`, et il ne confond pas `null` avec `undefined`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`typeof null` vaut `\"object\"`, donc `typeof x === \"object\"` laisse `null` dans l'union."
+      },
+      {
+        "id": "b",
+        "text": "`typeof null` vaut `\"null\"`, donc un test `typeof` retire `null` tout seul."
+      },
+      {
+        "id": "c",
+        "text": "`typeof null` vaut `\"undefined\"`, donc `null` et `undefined` se testent de la même façon."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+    "insight": "Après `typeof strs === \"object\"`, il reste `string[] | null`. TypeScript le dit : `strs` is possibly `null`.",
+    "commonMistake": "Prendre un tableau pour « un objet », et oublier que `null` est aussi un objet pour `typeof`.",
+    "related": [
+      "ts.narrow.typeof.001",
+      "ts.union.null.001"
+    ],
+    "lessonId": "ts.narrow.001"
+  },
+  {
+    "id": "ts.narrow.repeat.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Pourquoi `\" \".repeat(padding)` est-il refusé tant que `padding` a le type `number | string` ?",
+    "explanation": "`String.prototype.repeat` prend un nombre. L'union n'est pas un `number`. Ce n'est pas un souci de `null` dans cet exemple.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`repeat` attend un `number` ; tant que `padding` est `number | string`, l'argument est refusé."
+      },
+      {
+        "id": "b",
+        "text": "`repeat` attend un `string` ; tant que `padding` est `number | string`, l'argument est refusé."
+      },
+      {
+        "id": "c",
+        "text": "`repeat` accepte l'union ; TypeScript refuse seulement parce que `padding` pourrait être `null`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+    "insight": "Le handbook appelle `\" \".repeat(padding)`. D'où le garde `typeof padding === \"number\"` avant.",
+    "commonMistake": "Inverser : croire que `repeat` veut la chaîne `padding`, alors qu'ici c'est le nombre d'espaces.",
+    "related": [
+      "ts.union.op.001",
+      "ts.narrow.typeof.001"
+    ],
+    "lessonId": "ts.narrow.001"
+  },
+  {
+    "id": "ts.narrow.truth.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Que retire un test de truthiness `if (x)` du type de `x` ?",
+    "explanation": "Tout ce que JS considère faux, y compris `0` et `\"\"`. Ce n'est pas un simple filtre `null`/`undefined`, et ça ne mute pas la valeur pour le reste du fichier.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Un `if (x)` écarte aussi `0`, `\"\"` et `NaN`, pas seulement `null` et `undefined`."
+      },
+      {
+        "id": "b",
+        "text": "Un `if (x)` ne retire que `null` et `undefined`, les autres valeurs restant intactes."
+      },
+      {
+        "id": "c",
+        "text": "Un `if (x)` convertit `x` en booléen durable, donc `0` devient `false` pour la suite du fichier."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+    "insight": "Pour « est défini », on teste `x != null` (ou `!== undefined` selon le cas), pas la truthiness.",
+    "commonMistake": "Garder un compteur avec `if (count)` et sauter le zéro légitime.",
+    "related": [
+      "ts.narrow.guard.001",
+      "ts.union.bool.001"
+    ],
+    "lessonId": "ts.narrow.001"
+  },
+  {
+    "id": "ts.narrow.typeof.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Quel rôle TypeScript donne-t-il à `typeof` dans un `if` ?",
+    "explanation": "C'est un garde : la comparaison affine le type. `typeof` n'est pas ignoré, et il ne convertit pas la valeur.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`typeof` est un type guard ; comparer son résultat affine le type dans la branche."
+      },
+      {
+        "id": "b",
+        "text": "`typeof` est ignoré par TypeScript, car il n'existe qu'à l'exécution JavaScript."
+      },
+      {
+        "id": "c",
+        "text": "`typeof` convertit la valeur vers le type nommé, puis TypeScript fait confiance au résultat."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+    "insight": "Les chaînes reconnues : `string`, `number`, `bigint`, `boolean`, `symbol`, `undefined`, `object`, `function`.",
+    "commonMistake": "Attendre `typeof x === \"null\"` : cette chaîne n'existe pas.",
+    "related": [
+      "ts.narrow.null.001",
+      "ts.narrow.guard.001"
+    ],
+    "lessonId": "ts.narrow.001"
+  },
+  {
+    "id": "ts.union.and.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Quelle différence y a-t-il entre `|` et `&` sur des types ?",
+    "explanation": "`|` : un ou l'autre. `&` : les deux à la fois. Ce n'est pas la même chose sous deux écritures.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "L'intersection `A & B` combine les deux formes ; l'union `A | B` choisit un membre."
+      },
+      {
+        "id": "b",
+        "text": "L'intersection `A & B` choisit un membre ; l'union `A | B` combine les deux formes."
+      },
+      {
+        "id": "c",
+        "text": "L'intersection et l'union sont deux graphies du même opérateur, sans différence de sens."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "Pour étendre un `type` objet, le handbook croise avec `&`. Pour « string ou number », c'est `|`.",
+    "commonMistake": "Étendre un type alias avec `|` en croyant ajouter des champs.",
+    "related": [
+      "ts.union.form.001",
+      "ts.alias.merge.001"
+    ],
+    "lessonId": "ts.union.001"
+  },
+  {
+    "id": "ts.union.bool.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Quel rapport le type `boolean` a-t-il avec `true` et `false` ?",
+    "explanation": "C'est exactement l'union des deux littéraux. Pas un troisième primitif, et pas `0`/`1`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`boolean` est un alias de l'union `true | false`."
+      },
+      {
+        "id": "b",
+        "text": "`boolean` est un primitif distinct, sans rapport avec les littéraux `true` et `false`."
+      },
+      {
+        "id": "c",
+        "text": "`boolean` est un alias de `true | false | 0 | 1`, comme en C."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "On peut typer un flag `true` tout seul si la valeur ne peut plus basculer.",
+    "commonMistake": "Ajouter `0` et `1` dans le type « pour coller au JS truthy ».",
+    "related": [
+      "ts.union.literal.001",
+      "ts.narrow.truth.001"
+    ],
+    "lessonId": "ts.union.001"
+  },
+  {
+    "id": "ts.union.const.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Quelle inférence TypeScript fait-il pour une chaîne selon `const` ou `let` ?",
+    "explanation": "`const` fige le littéral. `let` s'élargit à `string`. Ce n'est pas `any`, et ce n'est pas `let` qui reste le plus étroit.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`const` d'une chaîne infère le littéral ; `let` infère `string`, parce que la variable peut changer."
+      },
+      {
+        "id": "b",
+        "text": "`const` et `let` infèrent tous les deux `string` dès que la valeur est une chaîne."
+      },
+      {
+        "id": "c",
+        "text": "`const` d'une chaîne infère `any` ; seul `let` garde le littéral, plus étroit."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "`const constantString: \"Hello World\"` : un seul habit possible. `let` doit pouvoir recevoir une autre chaîne.",
+    "commonMistake": "S'étonner qu'un `let` initialisé avec `\"GET\"` n'accepte plus d'être passé à `\"GET\" | \"POST\"`... en fait c'est l'inverse : il est trop large.",
+    "related": [
+      "ts.union.object.001",
+      "ts.union.literal.001"
+    ],
+    "lessonId": "ts.union.001"
+  },
+  {
+    "id": "ts.union.form.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Que décrit une union de types ?",
+    "explanation": "La valeur appartient à l'un des membres. Ce n'est pas l'intersection des formes, et ce n'est pas un tableau mixte.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une union `A | B` décrit une valeur qui peut être l'un des membres, pas les deux à la fois."
+      },
+      {
+        "id": "b",
+        "text": "Une union `A | B` décrit une valeur qui possède à la fois toutes les propriétés de `A` et de `B`."
+      },
+      {
+        "id": "c",
+        "text": "Une union `A | B` décrit un tableau dont les cases alternent un `A` et un `B`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "Le « et » des propriétés, c'est l'intersection `A & B`. L'union, c'est « un ou l'autre ».",
+    "commonMistake": "Lire `|` comme un ET, parce que la valeur « a plusieurs types ».",
+    "related": [
+      "ts.union.op.001",
+      "ts.union.and.001"
+    ],
+    "lessonId": "ts.union.001"
+  },
+  {
+    "id": "ts.union.literal.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "À quoi sert une union de types littéraux ?",
+    "explanation": "Elle nomme les valeurs permises, chaînes ou nombres. Elle ne retombe pas sur `string` dès le deuxième membre.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Une union de littéraux ferme un jeu de valeurs, comme `\"left\" | \"right\" | \"center\"`."
+      },
+      {
+        "id": "b",
+        "text": "Une union de littéraux élargit le type à `string` dès qu'il y a plus d'un membre."
+      },
+      {
+        "id": "c",
+        "text": "Une union de littéraux n'existe que pour les nombres, les chaînes restant toujours `string`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "`printText(s, \"centre\")` est refusé si l'union dit `\"center\"`. L'orthographe compte.",
+    "commonMistake": "Typer l'alignement `string` et laisser passer n'importe quel mot.",
+    "related": [
+      "ts.union.const.001",
+      "ts.union.bool.001"
+    ],
+    "lessonId": "ts.union.001"
+  },
+  {
+    "id": "ts.union.null.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Comment TypeScript traite-t-il `null` une fois `strictNullChecks` allumé ?",
+    "explanation": "Ils cessent d'être assignables à tout. On les unionne explicitement. Le drapeau n'efface rien au runtime.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Avec `strictNullChecks`, `null` et `undefined` s'ajoutent à l'union quand ils sont possibles."
+      },
+      {
+        "id": "b",
+        "text": "Avec `strictNullChecks`, `null` et `undefined` redeviennent assignables à n'importe quel type."
+      },
+      {
+        "id": "c",
+        "text": "Avec `strictNullChecks`, `null` est effacé du runtime, `undefined` restant un `any`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "Sans le drapeau, `null` se glisse partout. Avec, on écrit `string | null` quand c'est vraiment possible.",
+    "commonMistake": "Oublier `| null` puis « corriger » en désactivant `strictNullChecks`.",
+    "related": [
+      "ts.check.strict.001",
+      "ts.narrow.null.001"
+    ],
+    "lessonId": "ts.union.001"
+  },
+  {
+    "id": "ts.union.object.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Pourquoi `{ method: \"GET\" }` ne suffit-il souvent pas pour un paramètre `\"GET\" | \"POST\"` ?",
+    "explanation": "Le champ est inféré `string`, parce qu'il pourra être réassigné. Ce n'est ni un littéral figé, ni `any`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Sur un objet, TypeScript infère souvent `string` pour un champ, pas le littéral `\"GET\"`."
+      },
+      {
+        "id": "b",
+        "text": "Sur un objet, TypeScript fige chaque champ au littéral, comme un `const` de primitive."
+      },
+      {
+        "id": "c",
+        "text": "Sur un objet, TypeScript refuse d'inférer : chaque champ vaut `any` tant qu'on n'annote pas."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "`{ method: \"GET\" }.method` peut être réécrit plus tard. D'où `string`, trop large pour `\"GET\" | \"POST\"`.",
+    "commonMistake": "Passer `req.method` à `handleRequest` sans `as const` ni annotation, et ne pas comprendre l'erreur.",
+    "related": [
+      "ts.union.const.001",
+      "ts.alias.as.001"
+    ],
+    "lessonId": "ts.union.001"
+  },
+  {
+    "id": "ts.union.op.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Quand TypeScript laisse-t-il appeler une méthode sur une union ?",
+    "explanation": "Seulement si tous les membres la connaissent. Un seul membre ne suffit pas. Les méthodes vraiment communes passent sans narrowing.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "Sur une union, TypeScript n'autorise une opération que si elle est valable pour chaque membre."
+      },
+      {
+        "id": "b",
+        "text": "Sur une union, TypeScript autorise toute opération dès qu'elle existe sur au moins un membre."
+      },
+      {
+        "id": "c",
+        "text": "Sur une union, TypeScript refuse toute méthode, même `slice` commun à `string` et au tableau."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+    "insight": "`toUpperCase` sur `string | number` : refusé. `slice` sur `string | string[]` : OK, les deux l'ont.",
+    "commonMistake": "Appeler une méthode « évidente » du string sans `typeof` d'abord.",
+    "related": [
+      "ts.narrow.guard.001",
+      "ts.union.form.001"
+    ],
+    "lessonId": "ts.union.001"
+  },
+  {
+    "id": "ts.util.exclude.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Que construit l'utilitaire `Exclude` ?",
+    "explanation": "Une union plus petite. Pas un objet amputé de clés, pas un `Partial` ciblé.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`Exclude<Union, Members>` retire de l'union les membres assignables à `Members`."
+      },
+      {
+        "id": "b",
+        "text": "`Exclude<Union, Members>` retire d'un objet les propriétés dont le nom est dans `Members`."
+      },
+      {
+        "id": "c",
+        "text": "`Exclude<Union, Members>` rend optionnelles les propriétés listées dans `Members`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/utility-types.html",
+    "insight": "`Exclude<\"a\" | \"b\" | \"c\", \"a\">` vaut `\"b\" | \"c\"`. Pour un objet, c'est `Omit`.",
+    "commonMistake": "Exclure un champ d'interface avec `Exclude` : le mauvais outil.",
+    "related": [
+      "ts.util.omit.001",
+      "ts.util.nonnull.001"
+    ],
+    "lessonId": "ts.util.001"
+  },
+  {
+    "id": "ts.util.keyof.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Que produit l'opérateur `keyof` ?",
+    "explanation": "L'union des noms de clés. Pas l'union des types de champs, et rien n'est émis dans le JavaScript.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`keyof T` produit l'union des clés de `T`, par exemple `\"x\" | \"y\"` pour un point."
+      },
+      {
+        "id": "b",
+        "text": "`keyof T` produit l'union des types de valeurs de `T`, par exemple `number` pour un point."
+      },
+      {
+        "id": "c",
+        "text": "`keyof T` produit un tableau des clés, disponible aussi à l'exécution via `Object.keys`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/2/keyof-types.html",
+    "insight": "C'est un opérateur de types. `Object.keys` au runtime rend `string[]`, plus large.",
+    "commonMistake": "Prendre `keyof` pour la liste des valeurs, ou pour un `Object.keys` typé magique.",
+    "related": [
+      "ts.util.record.001",
+      "ts.util.pick.001"
+    ],
+    "lessonId": "ts.util.001"
+  },
+  {
+    "id": "ts.util.nonnull.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Que construit l'utilitaire `NonNullable` ?",
+    "explanation": "Le type sans `null` ni `undefined`. Pas `Required`, et rien n'est vérifié à l'exécution.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`NonNullable<Type>` retire `null` et `undefined` du type."
+      },
+      {
+        "id": "b",
+        "text": "`NonNullable<Type>` rend toutes les propriétés requises, comme `Required`."
+      },
+      {
+        "id": "c",
+        "text": "`NonNullable<Type>` convertit la valeur au runtime, et lève si elle est `null`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/utility-types.html",
+    "insight": "`string | null | undefined` devient `string`. Aucun `if` n'est inséré dans le JS.",
+    "commonMistake": "S'en servir comme d'un `!` runtime, ou à la place de `Required` sur un objet.",
+    "related": [
+      "ts.union.null.001",
+      "ts.util.exclude.001"
+    ],
+    "lessonId": "ts.util.001"
+  },
+  {
+    "id": "ts.util.omit.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Que construit l'utilitaire `Omit` ?",
+    "explanation": "Le type moins certaines clés. Pas `Pick`, pas `Exclude` (qui travaille sur une union, pas sur des champs).",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`Omit<Type, Keys>` enlève les propriétés listées ; c'est l'inverse de `Pick`."
+      },
+      {
+        "id": "b",
+        "text": "`Omit<Type, Keys>` garde seulement les propriétés listées ; c'est un alias de `Pick`."
+      },
+      {
+        "id": "c",
+        "text": "`Omit<Type, Keys>` retire des membres d'une union ; c'est un alias de `Exclude`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/utility-types.html",
+    "insight": "`Omit<Todo, \"description\">` : tout `Todo` sauf ce champ. `Keys` sont des noms de propriétés.",
+    "commonMistake": "Omettre un membre d'union avec `Omit` : pour ça, c'est `Exclude`.",
+    "related": [
+      "ts.util.pick.001",
+      "ts.util.exclude.001"
+    ],
+    "lessonId": "ts.util.001"
+  },
+  {
+    "id": "ts.util.partial.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Que construit l'utilitaire `Partial` ?",
+    "explanation": "Un type où chaque champ peut manquer. Ce n'est pas `Required`, et ce n'est pas un filtre `null`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`Partial<Type>` rend toutes les propriétés optionnelles."
+      },
+      {
+        "id": "b",
+        "text": "`Partial<Type>` rend toutes les propriétés requises, l'inverse de `Required`."
+      },
+      {
+        "id": "c",
+        "text": "`Partial<Type>` retire `null` et `undefined`, comme `NonNullable`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/utility-types.html",
+    "insight": "Utile pour un objet de mise à jour : on n'envoie que les champs qui changent.",
+    "commonMistake": "Confondre avec `Required` (l'inverse) ou `NonNullable` (sur une union).",
+    "related": [
+      "ts.util.required.001",
+      "ts.everyday.optional.001"
+    ],
+    "lessonId": "ts.util.001"
+  },
+  {
+    "id": "ts.util.pick.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Que construit l'utilitaire `Pick` ?",
+    "explanation": "Un sous-ensemble de champs d'un type objet. Ce n'est pas `Omit`, et ce n'est pas `Extract` sur une union.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`Pick<Type, Keys>` garde seulement les propriétés listées dans `Keys`."
+      },
+      {
+        "id": "b",
+        "text": "`Pick<Type, Keys>` enlève les propriétés listées dans `Keys`, comme `Omit`."
+      },
+      {
+        "id": "c",
+        "text": "`Pick<Type, Keys>` garde les membres d'une union, comme `Extract`."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/utility-types.html",
+    "insight": "`Pick<Todo, \"title\" | \"completed\">` : un aperçu, sans `description`.",
+    "commonMistake": "Inverser Pick et Omit, ou les appliquer à une union de primitifs.",
+    "related": [
+      "ts.util.omit.001",
+      "ts.util.keyof.001"
+    ],
+    "lessonId": "ts.util.001"
+  },
+  {
+    "id": "ts.util.readonly.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Que change `Readonly` sur un type objet ?",
+    "explanation": "Les champs ne se réassignent plus **dans le type**. Ce n'est pas `Partial`, et ce n'est pas un `freeze` automatique.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`Readonly<Type>` interdit de réassigner les propriétés du type construit."
+      },
+      {
+        "id": "b",
+        "text": "`Readonly<Type>` rend les propriétés optionnelles, sans interdire l'écriture."
+      },
+      {
+        "id": "c",
+        "text": "`Readonly<Type>` appelle `Object.freeze` au runtime, et lève si on écrit quand même."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/utility-types.html",
+    "insight": "Le handbook lie ça à `Object.freeze` : le type décrit un échec d'assignation, le freeze est le runtime à part.",
+    "commonMistake": "Croire que `Readonly<T>` gèle l'objet JavaScript tout seul.",
+    "related": [
+      "ts.util.required.001",
+      "ts.check.runtime.001"
+    ],
+    "lessonId": "ts.util.001"
+  },
+  {
+    "id": "ts.util.record.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 1,
+    "prompt": "Que construit l'utilitaire `Record` ?",
+    "explanation": "Un type objet clé → valeur. Pas un tableau, pas une union de `Keys` avec `Type`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`Record<Keys, Type>` décrit un objet dont les clés sont `Keys` et les valeurs `Type`."
+      },
+      {
+        "id": "b",
+        "text": "`Record<Keys, Type>` décrit un tableau indexé par `Keys`, avec des éléments `Type`."
+      },
+      {
+        "id": "c",
+        "text": "`Record<Keys, Type>` décrit une union, en enregistrant `Keys` ou `Type` au choix."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/utility-types.html",
+    "insight": "`Record<CatName, CatInfo>` : chaque nom de chat doit être présent, avec le même shape d'info.",
+    "commonMistake": "S'en servir comme d'un `Map` runtime. C'est un type d'objet, pas une classe.",
+    "related": [
+      "ts.util.keyof.001",
+      "ts.union.literal.001"
+    ],
+    "lessonId": "ts.util.001"
+  },
+  {
+    "id": "ts.util.required.001",
+    "type": "mcq",
+    "topic": "typescript",
+    "tags": [
+      "typescript"
+    ],
+    "difficulty": 2,
+    "prompt": "Que construit l'utilitaire `Required` ?",
+    "explanation": "Tout devient obligatoire. Ce n'est pas `Partial`, et ça ne parle pas de `readonly`.",
+    "choices": [
+      {
+        "id": "a",
+        "text": "`Required<Type>` rend toutes les propriétés requises : c'est l'inverse de `Partial`."
+      },
+      {
+        "id": "b",
+        "text": "`Required<Type>` rend toutes les propriétés optionnelles : c'est un alias de `Partial`."
+      },
+      {
+        "id": "c",
+        "text": "`Required<Type>` retire les propriétés `readonly`, sans toucher à l'optionnalité."
+      }
+    ],
+    "correctChoiceId": "a",
+    "source": "https://www.typescriptlang.org/docs/handbook/utility-types.html",
+    "insight": "Un `{ a: number; b?: number }` passé dans `Required` exige aussi `b`.",
+    "commonMistake": "L'utiliser pour enlever `readonly` : ça, c'est un autre utilitaire, pas celui-ci.",
+    "related": [
+      "ts.util.partial.001",
+      "ts.util.readonly.001"
+    ],
+    "lessonId": "ts.util.001"
   },
   {
     "id": "web.cloze.001",

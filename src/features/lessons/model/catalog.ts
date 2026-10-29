@@ -10,6 +10,8 @@ export const topicLabels: Record<CardTopic, string> = {
   shell: "Shell",
   architecture: "Architecture",
   angular: "Angular",
+  typescript: "TypeScript",
+  python: "Python",
 }
 
 export type LessonListItem = {

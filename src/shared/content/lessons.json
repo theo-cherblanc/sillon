@@ -87,5 +87,250 @@
     ],
     "prerequisites": [],
     "body": "## Le problème\n\nUne application web qui dure doit rester rapide et fiable quand l'équipe et le code grandissent. Recoller soi-même des outils, des API et des bibliothèques prend du temps, et le cadre de travail n'est plus le même d'un projet à l'autre.\n\n## L'idée\n\nAngular est un framework web. Une équipe dédiée chez Google le maintient. Il fournit une suite d'outils, d'API et de bibliothèques pour construire des applications rapides et fiables, qui tiennent la charge avec la taille de l'équipe et celle du code.\n\nLa documentation officielle est sur Angular.dev. Le guide Essentials est une courte introduction : il suppose HTML, CSS et TypeScript, plus les classes JavaScript, les bases de TypeScript et les décorateurs.\n\n## Un exemple\n\nLa plateforme couvre notamment :\n\n- les composants, pour découper le code en parties bien encapsulées\n- les `signals`, un modèle de réactivité fine, avec des optimisations à la compilation\n- le rendu côté serveur (`SSR`) et la génération de sites statiques (`SSG`), avec hydratation du DOM\n- l'injection de dépendances, pour partager du code entre les composants\n- le routage, les formulaires, Angular CLI, et DevTools\n\nAngular CLI vise à lancer un projet en moins d'une minute, avec les commandes pour aller jusqu'à une application en production. `ng update` applique des transformations automatiques sur les ruptures de compatibilité courantes.\n\n## Les pièges\n\nAngular n'est pas un serveur HTTP, ni une base de données, ni une feuille de styles. C'est le cadre dans lequel on écrit l'application.\n\nLes `signals` sont un modèle de réactivité. Ce n'est pas le mot pour un événement du DOM (`click`), ni pour une route.\n\n## À retenir\n\n- Angular est un framework web, maintenu chez Google, pensé pour durer avec l'équipe et le code.\n- La suite inclut composants, `signals`, `SSR` / `SSG`, injection de dépendances, routage, formulaires, CLI et DevTools.\n- Angular vise un développement sûr par défaut, avec une sanitization HTML et le support des trusted types."
+  },
+  {
+    "id": "py.dict.001",
+    "topic": "python",
+    "order": 7,
+    "title": "Tuples, ensembles et dictionnaires",
+    "level": 2,
+    "minutes": 8,
+    "source": [
+      "https://docs.python.org/3/tutorial/datastructures.html"
+    ],
+    "prerequisites": [
+      "py.list.001",
+      "py.fn.001"
+    ],
+    "body": "## Le problème\n\nLa liste suffit pour une suite ordonnée et mutable. Il manque : une suite **figée**, un sac **sans doublons**, et des paires **clé → valeur**.\n\n## L'idée\n\nUn **tuple** est une suite immuable : `t = 12345, 54321, 'hello!'`. Les parenthèses sont souvent optionnelles. Un singleton s'écrit `('hello',)` : la virgule fait le tuple, pas les parenthèses. On l'indexe comme une liste. On ne réassigne pas un élément. L'**unpacking** `x, y, z = t` dénomme les éléments.\n\nUn **ensemble** (`set`) est non ordonné, sans doublons. `{'apple', 'orange'}`. `in` y est rapide. `{x for x in 'abracadabra' if x not in 'abc'}` est une compréhension d'ensemble. `{}` n'est **pas** un ensemble vide : c'est un dict vide. L'ensemble vide s'écrit `set()`.\n\nUn **dictionnaire** associe des clés à des valeurs : `{'jack': 4098, 'sape': 4139}`. Les clés sont uniques. `tel['guido'] = 4127` ajoute ou remplace. `del tel['sape']` retire. `list(tel)` liste les clés. `in` teste une **clé**. `dict(sape=4139, guido=4127)` construit aussi. `items()` donne les paires `(clé, valeur)` pour un `for`.\n\n## Un exemple\n\n```python\nt = 12345, 54321, 'hello!'\nx, y, z = t\n\nbasket = {'apple', 'orange', 'apple', 'pear'}\n'orange' in basket  # True\nset()               # ensemble vide\n{}                  # dict vide\n\ntel = {'jack': 4098, 'sape': 4139}\ntel['guido'] = 4127\ndel tel['sape']\n'guido' in tel\nfor k, v in tel.items():\n    print(k, v)\n```\n\n## Les pièges\n\n`('hello')` est une chaîne entre parenthèses. `('hello',)` est un tuple.\n\n`{}` est un dict, pas un `set`.\n\n`in` sur un dict teste les clés, pas les valeurs. `'jack' in tel` : oui. `4098 in tel` : non, sauf si `4098` est aussi une clé.\n\n## À retenir\n\n- Tuple : suite immuable. La virgule fait le singleton. Unpacking : `x, y = t`.\n- `set` : unique, `in` rapide. Vide : `set()`, pas `{}`.\n- Dict : clé → valeur. `in` et `list(d)` parlent des clés. `items()` pour les paires."
+  },
+  {
+    "id": "py.err.001",
+    "topic": "python",
+    "order": 8,
+    "title": "Erreurs, None et identité",
+    "level": 2,
+    "minutes": 7,
+    "source": [
+      "https://docs.python.org/3/tutorial/errors.html",
+      "https://docs.python.org/3/tutorial/controlflow.html",
+      "https://docs.python.org/3/library/stdtypes.html#comparisons"
+    ],
+    "prerequisites": [
+      "py.fn.001"
+    ],
+    "body": "## Le problème\n\nLe parseur refuse une ligne (`SyntaxError`). Ou la ligne est correcte, et c'est l'exécution qui casse (`ZeroDivisionError`, `NameError`, `TypeError`). Il faut distinguer, rattraper, et comparer `None` sans le confondre avec `==`.\n\n## L'idée\n\nDeux familles. Les **erreurs de syntaxe** : le parseur n'accepte pas le texte (`while True print('Hello world')` : il manque `:`). Les **exceptions** : le texte est valide, l'exécution échoue. Le type s'affiche (`ZeroDivisionError`), puis un détail, puis une trace.\n\n`try` / `except` rattrape. On exécute le `try`. Sans exception, on saute le `except`. Avec une exception du type nommé, on exécute le `except`, puis on continue après le bloc. Un autre type remonte. Plusieurs `except` sont possibles ; le **premier** qui matche gagne.\n\n`None` est le nom bâti pour « pas de valeur ». Une fonction sans `return` rend `None`.\n\n`==` compare les **valeurs**. `is` compare l'**identité** : le même objet. `x is y` est vrai seulement si `x` et `y` sont le même objet. Pour tester `None`, le tutoriel écrit `if L is None`.\n\n## Un exemple\n\n```python\nwhile True:\n    try:\n        x = int(input(\"Please enter a number: \"))\n        break\n    except ValueError:\n        print(\"Oops!  That was no valid number.  Try again...\")\n\nprint(fib(0))  # None, si fib n'a pas de return\n\ndef f(a, L=None):\n    if L is None:\n        L = []\n    L.append(a)\n    return L\n```\n\n## Les pièges\n\n`'2' + 2` n'est pas une erreur de syntaxe. C'est `TypeError` à l'exécution.\n\n`except` trop large, ou dans le mauvais ordre (la classe parente d'abord), avale des cas qu'on voulait distinguer.\n\n`L == None` marche souvent, mais le tutoriel et la comparaison d'identité disent `is None`. Deux listes égales `==` peuvent ne pas être `is`.\n\n## À retenir\n\n- Syntaxe : le parseur. Exception : l'exécution. `try` / `except` rattrape un type.\n- Sans `return`, le résultat est `None`.\n- `==` : valeur. `is` : le même objet. `None` se teste avec `is`."
+  },
+  {
+    "id": "py.fn.001",
+    "topic": "python",
+    "order": 6,
+    "title": "Définir une fonction",
+    "level": 1,
+    "minutes": 8,
+    "source": [
+      "https://docs.python.org/3/tutorial/controlflow.html"
+    ],
+    "prerequisites": [
+      "py.for.001"
+    ],
+    "body": "## Le problème\n\nLe même calcul se répète. Il faut un nom, des paramètres, et une valeur de retour — ou `None` si on a seulement affiché.\n\n## L'idée\n\n`def nom(paramètres):` ouvre une fonction. Le corps est indenté. La première instruction peut être une chaîne : la **docstring**.\n\nSans `return`, la fonction rend quand même une valeur : `None`. `return` sans expression rend `None`. Tomber à la fin du corps aussi.\n\n`return resultat` rend cet objet et sort. `append` est une **méthode** : une fonction qui appartient à un objet, `obj.methodname`. `result.append(a)` ajoute à la liste.\n\nUn argument peut avoir une **valeur par défaut**. On appelle alors avec moins d'arguments. Les défauts sont évalués **une fois**, à la définition, pas à chaque appel. Un défaut mutable (`[]`, `{}`) est donc **partagé** entre les appels. Le tutoriel montre `def f(a, L=[]):` qui accumule. Le remède courant : `L=None`, puis `if L is None: L = []`.\n\nLes arguments nommés s'écrivent `kwarg=value`. Ils suivent les positionnels. `in` teste si une valeur est dans une séquence.\n\n## Un exemple\n\n```python\ndef fib2(n):\n    \"\"\"Return a list containing the Fibonacci series up to n.\"\"\"\n    result = []\n    a, b = 0, 1\n    while a < n:\n        result.append(a)\n        a, b = b, a + b\n    return result\n\ndef ask_ok(prompt, retries=4, reminder='Please try again!'):\n    ...\n\ndef f(a, L=None):\n    if L is None:\n        L = []\n    L.append(a)\n    return L\n```\n\n## Les pièges\n\n`def f(a, L=[]):` : le même `L` survit d'un appel à l'autre. Ce n'est pas une nouvelle liste à chaque fois.\n\nUne fonction qui `print` sans `return` rend `None`. `print(fib(0))` affiche `None`.\n\n`function(0, a=0)` : deux valeurs pour `a`. `TypeError`.\n\n## À retenir\n\n- `def`, corps indenté, `return` ou bien `None`.\n- Les défauts s'évaluent une fois. Pas de liste mutable en défaut.\n- Une méthode appartient à l'objet (`list.append`). `in` teste l'appartenance."
+  },
+  {
+    "id": "py.for.001",
+    "topic": "python",
+    "order": 5,
+    "title": "for, range et break",
+    "level": 1,
+    "minutes": 7,
+    "source": [
+      "https://docs.python.org/3/tutorial/controlflow.html"
+    ],
+    "prerequisites": [
+      "py.if.001",
+      "py.list.001"
+    ],
+    "body": "## Le problème\n\nIl faut parcourir les éléments d'une liste, ou une suite de nombres. En C, `for` compte. En Python, `for` parcourt une séquence, dans l'ordre.\n\n## L'idée\n\n`for w in words` prend chaque élément, dans l'ordre. Modifier la collection qu'on parcourt est délicat : on boucle plutôt sur une copie, ou on construit une nouvelle collection.\n\n`range` fabrique une progression arithmétique. `range(5)` produit `0, 1, 2, 3, 4` : la borne de fin **n'y est pas**. `range(5, 10)` commence à 5. Un troisième argument est le pas, éventuellement négatif. `range(10)` affiché tout seul s'écrit `range(0, 10)` : ce n'est pas une liste. C'est un **itérable**, qui donne les valeurs à la demande. `list(range(5, 10))` matérielise. `sum(range(4))` vaut `6` (`0+1+2+3`).\n\n`break` sort de la boucle **la plus interne**. `continue` passe à l'itération suivante.\n\nUn `else` sur `for` ou `while` s'exécute si la boucle finit **sans** `break`. Ce n'est pas le `else` d'un `if`. Le tutoriel le dit clairement : regarder à qui le `else` est accroché.\n\n## Un exemple\n\n```python\nwords = ['cat', 'window', 'defenestrate']\nfor w in words:\n    print(w, len(w))\n\nfor i in range(5):\n    print(i)  # 0 1 2 3 4\n\nlist(range(5, 10))      # [5, 6, 7, 8, 9]\nlist(range(0, 10, 3))   # [0, 3, 6, 9]\n\nfor num in range(2, 10):\n    if num % 2 == 0:\n        print(f\"Found an even number {num}\")\n        continue\n    print(f\"Found an odd number {num}\")\n```\n\n## Les pièges\n\n`range(10)` ne contient pas `10`. Les indices légaux d'une séquence de longueur 10 sont `0` à `9`.\n\n`for i in range(len(a))` marche, mais `enumerate` est souvent plus clair. (On peut s'en passer au début.)\n\nLe `else` d'un `for` n'est pas « sinon, si la liste est vide ». Il veut dire « aucun `break` n'a eu lieu ».\n\n## À retenir\n\n- `for` parcourt les éléments, dans l'ordre. `range` compte, fin exclue.\n- `range(...)` n'est pas une liste. `break` sort, `continue` saute.\n- `else` sur une boucle : seulement s'il n'y a pas eu de `break`."
+  },
+  {
+    "id": "py.if.001",
+    "topic": "python",
+    "order": 4,
+    "title": "if et l'indentation",
+    "level": 1,
+    "minutes": 6,
+    "source": [
+      "https://docs.python.org/3/tutorial/introduction.html",
+      "https://docs.python.org/3/tutorial/controlflow.html"
+    ],
+    "prerequisites": [
+      "py.num.001"
+    ],
+    "body": "## Le problème\n\nLe programme doit choisir : négatif, zéro, un, ou plus. En Python, ce n'est pas des accolades qui groupent les lignes. C'est l'indentation.\n\n## L'idée\n\n`if`, zéro ou plusieurs `elif`, `else` optionnel. `elif` est le « else if », pour éviter d'empiler les indentations. Une suite `if` / `elif` / `elif` remplace le `switch` d'autres langages.\n\nLes comparaisons : `<`, `>`, `==`, `<=`, `>=`, `!=`.\n\nLe corps d'un `if` ou d'un `while` est **indenté**. Toutes les lignes d'un même bloc ont le même décalage. L'indentation, c'est le groupement des instructions.\n\n`while` répète tant que la condition reste vraie. En Python, `0` est faux, un entier non nul est vrai. Une séquence vide est fausse, une séquence non vide est vraie.\n\n`pass` ne fait rien. Il tient la place d'un bloc encore vide. `True` et `False` sont les booléens.\n\n## Un exemple\n\n```python\nx = 42\nif x < 0:\n    x = 0\n    print('Negative changed to zero')\nelif x == 0:\n    print('Zero')\nelif x == 1:\n    print('Single')\nelse:\n    print('More')\n\na, b = 0, 1\nwhile a < 10:\n    print(a)\n    a, b = b, a + b\n```\n\n## Les pièges\n\nOublier `:` après `if x < 0` est une `SyntaxError`. Ce n'est pas l'indentation qui manque en premier dans ce cas.\n\n`=` assigne. `==` compare. `if x = 0` n'est pas un test.\n\nLe `else` d'une boucle `for` / `while` n'est **pas** celui du `if`. Il s'exécute si la boucle finit **sans** `break`. On le verra avec `for`. Ici, `else` appartient à `if`.\n\n## À retenir\n\n- `if` / `elif` / `else`. L'indentation groupe le bloc. Un `:` ouvre le bloc.\n- `==` compare, `=` assigne. `while` répète tant que c'est vrai.\n- `pass` tient un bloc vide."
+  },
+  {
+    "id": "py.list.001",
+    "topic": "python",
+    "order": 3,
+    "title": "Les listes",
+    "level": 1,
+    "minutes": 7,
+    "source": [
+      "https://docs.python.org/3/tutorial/introduction.html",
+      "https://docs.python.org/3/tutorial/datastructures.html"
+    ],
+    "prerequisites": [
+      "py.str.001"
+    ],
+    "body": "## Le problème\n\nIl faut grouper des valeurs, les changer, en ajouter. Une chaîne refuse l'écriture dans un index. La liste, elle, le permet.\n\n## L'idée\n\nUne **liste** s'écrit entre crochets : `[1, 4, 9, 16, 25]`. Index et tranches marchent comme pour les chaînes. Une tranche de liste **renvoie une nouvelle liste**.\n\nContrairement aux chaînes, la liste est **mutable**. `cubes[3] = 64` remplace un élément. `append` ajoute à la fin.\n\n`=` ne copie pas. `rgba = rgb` : les deux noms voient le même objet. `append` sur l'un se voit sur l'autre. `rgba[:]` (ou `list.copy()`) fabrique une copie peu profonde.\n\n`len` mesure aussi les listes. On peut les imbriquer.\n\nMéthodes courantes : `append`, `pop` (retire et rend, le dernier par défaut), `sort` et `reverse` **en place**. Les méthodes qui ne font que modifier renvoient `None` : on n'écrit pas `fruits = fruits.sort()`.\n\nUne compréhension `[x**2 for x in range(10)]` construit une liste nouvelle.\n\n## Un exemple\n\n```python\nsquares = [1, 4, 9, 16, 25]\nsquares[-1]      # 25\nsquares[-3:]     # [9, 16, 25]\ncubes = [1, 8, 27, 65, 125]\ncubes[3] = 64\ncubes.append(216)\n\nrgb = [\"Red\", \"Green\", \"Blue\"]\nrgba = rgb\nrgba.append(\"Alph\")\nrgb  # [\"Red\", \"Green\", \"Blue\", \"Alph\"]\n\ncopy = rgb[:]\n```\n\n## Les pièges\n\n`rgba = rgb` n'est pas une copie. Un `append` passe des deux côtés.\n\n`letters[2:5] = []` supprime une tranche. `letters[:] = []` vide la liste.\n\n`sort()` et `reverse()` rendent `None`. Chaîner `fruits.sort().append(...)` casse.\n\n## À retenir\n\n- Liste mutable : index, tranche, `append`, `pop`. `len` mesure.\n- `=` partage l'objet. Une tranche `[:]` copie.\n- `sort` / `reverse` en place, résultat `None`."
+  },
+  {
+    "id": "py.num.001",
+    "topic": "python",
+    "order": 1,
+    "title": "Nombres et variables",
+    "level": 1,
+    "minutes": 6,
+    "source": [
+      "https://docs.python.org/3/tutorial/introduction.html"
+    ],
+    "prerequisites": [],
+    "body": "## Le problème\n\nAvant les listes et les fonctions, il faut poser un nombre, le calculer, et le garder. Sans ça, on ne peut même pas lire un exemple du tutoriel.\n\n## L'idée\n\nPython sépare les **entiers** (`int`, comme `2`) et les **flottants** (`float`, comme `5.0`). Les opérateurs `+`, `-`, `*`, `/` et les parenthèses font calculatrice.\n\nLa division `/` renvoie **toujours** un flottant : `8 / 5` vaut `1.6`, `17 / 3` un `float`. La division entière `//` jette la partie fractionnaire : `17 // 3` vaut `5`. `%` est le reste. `**` est la puissance : `5 ** 2` vaut `25`.\n\n`=` assigne. Ensuite plus rien ne s'affiche, jusqu'au prochain calcul. Une variable jamais assignée lève `NameError`.\n\nUn commentaire commence par `#` et va jusqu'à la fin de la ligne. Un `#` dans une chaîne n'est pas un commentaire.\n\n## Un exemple\n\n```python\n# ceci est un commentaire\nspam = 1  # et celui-ci aussi\ntext = \"# Ceci n'est pas un commentaire.\"\n\nwidth = 20\nheight = 5 * 9\nwidth * height  # 900\n\n17 / 3   # 5.666...\n17 // 3  # 5\n17 % 3   # 2\n5 ** 2   # 25\n```\n\n## Les pièges\n\n`/` n'est pas la division entière. Même `8 / 2` vaut `4.0`, un `float`.\n\n`-3 ** 2` vaut `-9` : `**` passe avant le moins unaire. `(-3) ** 2` vaut `9`.\n\nUtiliser `n` sans l'avoir assigné n'affiche pas `None`. Ça lève `NameError`.\n\n## À retenir\n\n- `int` et `float`. `/` donne un flottant. `//` et `%` font quotient et reste entiers. `**` élève à la puissance.\n- `=` assigne. Une variable absente lève `NameError`.\n- `#` commente jusqu'à la fin de ligne, sauf dans une chaîne."
+  },
+  {
+    "id": "py.str.001",
+    "topic": "python",
+    "order": 2,
+    "title": "Les chaînes",
+    "level": 1,
+    "minutes": 7,
+    "source": [
+      "https://docs.python.org/3/tutorial/introduction.html"
+    ],
+    "prerequisites": [
+      "py.num.001"
+    ],
+    "body": "## Le problème\n\nLe texte est partout : un mot, un chemin, un message. Il faut le coller, le couper, et comprendre pourquoi `word[0] = 'J'` refuse.\n\n## L'idée\n\nUne chaîne a le type `str`. Guillemets simples ou doubles, même résultat. `print` affiche sans les guillemets et interprète `\\n`. Un préfixe `r` donne une chaîne brute, où `\\` n'échappe plus.\n\n`+` concatène. `*` répète. Deux **littéraux** côte à côte se collent (`'Py' 'thon'`). Une variable et un littéral, non : il faut `+`.\n\nL'index `word[0]` est le premier caractère. Les négatifs comptent depuis la fin : `word[-1]` est le dernier. Il n'y a pas de type caractère : un caractère est une chaîne de longueur 1.\n\nUne **tranche** `word[0:2]` va de 0 inclus à 2 exclu. Un début omis vaut 0, une fin omise vaut la longueur. `s[:i] + s[i:]` reconstruit `s`. Un index trop grand lève `IndexError`. Une tranche hors bornes, non : elle se coupe poliment.\n\nLes chaînes sont **immuables**. On n'écrit pas dans un index. On fabrique une nouvelle chaîne. `len` donne la longueur.\n\n## Un exemple\n\n```python\nword = 'Python'\nword[0]   # 'P'\nword[-1]  # 'n'\nword[0:2] # 'Py'\nword[:2] + word[2:]  # 'Python'\nlen(word)  # 6\n\n'J' + word[1:]  # 'Jython'\n```\n\n## Les pièges\n\n`word[0] = 'J'` lève `TypeError` : on ne modifie pas une `str`.\n\n`word[42]` lève `IndexError`. `word[42:]` vaut `''`.\n\n`prefix 'thon'` est une `SyntaxError`. `prefix + 'thon'` concatène.\n\n## À retenir\n\n- Index 0-based, négatifs depuis la fin. Tranche : début inclus, fin exclue.\n- Immuable : on construit une nouvelle chaîne. `len` mesure.\n- `+` et `*` collent et répètent. Deux littéraux se collent ; une variable, non."
+  },
+  {
+    "id": "ts.alias.001",
+    "topic": "typescript",
+    "order": 5,
+    "title": "type et interface",
+    "level": 2,
+    "minutes": 7,
+    "source": [
+      "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"
+    ],
+    "prerequisites": [
+      "ts.union.001"
+    ],
+    "body": "## Le problème\n\nOn répète `{ x: number; y: number }` à chaque fonction. Il faut un nom. Et il faut savoir si ce nom se déclare avec `type` ou avec `interface`.\n\n## L'idée\n\nUn **alias** `type Point = { x: number; y: number }` donne un nom à n'importe quel type : objet, union, littéral. Ce n'est qu'un nom : `type ID = number | string` n'invente pas un nouvel `ID` distinct. Remplacer l'alias par le type écrit revient au même.\n\nUne **interface** nomme aussi une forme d'objet :\n\n```ts\ninterface Point {\n  x: number;\n  y: number;\n}\n```\n\nTypeScript ne regarde que la **structure**. Un objet `{ x: 100, y: 100 }` convient s'il a les propriétés attendues, qu'on ait utilisé `type` ou `interface`. C'est le typage structurel.\n\n`type` et `interface` sont très proches. On choisit souvent librement. L'écart utile : une `interface` peut être rouverte pour ajouter des champs (declaration merging). Un `type` ne se rouvre pas. On étend une interface avec `extends`, un type objet avec une intersection `&`.\n\nLe handbook propose une heuristique : partir d'`interface`, passer à `type` quand on a besoin de ses traits (union, primitive renommée).\n\nUne **assertion** `as HTMLCanvasElement` dit un type plus précis que ce que TypeScript infère. Elle est effacée. Aucun contrôle à l'exécution. TypeScript refuse les conversions « impossibles » (`\"hello\" as number`) sauf à passer par `unknown` ou `any`.\n\n## Un exemple\n\n```ts\ntype ID = number | string;\n\ninterface Bear {\n  name: string;\n  honey: boolean;\n}\n\nfunction printCoord(pt: { x: number; y: number }) {\n  console.log(pt.x, pt.y);\n}\nprintCoord({ x: 100, y: 100 });\n```\n\n## Les pièges\n\nUn alias n'est pas une classe, ni une marque à l'exécution. `UserInputSanitizedString` reste un `string`.\n\n`interface` ne renomme pas un primitif. `type ID = string` oui.\n\nL'assertion n'est pas un cast runtime. Si le DOM n'a pas de canvas, le programme continue avec le mauvais objet.\n\n## À retenir\n\n- `type` nomme n'importe quel type. `interface` nomme une forme d'objet, et peut se fusionner.\n- Seule la structure compte, pas le nom de la déclaration.\n- `as` disparaît à la compilation. Ce n'est pas une vérif."
+  },
+  {
+    "id": "ts.check.001",
+    "topic": "typescript",
+    "order": 1,
+    "title": "Vérifier avant d'exécuter",
+    "level": 1,
+    "minutes": 7,
+    "source": [
+      "https://www.typescriptlang.org/docs/handbook/2/basic-types.html"
+    ],
+    "prerequisites": [],
+    "body": "## Le problème\n\nEn JavaScript, le type d'une valeur se voit surtout à l'exécution. Appeler une chaîne comme une fonction lève une `TypeError`. Lire une propriété absente renvoie `undefined`, sans exception. On découvre trop tard que `message` n'était pas appelable, ou que `location` n'existait pas.\n\n## L'idée\n\nTypeScript est un vérificateur de types statique. Il décrit les formes et les comportements des valeurs **avant** d'exécuter le programme, et signale ce qui déraille.\n\n`tsc` est le compilateur. Il type-check, puis émet du JavaScript. Les annotations de types ne font pas partie de JavaScript : le compilateur les efface. Elles ne changent jamais le comportement à l'exécution.\n\nTypeScript infère souvent le type tout seul. `const msg = \"hello there!\"` est déjà un `string` : inutile de le réécrire.\n\nPar défaut, `tsc` émet quand même le `.js` s'il a vu des erreurs. `noEmitOnError` bloque cette émission. Un projet neuf gagne à activer `\"strict\": true` : cela allume notamment `noImplicitAny` et `strictNullChecks`.\n\n## Un exemple\n\n```ts\nfunction greet(person: string, date: Date) {\n  console.log(`Hello ${person}, today is ${date.toDateString()}!`);\n}\n\ngreet(\"Maddison\", new Date());\n```\n\n`tsc` enlève les annotations. `Date()` sans `new` renvoie une chaîne : TypeScript refuse de la passer là où un `Date` est attendu.\n\n## Les pièges\n\nLes types ne s'exécutent pas. Un `as HTMLCanvasElement` disparaît à la compilation : aucune vérif runtime, aucune exception si l'assertion est fausse.\n\nSans `strict`, `null` et `undefined` sont assignables à presque tout. C'est le défaut « pour ne pas gêner », pas le mode d'un code neuf.\n\n## À retenir\n\n- TypeScript prédit les types avant l'exécution ; JavaScript les découvre en courant.\n- `tsc` efface les annotations. Elles ne changent pas le runtime.\n- `strict`, `noImplicitAny` et `strictNullChecks` serrent la vérif. `noEmitOnError` empêche d'émettre du JS faux."
+  },
+  {
+    "id": "ts.everyday.001",
+    "topic": "typescript",
+    "order": 2,
+    "title": "Les types du quotidien",
+    "level": 1,
+    "minutes": 7,
+    "source": [
+      "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"
+    ],
+    "prerequisites": [
+      "ts.check.001"
+    ],
+    "body": "## Le problème\n\nIl faut nommer ce qu'une variable, un paramètre ou un tableau a le droit de contenir. Sans ça, TypeScript retombe sur `any` et arrête de vérifier.\n\n## L'idée\n\nLes primitifs courants s'écrivent **en minuscules** : `string`, `number`, `boolean`. Ce sont les mêmes noms que `typeof` à l'exécution. `String`, `Number`, `Boolean` existent, mais désignent d'autres objets internes : on ne les utilise pas comme types du quotidien. JavaScript n'a pas d'`int` distinct d'un `float` : tout nombre est `number`.\n\nUn tableau de nombres s'écrit `number[]`, ou `Array<number>`. `[number]` est autre chose : un tuple d'un élément.\n\n`any` coupe la vérif : on peut tout lire, tout appeler, tout assigner. Sans annotation, si TypeScript n'infère rien, il retombe sur `any`. `noImplicitAny` en fait une erreur.\n\nL'annotation se place **après** le nom : `let myName: string = \"Alice\"`. Pas `string myName`. Souvent l'inférence suffit.\n\nUne propriété optionnelle s'écrit `last?: string`. À la lecture, il faut compter avec `undefined`.\n\n## Un exemple\n\n```ts\nlet myName: string = \"Alice\";\nconst names: string[] = [\"Alice\", \"Bob\", \"Eve\"];\n\nfunction printName(obj: { first: string; last?: string }) {\n  console.log(obj.first);\n  console.log(obj.last?.toUpperCase());\n}\n```\n\n`names.forEach(function (s) { s.toUpperCase(); })` : `s` est un `string` par typage contextuel, sans annotation sur le paramètre.\n\n## Les pièges\n\n`any` n'est pas un « type souple ». C'est l'absence de vérif. Une ligne en `any` contamine ce qu'on en tire.\n\n`String` n'est pas `string`. Le type du quotidien est minuscule.\n\nLire `obj.last` sans test peut planter : la propriété optionnelle vaut parfois `undefined`.\n\n## À retenir\n\n- `string`, `number`, `boolean` en minuscules. Tableaux : `T[]`.\n- L'annotation suit le nom. L'inférence et le typage contextuel évitent souvent de la répéter.\n- `any` désactive la suite des contrôles. `?` rend une propriété absente possible."
+  },
+  {
+    "id": "ts.fn.001",
+    "topic": "typescript",
+    "order": 6,
+    "title": "Typer les fonctions",
+    "level": 2,
+    "minutes": 7,
+    "source": [
+      "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+      "https://www.typescriptlang.org/docs/handbook/2/functions.html"
+    ],
+    "prerequisites": [
+      "ts.everyday.001"
+    ],
+    "body": "## Le problème\n\nLes fonctions font circuler les données. Sans types sur les paramètres, n'importe quel argument passe. Sans type de retour, une fonction qui devrait renvoyer un nombre peut se mettre à renvoyer autre chose sans bruit.\n\n## L'idée\n\nL'annotation d'un paramètre suit le nom : `function greet(name: string)`. Les arguments sont alors vérifiés. Même sans annotation, TypeScript compte les arguments.\n\nLe type de retour se place après la liste : `function getFavoriteNumber(): number`. Souvent l'inférence suffit, d'après les `return`. Une fonction async s'annote `Promise<number>`.\n\nDans un callback passé à `forEach` sur `string[]`, le paramètre est typé par le **contexte**. Pas besoin de le réécrire.\n\n`void` décrit une fonction dont la valeur de retour n'est pas utilisable. Ce n'est pas `undefined` comme type de valeur, même si beaucoup de fonctions `void` renvoient `undefined` en JS.\n\nUn paramètre optionnel s'écrit `name?: string`. Il peut être omis. Un défaut `name = \"world\"` rend aussi le paramètre optionnel, et TypeScript infère le type depuis la valeur.\n\nUne expression de type fonction s'écrit `(a: string) => void`.\n\n## Un exemple\n\n```ts\nfunction greet(name: string) {\n  console.log(\"Hello, \" + name.toUpperCase() + \"!!\");\n}\n\nfunction getFavoriteNumber(): number {\n  return 26;\n}\n\nasync function getFavoriteNumberAsync(): Promise<number> {\n  return 26;\n}\n\nconst names = [\"Alice\", \"Bob\", \"Eve\"];\nnames.forEach((s) => {\n  console.log(s.toUpperCase());\n});\n```\n\n## Les pièges\n\n`void` n'interdit pas d'écrire `return true` dans une fonction de type `() => void` dans certains contextes (callback). Ça veut dire : l'appelant n'utilise pas la valeur. Ce n'est pas un `undefined` obligatoire.\n\nOmettre le type de retour n'est pas grave si l'inférence est claire. L'écrire sert à figer le contrat.\n\n`greet(42)` est une erreur de type, pas un crash TypeScript : le JS émis peut quand même s'exécuter si on ignore `tsc`.\n\n## À retenir\n\n- Paramètre : `name: string`. Retour : `(): number` ou `Promise<T>`.\n- Le contexte type souvent les callbacks. `?` et les défauts rendent un paramètre omissible.\n- `void` : la valeur de retour n'est pas à utiliser."
+  },
+  {
+    "id": "ts.gen.001",
+    "topic": "typescript",
+    "order": 7,
+    "title": "Les génériques",
+    "level": 2,
+    "minutes": 8,
+    "source": [
+      "https://www.typescriptlang.org/docs/handbook/2/generics.html"
+    ],
+    "prerequisites": [
+      "ts.fn.001"
+    ],
+    "body": "## Le problème\n\nUne fonction identité qui ne marche que sur `number` est trop étroite. La même avec `any` accepte tout, mais on perd le type au retour : un `number` entré redevient `any` en sortie.\n\n## L'idée\n\nUn **générique** capte un type pour le réutiliser. Une **variable de type** (`Type`, souvent `T`) travaille sur les types, pas sur les valeurs.\n\n```ts\nfunction identity<Type>(arg: Type): Type {\n  return arg;\n}\n```\n\nL'argument et le retour sont le **même** type. On n'a rien perdu. On appelle `identity<string>(\"myString\")` en passant le type, ou plus souvent `identity(\"myString\")` : le compilateur **infère** `Type` depuis l'argument.\n\nDans le corps, `Type` peut être n'importe quel type. `arg.length` est donc refusé : un `number` n'a pas `length`. Pour un tableau : `arg: Type[]`. Pour « tout type qui a `length` » : une **contrainte** `Type extends { length: number }`.\n\nLes génériques existent aussi sur les types : `type Box<Type> = { contents: Type }`, et sur les classes.\n\n## Un exemple\n\n```ts\nfunction identity<Type>(arg: Type): Type {\n  return arg;\n}\n\nlet output = identity(\"myString\");\n\nfunction loggingIdentity<Type>(arg: Type[]): Type[] {\n  console.log(arg.length);\n  return arg;\n}\n\nfunction longest<Type extends { length: number }>(a: Type, b: Type) {\n  return a.length >= b.length ? a : b;\n}\n```\n\n## Les pièges\n\n`any` n'est pas un générique. Ça accepte tout **et** oublie ce qui est entré.\n\nSans contrainte, on ne lit pas une propriété « évidente » sur `Type`. Il faut `extends` ou travailler sur `Type[]`.\n\nL'inférence échoue parfois sur des cas tordus. On passe alors le type entre `<>`.\n\n## À retenir\n\n- `<Type>` capte un type et le fait ressortir. Plus précis que `any`.\n- L'inférence évite souvent d'écrire `identity<string>(...)`.\n- Une contrainte `extends` autorise les opérations communes (comme `length`)."
+  },
+  {
+    "id": "ts.narrow.001",
+    "topic": "typescript",
+    "order": 4,
+    "title": "Réduire une union",
+    "level": 2,
+    "minutes": 8,
+    "source": [
+      "https://www.typescriptlang.org/docs/handbook/2/narrowing.html"
+    ],
+    "prerequisites": [
+      "ts.union.001"
+    ],
+    "body": "## Le problème\n\nSur `number | string`, `padding.repeat(4)` est refusé : `repeat` attend un `number`. Il faut d'abord montrer à TypeScript dans quelle branche on est.\n\n## L'idée\n\nLe **narrowing** affine un type déclaré vers un type plus précis, d'après le flux du code. TypeScript lit les `if`, ternaires, boucles, et des formes spéciales appelées **type guards**.\n\n`typeof` est un garde. Il ne renvoie qu'un jeu fixe : `\"string\"`, `\"number\"`, `\"bigint\"`, `\"boolean\"`, `\"symbol\"`, `\"undefined\"`, `\"object\"`, `\"function\"`. Pas `\"null\"` : `typeof null` vaut `\"object\"`.\n\nD'autres gardes : une valeur « truthy », `===` / `!==`, `in` (`\"swim\" in pet`), `instanceof`. Une affectation affine aussi le type ensuite.\n\nUne **union discriminée** partage un champ littéral (`kind: \"circle\" | \"square\"`). Un `switch` sur ce champ réduit chaque branche. Si un cas reste, `never` le signale : c'est le type des valeurs qui n'arrivent jamais. Un `default` qui assigne à `never` rend le `switch` exhaustif.\n\n## Un exemple\n\n```ts\nfunction padLeft(padding: number | string, input: string): string {\n  if (typeof padding === \"number\") {\n    return \" \".repeat(padding) + input;\n  }\n  return padding + input;\n}\n\ninterface Circle {\n  kind: \"circle\";\n  radius: number;\n}\ninterface Square {\n  kind: \"square\";\n  sideLength: number;\n}\ntype Shape = Circle | Square;\n\nfunction getArea(shape: Shape) {\n  switch (shape.kind) {\n    case \"circle\":\n      return Math.PI * shape.radius ** 2;\n    case \"square\":\n      return shape.sideLength ** 2;\n  }\n}\n```\n\n## Les pièges\n\n`typeof null === \"object\"`. Après `typeof strs === \"object\"`, TypeScript laisse `string[] | null`, pas seulement le tableau.\n\nUn `if (x)` écarte `0`, `\"\"`, `NaN`, `null` et `undefined`. Ce n'est pas un test « est défini ».\n\n`in` vérifie un nom de propriété. Ce n'est pas `typeof`, ni `instanceof`.\n\n## À retenir\n\n- Narrowing : le flux affine le type. `typeof`, égalité, `in`, `instanceof` sont des gardes.\n- `typeof` ne dit pas `\"null\"`. `null` reste un objet pour `typeof`.\n- Un champ littéral (`kind`) discrimine une union. `never` attrape les cas oubliés."
+  },
+  {
+    "id": "ts.union.001",
+    "topic": "typescript",
+    "order": 3,
+    "title": "Unions et littéraux",
+    "level": 1,
+    "minutes": 7,
+    "source": [
+      "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"
+    ],
+    "prerequisites": [
+      "ts.everyday.001"
+    ],
+    "body": "## Le problème\n\nUne valeur n'est pas toujours d'un seul type : un identifiant est un `number` ou un `string`, un alignement vaut `\"left\"` ou `\"right\"`. Si on type trop large (`string`), n'importe quel texte passe. Si on type trop étroit, l'autre cas est refusé.\n\n## L'idée\n\nUne **union** `A | B` est formée de deux types ou plus. La valeur peut être n'importe lequel des membres. Fournir un membre convient. Une opération n'est autorisée que si elle est valable **pour chaque** membre. Sur `string | number`, `toUpperCase` est refusé : il n'existe pas sur `number`. Il faut d'abord **réduire** (narrow) l'union, par exemple avec `typeof`.\n\nLes **littéraux** nomment une valeur précise : `\"hello\"`, `0`, `true`. Seuls, ils servent peu. En union, ils décrivent un ensemble fermé : `\"left\" | \"right\" | \"center\"`. `boolean` est l'alias de `true | false`.\n\n`const` d'une chaîne infère le littéral. `let` infère `string`, parce que la variable peut changer. Sur un objet, TypeScript suppose que les champs pourront être réécrits : `{ method: \"GET\" }` a `method: string`, pas `\"GET\"`.\n\nAvec `strictNullChecks`, `null` et `undefined` ne sont plus assignables à tout. On les ajoute à l'union quand ils sont possibles : `string | null`.\n\n## Un exemple\n\n```ts\nfunction printId(id: number | string) {\n  if (typeof id === \"string\") {\n    console.log(id.toUpperCase());\n  } else {\n    console.log(id);\n  }\n}\n\nfunction printText(s: string, alignment: \"left\" | \"right\" | \"center\") {}\nprintText(\"Hello, world\", \"left\");\n```\n\n## Les pièges\n\nUne union n'est pas un « et ». `number | string` n'est pas un objet qui serait les deux à la fois. L'intersection `A & B` est l'autre opérateur.\n\n`typeof null === \"object\"` en JavaScript. Un test `typeof x === \"object\"` ne sort pas `null` d'une union `string[] | null`.\n\nSans assertion ni `as const`, `req.method` inféré depuis `{ method: \"GET\" }` est un `string`, trop large pour `\"GET\" | \"POST\"`.\n\n## À retenir\n\n- `A | B` : un membre ou l'autre. On n'utilise que ce qui est commun, ou on réduit.\n- Les littéraux en union ferment un jeu de valeurs (`\"left\" | \"right\"`).\n- `const` garde le littéral ; `let` et les champs d'objet s'élargissent souvent."
+  },
+  {
+    "id": "ts.util.001",
+    "topic": "typescript",
+    "order": 8,
+    "title": "Partial, Pick et keyof",
+    "level": 2,
+    "minutes": 8,
+    "source": [
+      "https://www.typescriptlang.org/docs/handbook/2/keyof-types.html",
+      "https://www.typescriptlang.org/docs/handbook/utility-types.html"
+    ],
+    "prerequisites": [
+      "ts.alias.001",
+      "ts.gen.001"
+    ],
+    "body": "## Le problème\n\nOn a déjà un type `Todo`. Il faut parfois le même objet tout optionnel, ou seulement `title` et `completed`, ou un dictionnaire dont les clés sont un union de noms. Réécrire à la main casse dès que `Todo` bouge.\n\n## L'idée\n\n`keyof T` produit l'union des clés de `T`. Pour `{ name: string; age: number }`, `keyof` vaut `\"name\" | \"age\"`.\n\nTypeScript fournit des **utilitaires** globaux :\n\n- `Partial<Type>` : toutes les propriétés deviennent optionnelles\n- `Required<Type>` : l'inverse, tout est requis\n- `Readonly<Type>` : les propriétés ne se réassignent plus\n- `Record<Keys, Type>` : un objet dont les clés sont `Keys` et les valeurs `Type`\n- `Pick<Type, Keys>` : garde seulement `Keys`\n- `Omit<Type, Keys>` : enlève `Keys` (l'inverse de `Pick`)\n- `Exclude<UnionType, ExcludedMembers>` : retire des membres d'une union\n- `NonNullable<Type>` : retire `null` et `undefined`\n- `ReturnType<Type>` : le type de retour d'une fonction\n\nCe sont des transformations de types. Elles n'existent pas à l'exécution.\n\n## Un exemple\n\n```ts\ntype Point = { x: number; y: number };\ntype P = keyof Point; // \"x\" | \"y\"\n\ninterface Todo {\n  title: string;\n  description: string;\n  completed: boolean;\n}\n\ntype TodoPreview = Pick<Todo, \"title\" | \"completed\">;\ntype TodoUpdate = Partial<Todo>;\ntype TodoInfo = Omit<Todo, \"completed\">;\n\ntype CatName = \"miffy\" | \"boris\" | \"mordred\";\ntype CatInfo = { age: number; breed: string };\nconst cats: Record<CatName, CatInfo> = {\n  miffy: { age: 10, breed: \"Persian\" },\n  boris: { age: 5, breed: \"Maine Coon\" },\n  mordred: { age: 16, breed: \"British Shorthair\" },\n};\n```\n\n## Les pièges\n\n`Partial` ne rend pas les valeurs `undefined` « sémantiquement optionnelles » à l'exécution. C'est un type. L'objet JS peut toujours manquer un champ, ou pas.\n\n`Pick` et `Omit` travaillent sur des **clés** (littéraux ou unions de littéraux). `Exclude` travaille sur une **union** de types.\n\n`keyof` d'un index signature large peut devenir `string | number`. Ce n'est pas toujours une union de noms précis.\n\n## À retenir\n\n- `keyof T` : union des clés.\n- `Partial`, `Pick`, `Omit`, `Record`, `Readonly` transforment un type objet.\n- `Exclude` et `NonNullable` transforment une union. Rien de tout ça n'existe au runtime."
   }
 ]

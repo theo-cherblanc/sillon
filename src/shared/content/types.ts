@@ -7,6 +7,8 @@ export const cardTopics = [
   "shell",
   "architecture",
   "angular",
+  "typescript",
+  "python",
 ] as const
 
 export type CardTopic = (typeof cardTopics)[number]

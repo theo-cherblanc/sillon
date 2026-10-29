@@ -93,6 +93,12 @@ function sourceLabel(value: string): string {
     if (host === "angular.dev") {
       return "Angular"
     }
+    if (host === "typescriptlang.org") {
+      return "TypeScript"
+    }
+    if (host === "docs.python.org") {
+      return "Python"
+    }
     if (host.endsWith("ietf.org") || host === "httpwg.org") {
       return "HTTP"
     }

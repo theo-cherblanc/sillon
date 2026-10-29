@@ -114,9 +114,12 @@ function readTopic(value: unknown): Card["topic"] {
   if (typeof value === "string" && cardTopics.includes(value as Card["topic"])) {
     return value as Card["topic"]
   }
-  throw new Error(
-    'Le champ topic doit être "javascript", "http", "web", "git", "docker", "shell", "architecture" ou "angular"',
-  )
+  throw new Error(`Le champ topic doit être ${topicList()}`)
+}
+
+function topicList(): string {
+  const names = cardTopics.map((topic) => `"${topic}"`)
+  return `${names.slice(0, -1).join(", ")} ou ${names.at(-1)}`
 }
 
 function readType(value: unknown): Card["type"] {
